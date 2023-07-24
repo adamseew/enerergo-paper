@@ -1,0 +1,186 @@
+\documentclass[lettersize,journal,twoside]{IEEEtran} 
+\usepackage[inline]{enumitem}
+\usepackage{amsmath,amsfonts}
+\usepackage{amssymb}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{array}
+%\usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
+\usepackage{textcomp}
+\usepackage{stfloats}
+\usepackage{url}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage[font=footnotesize]{caption}
+\usepackage[font=footnotesize]{subcaption}
+\usepackage[noadjust]{cite}
+
+%% package for urls
+\usepackage{url}
+
+%% hyperref
+% and an override to make hyperref work with ieeeconf.cls
+\makeatletter
+\let\NAT@parse\undefined
+\makeatother
+\usepackage[pagebackref=true,breaklinks=true,colorlinks,bookmarks=false]{hyperref}
+\makeatletter
+\newcommand*{\textlabel}[2]{%
+  \edef\@currentlabel{#1}% Set target label
+  \phantomsection% Correct hyper reference link
+  #1\label{#2}% Print and store label
+}
+\makeatother
+
+\usepackage{textpos}
+\usepackage{amsthm}
+\usepackage{xcolor}
+\colorlet{RED}{red}
+
+\usepackage{tikz}
+\usepackage[scaled]{helvet}
+
+\AddToHook{shipout/foreground}{
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[red,rotate=45,scale=10,opacity=0.2] at (current page.center) {\small\fontfamily{phv}\selectfont%};
+    IN~PREPARATION};
+    %UNDER~REVIEW};   
+  \end{tikzpicture}
+}
+
+%% correct bad hyphenation here
+\hyphenation{obs-tacles sur-roundings}
+
+\renewcommand{\qedsymbol}{$\blacksquare$}
+
+\theoremstyle{definition}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{assm}[thm]{Assumption}
+\newtheorem{cor}{Corollary}
+\newtheorem{conj}{Conjecture}[section]
+\newtheorem{defn}{Definition}[section]
+\newtheorem{exmp}{Example}[section]
+\newtheorem*{pb}{Problem}%[section]
+\newtheorem{rem}{Remark}
+\newtheorem{obs}{Observation}
+\newtheorem*{ctb}{Contribution}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\makeatletter
+\newcommand\notsotiny{\@setfontsize\notsotiny\@vipt\@viipt}
+\makeatother
+
+\renewcommand\citepunct{,\hspace*{.8ex}}
+\renewcommand*{\citedash}{--}
+
+\begin{document}
+\bstctlcite{IEEEexample:BSTcontrol}
+
+\title{Energy-Aware Ergodic Search: Continuous Long-Term Exploration for Multiagent Systems}
+
+\author{Adam Seewald${}^\text{1}$, Marvin Chanc{\'a}n${}^\text{1}$, Aaron M. Dollar${}^\text{1}$, and Ian Abraham${}^\text{1}$%~\IEEEmembership{Staff,~IEEE,}
+        % <-this % stops a space
+  %\thanks{Manuscript received: Month, Day, Year; Revised Month, Day, Year; Accepted Month, Day, Year.}%Use only for final RAL version
+  %\thanks{This paper was recommended for publication by Editor Editor A. Name upon evaluation of the Associate Editor and Reviewers' comments.} %Use only for final RAL version
+  \thanks{${}^\text{1}$A.\hspace*{.4ex}S., M.\hspace*{.4ex}C., A.\hspace*{.4ex}M.\hspace*{.4ex}D., and I.\hspace*{.4ex}A. are with the Department of Mechanical Engineering and Materials Science, Yale University, CT, USA. Email: {\tt\footnotesize \href{mailto:adam.seewald@yale.edu}{adam.seewald@yale.edu};}}
+  %\thanks{${}^\text{3}$A.\hspace*{.4ex}M.\hspace*{.4ex}W. is with the Department of Mechanical Engineering, Massachusetts Institute of Technology, MA, USA;}
+  %\thanks{${}^\text{4}$V.\hspace*{.4ex}E. and B.\hspace*{.4ex}B. are currently unaffiliated. ${}^\text{2, 3, 4}$C.\hspace*{.4ex}M.\hspace*{.4ex}C., A.\hspace*{.4ex}M.\hspace*{.4ex}W., V.\hspace*{.4ex}E., and B.\hspace*{.4ex}B. performed the work while affiliated with Yale University.}
+  %\thanks{Digital Object Identifier (DOI): see top of this page.}
+}
+
+% The paper headers
+\markboth{%Journal of \LaTeX\ Class Files,~Vol.~14, No.~8, August~2021
+%Manuscript~submitted~for~publication. Version~\textnumero~1, 
+Manuscript in preparation. %\underline{Not for distribution}. 
+July~2023
+}%
+{Seewald \MakeLowercase{\textit{et al.}}: Ergodic Search for Long-Term Exploration}
+
+\IEEEpubid{%0000--0000/00\$00.00~\copyright~2023 IEEE
+}
+% Remember, if you use this you must call \IEEEpubidadjcol in the second
+% column for its text to clear the IEEEpubid mark.
+
+\maketitle
+
+%\vspace*{-1cm}
+\begin{abstract} 
+---
+\end{abstract}
+
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{IEEEkeywords}
+  Motion and Path Planning; Energy and Environment-Aware Autonomation.
+\end{IEEEkeywords}
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+
+\IEEEPARstart{A}{a} 
+\IEEEpubidadjcol
+
+---
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Problem Formulation}
+\noindent
+
+---
+
+
+%%%%%%%%%%%%%%%%%%
+\section{Methods}
+\noindent
+
+---
+
+\subsection{Ergodic search}
+\noindent
+
+---
+
+\subsection{Battery modeling}
+\noindent
+
+---
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Experimental Results}
+\noindent
+
+---
+
+\begin{figure*}[p]
+  \begin{minipage}[t]{1\columnwidth}
+    \input{figures/trajs.pdf_tex}
+  \end{minipage}
+  \hspace{.42cm}
+  \begin{minipage}[t]{.93\columnwidth}
+    \vspace*{-4.2cm}
+    \caption{.   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .}
+  \end{minipage}
+\end{figure*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusion and Future Directions}
+\noindent
+
+---
+
+
+{\small
+\bibliographystyle{IEEEtran} 
+%\bibliography{enerergo}
+}
+
+\end{document}
+
+
