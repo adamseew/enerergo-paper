@@ -96,10 +96,10 @@
     \put(0.01468955,0.72392931){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}1.8\end{tabular}}}}%
     \put(0.01468955,0.76138045){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}2.4\end{tabular}}}}%
     \put(0.02955112,0.7988316){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}3\end{tabular}}}}%
-    \put(0.12710746,0.27619112){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$t_9$\end{tabular}}}}%
-    \put(0.3731173,0.27628495){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$t_{10}$\end{tabular}}}}%
-    \put(0.61327658,0.27625711){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$t_{11}$\end{tabular}}}}%
-    \put(0.85462874,0.27627942){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$t_{12}$\end{tabular}}}}%
+    \put(0.12710746,0.27619112){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$t_8$\end{tabular}}}}%
+    \put(0.3791173,0.27628495){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$t_{9}$\end{tabular}}}}%
+    \put(0.61327658,0.27625711){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$t_{10}$\end{tabular}}}}%
+    \put(0.85462874,0.27627942){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$t_{11}$\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=7]{figures/trajs.pdf}}%
     \put(0.28852077,0.59574218){\rotatebox{45}{\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0\end{tabular}}}}}%
     \put(0.31576043,0.58523347){\rotatebox{45}{\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.6\end{tabular}}}}}%
@@ -280,8 +280,8 @@
     \put(0.84830923,0.30025549){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}x (m)\end{tabular}}}}%
     \put(0.11617064,0.02806753){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}x (m)\end{tabular}}}}%
     \put(0.36070359,0.02795469){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}x (m)\end{tabular}}}}%
-    \put(0.12811297,0.00435933){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$t_{13}$\end{tabular}}}}%
-    \put(0.37187224,0.00433148){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$t_{14}$\end{tabular}}}}%
+    \put(0.12811297,0.00435933){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$t_{12}$\end{tabular}}}}%
+    \put(0.37187224,0.00433148){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$t_{13}$\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=29]{figures/trajs.pdf}}%
   \end{picture}%
 \endgroup%
