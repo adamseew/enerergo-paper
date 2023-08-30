@@ -63,7 +63,7 @@
 \newtheorem{conj}{Conjecture}[section]
 \newtheorem{defn}{Definition}[section]
 \newtheorem{exmp}{Example}[section]
-\newtheorem*{pb}{Problem}%[section]
+\newtheorem{pb}{Problem}[section]
 \newtheorem{rem}{Remark}
 \newtheorem{obs}{Observation}
 \newtheorem*{ctb}{Contribution}
@@ -135,14 +135,14 @@ July~2023
 The problem addressed in this work is that of exploring a bounded space with multiple agents, continuosly, and proportionally to a spatial distribution. To achieve the latter, canonical ergodic search~\cite{mathew2011metrics} derives the agent's control so that its trajectory maximizes an ergodic metric defined in the spectral domain~\cite{calinon2020mixture}.
 
 \begin{pb}[Ergodic search]\label{pb:ergo}
-  Consider a bounded space $\mathcal{Q}\subset\mathbb{R}^D$ of dimension $D\in\mathbb{N}_{>0}$ and a spatial distribution $\phi$. \textit{Ergodic search problem} is the problem of deriving a control action $\mathbf{u}(t)\in\mathcal{U}$ so that the trajectory $\mathbf{q}(t)\in\mathcal{Q}$ is proportional to the distribution $\phi$.
+  Consider a bounded space $\mathcal{Q}\subset\mathbb{R}^D$ of dimension $D$ with $D\in\mathbb{N}_{>0}$ and a spatial distribution $\phi$. \textit{Ergodic search problem} is the problem of deriving a control action $\mathbf{u}(t)\in\mathcal{U}\subset\mathbb{R}^V$ with $V\in\mathbb{N}_{>0}$ so that the trajectory $\mathbf{q}(t)\in\mathcal{Q}$ is proportional to the distribution $\phi$.
 \end{pb}
 
 Here the notation $\mathbb{R}$ and $\mathbb{N}$ indicates reals and naturals, $\mathbb{N}_{>0}$ strictly naturals. Bold notation is used for vectors.
 
 We extend the canonical erogidc search problem, to multi-agent continuous ergodic search, i.e., exploration with multiple robots under spatial distribution and battery constraints.
 
-\begin{pb}[Multi-agent continuous ergodic search]
+\begin{pb}[Multi-agent continuous ergodic search]\label{pb:enerergo}
   Consider a set of $n$ agents $\boldsymbol{\alpha}:=\{\alpha_1,\alpha_2,\dots,\alpha_n\}$, a bounded space $\mathcal{Q}$, and a spatial distribution $\phi$ similarly to Problem~\ref{pb:ergo}. We are interested in deriving each agent ${}^j\alpha$ control actions ${}^j\mathbf{u}(t)$ so that its trajectory ${}^j\mathbf{q}(t)$ is proportional to the distribution $\phi$.
 \end{pb}
 
@@ -157,37 +157,63 @@ We extend the canonical erogidc search problem, to multi-agent continuous ergodi
 \noindent
 For the purposes of defining the spatial distribution, let us consider a Gaussian mixture model (GMM)
 \begin{equation}\label{eq:gmm}
-  \phi(\boldsymbol{\delta},\mathbf{q}(t)):=\sum_{k=1}^{n}\delta_k\,\mathcal{N}(\mathbf{q}(t)\,|\,\mu_k,\Sigma_k),
+  \phi(\boldsymbol{\delta},\mathbf{q}):=\sum_{k=1}^{m}\delta_k\,\mathcal{N}(\mathbf{q}\,|\,\mu_k,\Sigma_k),
 \end{equation} 
-composed of $n$ Gaussians. Each has a coveriance matrix ${\Sigma_k}\in\mathbb{R}^{D\times D}$, a center $\mu_k\in\mathcal{Q}$, and a positive mixing coefficient $\delta_k\in\boldsymbol{\delta}$ such that the sum of the $\delta$s is one.
+composed of $m$ Gaussians. Each has a coveriance matrix ${\Sigma_k}\in\mathbb{R}^{D\times D}$, a center $\mu_k\in\mathcal{Q}$, and a positive mixing coefficient $\delta_k\in\boldsymbol{\delta}$ such that the sum of the $\delta$s is less or equal to one. They indicate how well is each Guassian in the GMM considered. 
 
 The goal of ergodic search is to minimize an ergodic metric
 \begin{equation}\label{eq:ergmetric}
-  \mathcal{E}(\mathbf{q}(t),\phi):=\frac{1}{2}\sum_{k\in\mathcal{K}}\Lambda_k(c_k-\phi_k)^2,
+  \mathcal{E}(\boldsymbol{\delta},\mathbf{q}(t),t):=\frac{1}{2}\sum_{k\in\mathcal{K}}\Lambda_k \big( c_k(\mathbf{q}(t),t)-\phi_k(\boldsymbol{\delta},t) \big)^2,
 \end{equation}
-where $\phi_k$ are coefficients derived utilizing the Fourier series on the spatial distribution $\phi$ and $c_k$ on the trajectory $\mathbf{q}$.
-$\mathcal{K}$ is a set of vectors in $\mathbb{N}^D$  built so that it contains the indices of all the frequencies, i.e., if there are $k$ frequencies in 2D including the fundamental frequency, $\mathcal{K}$ is 
-$\small\{\,\begin{bmatrix}0 &\hspace*{-.7ex} \cdots \hspace*{-.7ex}& k\end{bmatrix}^T,$
-$\small\begin{bmatrix}0 &\hspace*{-.7ex} \cdots \hspace*{-.7ex}& 0\end{bmatrix}^T\},\dots,\hspace*{-.5ex}\{\,\begin{bmatrix}0 &\hspace*{-.7ex} \cdots \hspace*{-.7ex}& k\end{bmatrix}^T,\begin{bmatrix}k &\hspace*{-.7ex} \cdots \hspace*{-.7ex}& k\end{bmatrix}^T\}$.
-Finally, $\Lambda_k$ is a weight factor, i.e., if $\Lambda_k$ is $(1+\lVert k\rVert^2)^{(-D-1)/2}$ lower fre- quencies have more weight.
+where $\phi_k$ are coefficients derived utilizing the Fourier series on the spatial distribution $\phi$ and $c_k$ on the trajectory $\mathbf{q}(t)$. They are detailed in Equation~(\ref{eq:phik}) and (\ref{eq:ck}) respectively.
+$\Lambda_k$ is a weight factor, i.e., if 
+\begin{equation}
+  \Lambda_k=(1+\lVert k\rVert^2)^{(-D-1)/2},
+\end{equation}
+lower frequencies have more weight~\cite{miller2016ergodic}.
+$\mathcal{K}\in\mathbb{N}^D$ is a set index vectors that covers $[K]\times\cdots\times[K]\in\mathbb{N}^{K^D}$ 
+where $K$ is a given number of frequencies including the fundamental frequency. The notation $[K]$ indicates positive naturals up to $K$.
 
 The coefficients $c_k$ are derived using the Fourier series basis function. If we consider the trigonometric form
-\begin{equation}
+\begin{equation}\label{eq:ck}
   \begin{split}
-    c_k(\mathbf{q},t):=\int_{\mathcal{T}}\frac{1}{L^D}\prod_{d\in[D]}(& \cos(k_d\,\mathbf{q}_d(\tau)\,\psi)\\[-2ex]
+    c_k(\mathbf{q}(t),t):=\int_{\mathcal{T}}\frac{1}{L^D}\prod_{d\in[D]_{>0}\hspace*{-1ex}}(& \cos(k_d\,\mathbf{q}_d(\tau)\,\psi)\\[-2ex]
     &\vspace*{-4ex}-i\sin(k_d\,\mathbf{q}_d(\tau)\,\psi) )\,d\tau/t,
   \end{split}
 \end{equation}
 $c_k$ is then evaluated per each $k$ in $\mathcal{K}$ in Eq.~(\ref{eq:ergmetric}).
 $\psi$ is $2\pi/L$ for a given period $L\in\mathbb{R}_{>0}$, $i$ is the imaginary unit, $k_d$ is the $d$th item of $k$, and $\mathbf{q}_d$ the $d$th item of $\mathbf{q}$.
-$\mathcal{T}$ is built so that the integration is between $\tau=t_0$ and $t$, and the notation $[D]$ indicates positive naturals up to $D$.
+
+$\mathcal{T}$ is built so that the integration is between $\tau=t_0$ and $t$, and the notation $[D]_{>0}$ indicates strictly positive naturals up to $D$.
 
 For the purposes of deriving the coefficients $\phi_k$, let us consider the GMM model in Eq.~(\ref{eq:gmm}) on a search space $\mathcal{Q}$. The space is further bounded to a symmetric set $[-L/2,L/2]^D$ since the Gaussians are symmetric about the zero axes. The resulting new model is then
-\begin{equation}\small
-  \Phi(\boldsymbol{\delta},\mathbf{q}(t)):=\sum_{d\in[2^D]}\sum_{k=1}^{n}\delta_k\,\mathcal{N}(\mathbf{q}(t)\,|\,A_d\mu_k,A_d\Sigma_k A_d^T)/2^D,
+\begin{equation}
+  \Phi(\boldsymbol{\delta},\mathbf{q}):=\sum_{d\in[2^D]_{>0}}\sum_{k=1}^{m}\delta_k\,\mathcal{N}(\mathbf{q}\,|\,A_d\mu_k,A_d\Sigma_k A_d^T)/2^D,
 \end{equation}
-where $A_d\in\mathbb{R}^{D\times D}$ are linear transformation matrices~\cite{calinon2020mixture}.
+where $A_d\in\mathbb{R}^{D\times D}$ are linear transformation matrices~\cite{calinon2020mixture}. Let us call the integrand in Eq.~(\ref{eq:ck}) $c:\mathcal{Q}\longrightarrow \mathbb{R}^K$. It maps the space to spectral domain. The equivalent of Eq.~(\ref{eq:ck}) for the spatial distribution can be then expressed
+\begin{equation}\label{eq:phik}
+  \phi_k(\boldsymbol{\delta},t):=\int_{\mathcal{Q}} \Phi(\boldsymbol{\delta},\mathbf{q})\,c(\mathbf{q})\,\,d\mathbf{q}.
+\end{equation}
 
+$\mathcal{Q}$ is build so that the integration is withing the points of the bounded symmetric set $\mathbf{q}\in[-L/2,L/2]^D$.
+
+Let us first formulate the solution for Problem~\ref{pb:ergo}, borrowed by canonical ergodic search~\cite{ayvali2017ergodic}.
+If the robot's dynamics is described by a generic differential equation $\dot{\mathbf{q}}(t)=f\big({\small\mathbf{q}(t),}$ ${\small\mathbf{u}(t),t})$, an optimal control problem (OCP) that selects an ergodic control action can be formulated
+\begin{subequations}\label{eq:ocpergo}\begin{align}
+  \min_{\mathbf{q}(t),\mathbf{u}(t)}&{\mathcal{E}(\boldsymbol{\delta},\mathbf{q}(t),t_f)}+\int_{\mathcal{T}}\mathbf{u}(\tau)^TR\mathbf{u}(\tau)\,d\tau,\label{eq:ocpergomin}\\
+  \text{s.t. }\dot{\mathbf{q}}&=f(\mathbf{q}(t),\mathbf{u}(t),t),\\
+  \mathbf{q}&(t)\in\mathcal{Q},\,\mathbf{u}(t)\in\mathcal{U},\\
+  \mathbf{q}&(t_0), \mathbf{q}(t_f)\text{ given},
+\end{align}\end{subequations}
+where the ergodic metric is derived in Eq.~(\ref{eq:ergmetric}), $R\in\mathbb{R}^{V\times V}$ is a control penalizing diagonal positive-definite matrix, and $t_0, t_f$ are respectively the first and last time instants. 
+$\mathcal{T}$ is $[t_0, t_f)$.
+
+
+To formulate the solution to Pb.~\ref{pb:enerergo}, let us first extend the OCP in Eq.~(\ref{eq:ocpergo}) to multiagent systems. Eq.~(\ref{eq:ocpergomin}) becomes
+\begin{equation}
+  \min_{\square}\,\,\,{\sum_{k=1}^{n}\left(\mathcal{E}(\boldsymbol{\delta},{}^k\hspace*{-.2ex}\mathbf{q}(t),t)+\int_{\mathcal{T}_k}{}^k\hspace*{-.1ex}\mathbf{u}(\tau)^TR_k\,{}^k\hspace*{-.1ex}\mathbf{u}(\tau)\,d\tau\right)},
+\end{equation}
+where the ergodic metrics and the control penalizing term $R_k$ are now agent-specifc. The term $\square$ is ${}^1\mathbf{q}(t),{}^2\mathbf{q}(t),\dots,$ ${}^n\mathbf{q}(t),{}^1\mathbf{u}(t),{}^2\mathbf{u}(t),\dots{}^n\mathbf{u}(t)$. $\mathcal{T}_k$ is $[{}^kt_0, {}^kt_f)$, i.e., different agents might have different duration.
 
 \subsection{Battery modeling}
 \noindent
