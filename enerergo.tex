@@ -131,7 +131,7 @@ July~2023
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Problem Formulation}
 \noindent
-The problem addressed in this work is that of exploring a bounded space with multiple agents, continuously, and proportionally to a spatial distribution. 
+This work addresses the problem of exploring a bounded space with multiple agents, continuously, and proportionally to a spatial distribution. 
 In the remainder of the text, we will use the term ``continuously'' to indicate that there is at least one agent that is exploring the space at all times.
 
 Canonical ergodic search~\cite{mathew2011metrics} does not deal with continuous exploration. It derives an agent's control so that its trajectory maximizes an ergodic metric defined in the spectral domain~\cite{calinon2020mixture}.
@@ -142,7 +142,7 @@ Canonical ergodic search~\cite{mathew2011metrics} does not deal with continuous 
 
 Here the notation $\mathbb{R}$ and $\mathbb{N}$ indicates reals and naturals, $\mathbb{N}_{>0}$ strictly naturals. Bold notation is used for vectors.
 
-We extend the canonical ergodic search problem, to multi-agent continuous ergodic search, i.e., exploration with multiple agents under spatial distribution and battery constraints.
+We extend the canonical ergodic search problem to multi-agent continuous ergodic search, i.e., exploration with multiple agents under spatial distribution and battery constraints.
 
 \begin{pb}[Multi-agent continuous ergodic search]\label{pb:enerergo}
   Consider a set of $n$ agents $\boldsymbol{\alpha}:=\{\alpha_1,\alpha_2,\dots,\alpha_n\}$, a bounded space $\mathcal{Q}$, and a spatial distribution $\phi$ similar to Problem~\ref{pb:ergo}. \textit{Multi-agent continuous ergodic search problem} is the problem of deriving each agent ${}^j\alpha$ control action ${}^j\mathbf{u}(t)$ so that its trajectory ${}^j\mathbf{q}(t)$ is proportional to the spatial distribution $\phi$ on a continuous time horizon.
@@ -222,9 +222,9 @@ To formulate the solution to Problem~\ref{pb:enerergo}, let us first extend the 
 \end{equation}
 where the ergodic metric and the control penalizing term $R_k$ are now agent-specific. The term $\square$ is ${}^1\mathbf{q}(t),{}^2\mathbf{q}(t),\dots,$ ${}^n\mathbf{q}(t),{}^1\mathbf{u}(t),{}^2\mathbf{u}(t),\dots{}^n\mathbf{u}(t)$. $\mathcal{T}_k$ is $[{}^kt_0, {}^kt_f)$, i.e., different agents might have different duration.
 
-Let us consider a vector $\mathbf{b}\in\mathbb{R}^3$ -- which is detailed later in Section~\ref{sec:batt} -- whose trajectory $\mathbf{b}(t)$ describes the battery metrics evolution in time. If $\mathbf{b}_{\text{SoC}}$ is the value of the vector that expresses the battery state of charge (SoC), the expression in Eq.~(\ref{eq:ocpergomulti}) might select ergodic metrics corresponding to trajectories that are impossible to traverse in the $\mathbf{b}_{\text{SoC}}\in(0,1]$ domain, i.e., one or more agents' state at $\mathbf{q}(t_f)$ will not satisfy Eq.~(\ref{eq:ocpconsttotf}).
+Let us consider a vector $\mathbf{b}\in\mathbb{R}^3$ -- which is detailed later in Section~\ref{sec:batt} -- whose trajectory $\mathbf{b}(t)$ describes the battery metrics' evolution in time. If $\mathbf{b}_{\text{SoC}}$ is the value of the vector that expresses the battery state of charge (SoC), the expression in Eq.~(\ref{eq:ocpergomulti}) might select ergodic metrics corresponding to trajectories that are impossible to traverse in the $\mathbf{b}_{\text{SoC}}\in(0,1]$ domain, i.e., one or more agents' state at $\mathbf{q}(t_f)$ will not satisfy Eq.~(\ref{eq:ocpconsttotf}).
 
-An OCP that selects an ergodic metric that satisfies the battery SoC domain and always keeps at least one agent exploring requires an additional constraint
+In order to satisfy the battery SoC domain and always keep at least one agent exploring, an OCP must satisfy an additional constrain
 \begin{equation}\label{eq:ocpbattconst}
   \exists k\in[n]\text{ s.t. }{}^k\mathbf{b}_{\text{SoC}}(t_f)\in(0,b_f],
 \end{equation}
@@ -234,9 +234,9 @@ Finally, let us consider the realistic assumption that the optimization horizon 
 e.g., an empirically collected value that corresponds to one of the agents' discharge times (see Sec.~\ref{sec:res}).
 
 The OCP that provides a solution to Problem~\ref{pb:enerergo} can be formulated as
-\begin{subequations}\label{eq:ocpfinal}\small\begin{align}
+\begin{subequations}\label{eq:ocpfinal}\begin{align}
   \min_{\square,\boldsymbol{\delta}}\,\,\,&{\sum_{k=1}^{n}\int_{\mathcal{T}_k}{}^k\hspace*{-.1ex}\mathbf{u}(\tau)^TR_k\,{}^k\hspace*{-.1ex}\mathbf{u}(\tau)\,d\tau-\sum_{k=1}^{m}\delta_k},\\
-  \text{ s.t. }{}^1\hspace*{-.2ex}\dot{\mathbf{q}}&(t)\hspace*{-.2ex}=\hspace*{-.2ex}f_1({}^1\hspace*{-.2ex}\mathbf{q}(t),{}^1\hspace*{-.2ex}\mathbf{u}(t)),\dots,{}^n\hspace*{-.4ex}\dot{\mathbf{q}}(t)\hspace*{-.2ex}=\hspace*{-.2ex}f_n({}^n\hspace*{-.4ex}\mathbf{q}(t),{}^n\hspace*{-.4ex}\mathbf{u}(t)),\\
+  \text{ s.t. }{}^1\hspace*{-.4ex}\dot{\mathbf{q}}&(t)\hspace*{-.4ex}=\hspace*{-.6ex}f_1({}^1\hspace*{-.2ex}\mathbf{q}(t),\hspace*{-.8ex}{}^1\hspace*{-.2ex}\mathbf{u}(t)),\hspace*{-.3ex}{\small\dots},\hspace*{-.7ex}{}^n\hspace*{-.3ex}\dot{\mathbf{q}}(t)\hspace*{-.3ex}=\hspace*{-.5ex}f_n({}^n\hspace*{-.4ex}\mathbf{q}(t),\hspace*{-.7ex}{}^n\hspace*{-.4ex}\mathbf{u}(t)),\\
   {}^1\hspace*{-.2ex}\mathbf{q}&(t),\dots,{}^n\hspace*{-.2ex}\mathbf{q}(t)\in\mathcal{Q},\,{}^1\hspace*{-.2ex}\mathbf{u}(t),\dots,{}^n\hspace*{-.2ex}\mathbf{u}(t)\in\mathcal{U},\\
   \exists &k\in[n]\text{ s.t. }{}^k\mathbf{b}_{\text{SoC}}(t_f)\in(0,b_f],\\
   \forall &k\,\,\mathcal{E}(\boldsymbol{\delta},{}^k\hspace*{-.2ex}\mathbf{q}(t))\leq\gamma,\\
