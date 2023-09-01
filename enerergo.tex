@@ -238,7 +238,7 @@ The OCP that provides a solution to Problem~\ref{pb:enerergo} can be formulated 
   \min_{\square,\boldsymbol{\delta}}\,\,\,&{\sum_{k=1}^{n}\int_{\mathcal{T}_k}{}^k\hspace*{-.1ex}\mathbf{u}(\tau)^TR_k\,{}^k\hspace*{-.1ex}\mathbf{u}(\tau)\,d\tau-\sum_{k=1}^{m}\delta_k},\\
   \text{ s.t. }{}^1\hspace*{-.4ex}\dot{\mathbf{q}}&(t)\hspace*{-.4ex}=\hspace*{-.6ex}f_1({}^1\hspace*{-.2ex}\mathbf{q}(t),\hspace*{-.8ex}{}^1\hspace*{-.2ex}\mathbf{u}(t)),\hspace*{-.3ex}{\small\dots},\hspace*{-.7ex}{}^n\hspace*{-.3ex}\dot{\mathbf{q}}(t)\hspace*{-.3ex}=\hspace*{-.5ex}f_n({}^n\hspace*{-.4ex}\mathbf{q}(t),\hspace*{-.7ex}{}^n\hspace*{-.4ex}\mathbf{u}(t)),\\
   {}^1\hspace*{-.2ex}\mathbf{q}&(t),\dots,{}^n\hspace*{-.2ex}\mathbf{q}(t)\in\mathcal{Q},\,{}^1\hspace*{-.2ex}\mathbf{u}(t),\dots,{}^n\hspace*{-.2ex}\mathbf{u}(t)\in\mathcal{U},\\
-  \exists &k\in[n]\text{ s.t. }{}^k\mathbf{b}_{\text{SoC}}(t_f)\in(0,b_f],\\
+  \exists &k\in[n]\text{ s.t. }{}^k\mathbf{b}_{\text{SoC}}(t_f)\in(0,b_f],\label{eq:battconst}\\
   \forall &k\,\,\mathcal{E}(\boldsymbol{\delta},{}^k\hspace*{-.2ex}\mathbf{q}(t))\leq\gamma,\\
   g&{}_1({}^1\hspace*{-.2ex}\mathbf{q}(t),{}^1\hspace*{-.2ex}\mathbf{u}(t))\leq 0,\dots,g_n({}^n\hspace*{-.2ex}\mathbf{q}(t),{}^n\hspace*{-.2ex}\mathbf{u}(t))\leq 0,\label{eq:ocpfinalextra1}\\
   g&{}_\delta(\boldsymbol{\delta})\leq 0,\label{eq:ocpfinalextra2}\\
@@ -251,7 +251,31 @@ In Eq.~(\ref{eq:ocpfinal}), the ergodic metric is integrated into the constraint
 \subsection{Battery modeling}\label{sec:batt}
 \noindent
 
----
+For the purpose of battery modeling, let us consider an equivalent circuit model (ECM) -- commonly employed in battery metrics estimation for robots and other applications, especially if equipped with rechargeable battery cells~\cite{zhang2018online,xiaosong2012comparative,hasan2018exogenous,hinz2019comparison,mousavi2014various,seewald2022energy}.
+
+The ECM model we employ is a second-order RC model~\cite{zhao2017observability}, as illustrated in Figure~\ref{}. 
+
+Formally, it can be formulated as~\cite{zhao2017observability}
+\begin{equation}
+  \dot{\mathbf{b}}(t)\hspace*{-.4ex}=\hspace*{-.7ex}\begin{bmatrix}-1/(R_1C_1)\hspace*{-2ex}&\hspace*{-2ex}0&0\\\hspace*{2ex}0&\hspace*{-2ex}-1/(R_2C_2)&0\\\hspace*{2ex}0&\hspace*{-2ex}0&0\end{bmatrix}\hspace*{-.6ex}\mathbf{b}(t)\hspace*{-.2ex}-\hspace*{-.6ex}\begin{bmatrix}\hspace*{-.4ex}-\hspace*{-.2ex}1/C_1\\\hspace*{-.4ex}-\hspace*{-.2ex}1/C_2\\1/Q\end{bmatrix}\hspace*{-.4ex}I(t),
+\end{equation}
+where $R_1,R_2\in\mathbb{R}$ and $C_1,C_2\in\mathbb{R}$ are the resistors and capacitors relative to the first and second RC elements in the ECM measured in ohms and farad respectively.
+$Q\in\mathbb{R}$ is the battery nominal capacity measured in amperes per hour.
+
+$I\in\mathbb{R}$ is then the internal current which is load-dependent, e.g., the current required to run the motors, actuators, etc.
+
+The state $\mathbf{b}:=\begin{bmatrix}V_1&V_2&\mathbf{b}_{\text{SoC}}\end{bmatrix}\in\mathbb{R}^3$ contains three battery metrics. $V_1,V_2\in\mathbb{R}$ are the voltages measured in volts across the first and second RC elements, and $\mathbf{b}_{\text{SoC}}\in(0,1]$ is the normalized battery SoC that evolves from fully charged -- or from a given initial value $\mathbf{b}_{\text{SoC}}(t_0)$ -- to discharged.
+
+The battery voltage at the extremes of the ECM $V_e\in\mathbb{R}$, measured in volts, can be then formulated as~\cite{zhao2017observability}
+\begin{equation}
+  V_e(t)=V_{\text{OC}}(\mathbf{b}_{\text{SoC}}(t))-V_1(t)-V_2(t)-I(t)R,
+\end{equation}
+where $R\in\mathbb{R}$ is the single resistor measured in ohm in Figure~\ref{}, and $V_{\text{OC}}$ is the open circuit voltage. It is a nonlinear function of the battery SoC and can be retrieved from the battery data sheet~\cite{hinz2019comparison}.
+
+The values of $R_1,C_1,R_2,C_2,R$ are identified so that the model output and the physical behavior of the agents are matched as closely as possible~\cite{zhao2017observability} (see Sec.~\ref{sec:res}).
+
+The battery model allows us to determine the battery SoC $\mathbf{b}_{\text{SoC}}$ in Eq.~(\ref{eq:battconst}), which is in turn utilized to find the control action $\mathbf{u}(t)$ so that there is at least one agent exploring $\mathcal{Q}$ at all times.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experimental Results}\label{sec:res}
