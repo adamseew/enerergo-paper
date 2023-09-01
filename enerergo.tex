@@ -148,18 +148,21 @@ We extend the canonical ergodic search problem to multi-agent continuous ergodic
   Consider a set of $n$ agents $\boldsymbol{\alpha}:=\{\alpha_1,\alpha_2,\dots,\alpha_n\}$, a bounded space $\mathcal{Q}$, and a spatial distribution $\phi$ similar to Problem~\ref{pb:ergo}. \textit{Multi-agent continuous ergodic search problem} is the problem of deriving each agent ${}^j\alpha$ control action ${}^j\mathbf{u}(t)$ so that its trajectory ${}^j\mathbf{q}(t)$ is proportional to the spatial distribution $\phi$ on a continuous time horizon.
 \end{pb}
 
-We will provide a solution to Problem~\ref{pb:enerergo} (see Sec.~\ref{sec:meth}), assuming that there are one or more areas in $\mathcal{Q}$ -- i.e., charging stations -- where the agents $\boldsymbol{\alpha}$ can land and recharge the battery, e.g., using wireless charging (see Sec.~\ref{sec:res}). 
+We will provide a solution to Problem~\ref{pb:enerergo} (see Sec.~\ref{sec:meth}), assuming that there are one or more areas in $\mathcal{Q}$ -- namely, charging stations -- where the agents $\boldsymbol{\alpha}$ can land and recharge the battery, e.g., using wireless charging (see Sec.~\ref{sec:res}). 
 
 
 %%%%%%%%%%%%%%%%%%
 \section{Methods}\label{sec:meth}
 \noindent
+In this section, we discuss the methods utilized in this work for continuous exploration with multiple agents and proportionally to a spatial distribution
 
----
+We discuss how to achieve the latter in Sec.~\ref{sec:ergosearch} and the former in Sec.~\ref{sec:batt}.
 
 \subsection{Ergodic search}\label{sec:ergosearch}\IEEEpubidadjcol
 \noindent
-For the purposes of defining the spatial distribution in both Problem~\ref{pb:ergo} and \ref{pb:enerergo}, let us consider a Gaussian mixture model (GMM)
+To derive an agent's trajectory proportionally to a spatial distribution, canonical ergodic search first requires defining the distribution $\phi$.
+
+For the purposes of this, in both Problem~\ref{pb:ergo} and \ref{pb:enerergo}, let us consider a Gaussian mixture model (GMM)
 \begin{equation}\label{eq:gmm}
   \phi(\boldsymbol{\delta},\mathbf{q}):=\sum_{k=1}^{m}\delta_k\,\mathcal{N}(\mathbf{q}\,|\,\mu_k,\Sigma_k),
 \end{equation} 
@@ -170,7 +173,7 @@ The goal of the ergodic search is to minimize an ergodic metric~\cite{mathew2011
   \mathcal{E}(\boldsymbol{\delta},\mathbf{q}(t)):=\frac{1}{2}\sum_{k\in\mathcal{K}}\Lambda_k \big( c_k(\mathbf{q}(t))-\phi_k(\boldsymbol{\delta}) \big)^2,
 \end{equation}
 where $\phi_k$ are coefficients derived utilizing the Fourier series on the spatial distribution $\phi$ and $c_k$ on the trajectory $\mathbf{q}(t)$. They are detailed in Equation~(\ref{eq:phik}) and (\ref{eq:ck}) respectively.
-$\Lambda_k$ is a weight factor, i.e., if 
+$\Lambda_k$ is a weight factor. That is, if 
 \begin{equation}
   \Lambda_k=(1+\lVert k\rVert^2)^{(-D-1)/2},
 \end{equation}
@@ -191,7 +194,7 @@ $\mathcal{T}$ is built so that the integration is between $\tau=t_0$ and $t$, an
 
 $c_k$ is evaluated per each $k$ in $\mathcal{K}$ in Eq.~(\ref{eq:ergmetric}).
 
-For the purposes of deriving the coefficients $\phi_k$, let us consider the GMM model in Eq.~(\ref{eq:gmm}) on a search space $\mathcal{Q}$. The space is further bounded to a symmetric set $[-L/2,L/2]^D$ since the Gaussians are symmetric about the zero axes. The resulting new model is then
+To derive the coefficients $\phi_k$, let us consider the GMM model in Eq.~(\ref{eq:gmm}) on a search space $\mathcal{Q}$. The space is further bounded to a symmetric set $[-L/2,L/2]^D$ since the Gaussians are symmetric about the zero axes. The resulting new model is then
 \begin{equation}
   \Phi(\boldsymbol{\delta},\mathbf{q}):=\sum_{d\in[2^D]_{>0}}\sum_{k=1}^{m}\delta_k\,\mathcal{N}(\mathbf{q}\,|\,A_d\mu_k,A_d\Sigma_k A_d^T)/2^D,
 \end{equation}
@@ -250,8 +253,7 @@ In Eq.~(\ref{eq:ocpfinal}), the ergodic metric is integrated into the constraint
 
 \subsection{Battery modeling}\label{sec:batt}
 \noindent
-
-For the purpose of battery modeling, let us consider an equivalent circuit model (ECM) -- commonly employed in battery metrics estimation for robots and other applications, especially if equipped with rechargeable battery cells~\cite{zhang2018online,xiaosong2012comparative,hasan2018exogenous,hinz2019comparison,mousavi2014various,seewald2022energy}.
+To derive a battery model for continuous exploration -- a model that allows us to predict when an agent is exploring and when it conversely should be recharging the battery -- let us consider an equivalent circuit model (ECM). These models are commonly employed in battery metrics estimation for robots and other applications, especially if equipped with rechargeable battery cells~\cite{zhang2018online,xiaosong2012comparative,hasan2018exogenous,hinz2019comparison,mousavi2014various,seewald2022energy}.
 
 The ECM model we employ is a second-order RC model~\cite{zhao2017observability}, as illustrated in Figure~\ref{}. 
 
