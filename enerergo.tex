@@ -134,7 +134,7 @@ July~2023
 This work addresses the problem of exploring a bounded space with multiple agents, continuously, and proportionally to a spatial distribution. 
 In the remainder of the text, we will use the term ``continuously'' to indicate that there is at least one agent that is exploring the space at all times.
 
-Canonical ergodic search~\cite{mathew2011metrics} does not deal with continuous exploration. It derives an agent's control so that its trajectory maximizes an ergodic metric defined in the spectral domain~\cite{calinon2020mixture}.
+Canonical ergodic search~\cite{mathew2011metrics,miller2013trajectory,abraham2021ergodic,miller2016ergodic,dressel2018optimality,torre2016ergodic,shetty2022ergodic} does not deal with continuous exploration. It derives an agent's control -- or analogously multiple agents control~\cite{prabhakar2020ergodic,coffin2022multi,lerch2023safety,abraham2018decentralized,patel2021multi} -- so that its trajectory maximizes an ergodic metric defined in the spectral domain~\cite{calinon2020mixture}.
 
 \begin{pb}[Ergodic search]\label{pb:ergo}
   Consider a bounded space $\mathcal{Q}\subset\mathbb{R}^D$ of dimension $D$ with $D\in\mathbb{N}_{>0}$ and a spatial distribution $\phi$. \textit{Ergodic search problem} is the problem of deriving a control action $\mathbf{u}(t)\in\mathcal{U}\subset\mathbb{R}^V$ with $V\in\mathbb{N}_{>0}$ so that the trajectory $\mathbf{q}(t)\in\mathcal{Q}$ is proportional to the spatial distribution $\phi$.
@@ -218,8 +218,7 @@ If the agent's dynamics is described by a generic differential equation $\dot{\m
 where the ergodic metric is derived in Eq.~(\ref{eq:ergmetric}), $R\in\mathbb{R}^{V\times V}$ is a control penalizing diagonal positive-definite matrix, and $t_0, t_f$ are respectively the first and last time instants. 
 $\mathcal{T}$ is $[t_0, t_f)$.
 
-
-To formulate the solution to Problem~\ref{pb:enerergo}, let us first extend the OCP in Eq.~(\ref{eq:ocpergo}) to multiagent systems. Eq.~(\ref{eq:ocpergomin}) becomes
+To formulate the solution to Problem~\ref{pb:enerergo}, let us first extend the OCP in Eq.~(\ref{eq:ocpergo}) to multiagent systems~\cite{coffin2022multi}. Eq.~(\ref{eq:ocpergomin}) becomes
 \begin{equation}\label{eq:ocpergomulti}
   \min_{\square}\,\,\,{\sum_{k=1}^{n}\left(\int_{\mathcal{T}_k}{}^k\hspace*{-.1ex}\mathbf{u}(\tau)^TR_k\,{}^k\hspace*{-.1ex}\mathbf{u}(\tau)\,d\tau+\mathcal{E}(\boldsymbol{\delta},{}^k\hspace*{-.2ex}\mathbf{q}(t))\right)},
 \end{equation}
@@ -299,7 +298,7 @@ The battery model allows us to determine the battery SoC $\mathbf{b}_{\text{SoC}
 
 ---
 
-\begin{figure*}[p]
+\begin{figure*}[p!]
   \begin{minipage}[t]{1\columnwidth}
 
     \input{figures/trajs.pdf_tex}
@@ -317,6 +316,7 @@ The battery model allows us to determine the battery SoC $\mathbf{b}_{\text{SoC}
 
 ---
 
+\clearpage 
 
 {\small
 \bibliographystyle{IEEEtran} 
