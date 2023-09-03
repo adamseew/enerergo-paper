@@ -97,7 +97,7 @@
 \markboth{%Journal of \LaTeX\ Class Files,~Vol.~14, No.~8, August~2021
 %Manuscript~submitted~for~publication. Version~\textnumero~1, 
 Manuscript in preparation. %\underline{Not for distribution}. 
-July~2023
+September~2023
 }%
 {Seewald \MakeLowercase{\textit{et al.}}: Ergodic Search for Long-Term Exploration}
 
@@ -292,11 +292,29 @@ The values of $R_1,C_1,R_2,C_2,R$ are identified so that the model output and th
 The battery model allows us to determine the battery SoC $\mathbf{b}_{\text{SoC}}$ in Eq.~(\ref{eq:battconst}), which is in turn utilized to find the control action $\mathbf{u}(t)$ so that there is at least one agent exploring $\mathcal{Q}$ at all times.
 
 
+\begin{figure}[t!]
+  \begin{minipage}[t!]{.48\columnwidth}
+    \input{figures/scenario.pdf_tex}
+  \end{minipage}
+  \begin{minipage}[c]{.5\columnwidth}
+    \caption{.   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .}
+    \label{fig:scenario}
+  \end{minipage}
+\end{figure}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experimental Results}\label{sec:res}
 \noindent
 
----
+In this section, we discuss our experimental setup and results. Our experiments are implemented first in simulation using  \textsc{Matlab} (R), whereas physical experiments  are implemented in Pyhton and conducted using a set of Crazyflie 2.0 micro aerial vehicles (MAVs).
+
+In both cases, the source code\footnote{{\tt\footnotesize\href{https://github.com/adamseew/enerergo}{github.com/adamseew/enerergo}}} is released under the popular non-commercial open-source license CC BY NC-SA 4.0. The solution in OCP in Eq.~(\ref{eq:ocpfinal}) relies on two external open-source components from the literature. The popular nonlinear programming solver IPOPT~\cite{wachter2006implementation} and a software framework for nonlinear optimization called CasADi~\cite{andersson2012casadi}.
+
+We propose different scenarios with different conditions. In all the scenarios, we derive a continuous ergodic exploration of a three-by-three-meter space $\mathcal{Q}$. The spatial distribution $\phi$ contains four Gaussians in the GMM in Eq.~(\ref{eq:gmm}), as illustrated in Fig.~\ref{fig:scenario}.
+
+In the first extensive scenario, four MAVs $\alpha_1$, $\alpha_2$, $\alpha_3$, and $\alpha_4$ are placed on top of four wireless charging stations. Each MAV is equipped with a positioning and wireless charging decks. Precise positioning of MAVs is achieved via two HTC SteamVR Base Station 2.0 units. Each MAV is then equipped with a one-cell 250 mAh 3.7 volts LiPo battery, capable of approximately seven minutes of flight. The optional constraints in Eq.~(\ref{eq:ocpfinalextra1}) and (\ref{eq:ocpfinalextra2}) are built so that each MAV covers just two Guassians at a time that are respectively farthest (see different colors in Fig.~\ref{fig:scenario}), whereas the battery constraint is edited so that there are at least two MAVs at each time, i.e., $\exists k_1,k_2\in[n]$ s.t. ${}^{k_1} \mathbf{b}_{\text{SoC}},{}^{k_2} \mathbf{b}_{\text{SoC}}\in(0,b_f]$. The horizon is derived empirically and is set to two minutes and a half. The battery values used in the scenario are those proposed in~\cite{zhao2017observability}.
+
+The results are shown in Fig.~\ref{fig:res}. Initially, two MAVs are selected: $\alpha_1$ and $\alpha_2$ in coordinates $($0.3$,$0.9$)$ and $($2.7$,$2.1$)$ respectively -- the blue and red filled squares in the top left of the figure. 
 
 \begin{figure*}[p!]
   \begin{minipage}[t]{1\columnwidth}
@@ -307,6 +325,7 @@ The battery model allows us to determine the battery SoC $\mathbf{b}_{\text{SoC}
   \begin{minipage}[t]{.93\columnwidth}
     \vspace*{-4.2cm}
     \caption{.   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .}
+    \label{fig:res}
   \end{minipage}
 \end{figure*}
 
