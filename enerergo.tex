@@ -220,7 +220,7 @@ $\mathcal{T}$ is $[t_0, t_f)$.
 
 To formulate the solution to Problem~\ref{pb:enerergo}, let us first extend the OCP in Eq.~(\ref{eq:ocpergo}) to multiagent systems~\cite{coffin2022multi}. Eq.~(\ref{eq:ocpergomin}) becomes
 \begin{equation}\label{eq:ocpergomulti}
-  \min_{\square}\,\,\,{\sum_{k=1}^{n}\left(\int_{\mathcal{T}_k}{}^k\hspace*{-.1ex}\mathbf{u}(\tau)^TR_k\,{}^k\hspace*{-.1ex}\mathbf{u}(\tau)\,d\tau+\mathcal{E}(\boldsymbol{\delta},{}^k\hspace*{-.2ex}\mathbf{q}(t))\right)},
+  \min_{\square}\,\,\,{\frac{1}{n}\sum_{k=1}^{n}\left(\int_{\mathcal{T}_k}{}^k\hspace*{-.1ex}\mathbf{u}(\tau)^TR_k\,{}^k\hspace*{-.1ex}\mathbf{u}(\tau)\,d\tau+\mathcal{E}(\boldsymbol{\delta},{}^k\hspace*{-.2ex}\mathbf{q}(t))\right)},
 \end{equation}
 where the ergodic metric and the control penalizing term $R_k$ are now agent-specific. The term $\square$ is ${}^1\mathbf{q}(t),{}^2\mathbf{q}(t),\dots,$ ${}^n\mathbf{q}(t),{}^1\mathbf{u}(t),{}^2\mathbf{u}(t),\dots{}^n\mathbf{u}(t)$. $\mathcal{T}_k$ is $[{}^kt_0, {}^kt_f)$, i.e., different agents might have different duration.
 
@@ -237,7 +237,7 @@ e.g., an empirically collected value that corresponds to one of the agents' disc
 
 The OCP that provides a solution to Problem~\ref{pb:enerergo} can be formulated as
 \begin{subequations}\label{eq:ocpfinal}\begin{align}
-  \min_{\square,\boldsymbol{\delta}}\,\,\,&{\sum_{k=1}^{n}\int_{\mathcal{T}_k}{}^k\hspace*{-.1ex}\mathbf{u}(\tau)^TR_k\,{}^k\hspace*{-.1ex}\mathbf{u}(\tau)\,d\tau-\sum_{k=1}^{m}\delta_k},\\
+  \min_{\square}\,\,\,&{\frac{1}{n}\sum_{k=1}^{n}\int_{\mathcal{T}_k}{}^k\hspace*{-.1ex}\mathbf{u}(\tau)^TR_k\,{}^k\hspace*{-.1ex}\mathbf{u}(\tau)\,d\tau},\label{eq:ocpfinalcost}\\
   \text{ s.t. }{}^1\hspace*{-.4ex}\dot{\mathbf{q}}&(t)\hspace*{-.4ex}=\hspace*{-.6ex}f_1({}^1\hspace*{-.2ex}\mathbf{q}(t),\hspace*{-.8ex}{}^1\hspace*{-.2ex}\mathbf{u}(t)),\hspace*{-.3ex}{\small\dots},\hspace*{-.7ex}{}^n\hspace*{-.3ex}\dot{\mathbf{q}}(t)\hspace*{-.3ex}=\hspace*{-.5ex}f_n({}^n\hspace*{-.4ex}\mathbf{q}(t),\hspace*{-.7ex}{}^n\hspace*{-.4ex}\mathbf{u}(t)),\\
   {}^1\hspace*{-.2ex}\mathbf{q}&(t),\dots,{}^n\hspace*{-.2ex}\mathbf{q}(t)\in\mathcal{Q},\,{}^1\hspace*{-.2ex}\mathbf{u}(t),\dots,{}^n\hspace*{-.2ex}\mathbf{u}(t)\in\mathcal{U},\\
   \exists &k\in[n]\text{ s.t. }{}^k\mathbf{b}_{\text{SoC}}(t_f)\in(0,b_f],\label{eq:battconst}\\
@@ -248,7 +248,9 @@ The OCP that provides a solution to Problem~\ref{pb:enerergo} can be formulated 
 \end{align}\end{subequations}
 where constraints in Eq.~(\ref{eq:ocpfinalextra1}) are optional and express additional requirements, e.g., that there is always at least one agent exploring $\mathcal{Q}$, the agents explore the space two-by-two, etc. (see Sec.~\ref{sec:res}).
 
-In Eq.~(\ref{eq:ocpfinal}), the ergodic metric is integrated into the constraint as proposed in~\cite{dong2023time}. The cost contains further mixing coefficient $\boldsymbol{\delta}$ in Eq.~(\ref{eq:gmm}) -- so that one can find tradeoffs between the single Gaussians, the different agents, and the battery SoC (see Sec~\ref{sec:res}).
+Furthermore, the evolutions of the agents' states in time are described by the deterministic nonlinear equation ${}^k\dot{\mathbf{q}}(t)=f_k($ ${}^k\mathbf{q}(t),{}^k\mathbf{u}(t))$ $\forall k\in[n]$~\cite{abraham2018decentralized}.
+
+In Eq.~(\ref{eq:ocpfinal}), the ergodic metric is integrated into the constraint as proposed in~\cite{dong2023time}. %The cost contains further mixing coefficient $\boldsymbol{\delta}$ in Eq.~(\ref{eq:gmm}) -- so that one can find tradeoffs between the single Gaussians, the different agents, and the battery SoC (see Sec~\ref{sec:res}).
 
 \subsection{Battery modeling}\label{sec:batt}
 \noindent
@@ -289,15 +291,6 @@ where $R\in\mathbb{R}$ is the single resistor measured in ohm in Fig.~\ref{fig:t
 
 The values of $R_1,C_1,R_2,C_2,R$ are identified so that the model output and the physical behavior of the agents are matched as closely as possible~\cite{zhao2017observability} (see Sec.~\ref{sec:res}).
 
-The battery model allows us to determine the battery SoC $\mathbf{b}_{\text{SoC}}$ in Eq.~(\ref{eq:battconst}), which is in turn utilized to find the control action $\mathbf{u}(t)$ so that there is at least one agent exploring $\mathcal{Q}$ at all times. This means that when the solution of the OCP in Eq.~(\ref{eq:ocpfinal}) is evaluated, the battery model in Eq.~(\ref{eq:battmodel}) is integrated for the duration of the horizon, whereas the recharging is approximated linear $\mathbf{b}_{\text{SoC}}=\eta\,\mathbf{b}_{\text{SoC}}+\theta$ for a given $\eta,\theta\in\mathbb{R}$.
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Experimental Results}\label{sec:res}
-\noindent
-In this section, we discuss our experimental setup and results. Our experiments are implemented first in simulation using  \textsc{Matlab} (R), and physical experiments  are implemented in Python and conducted using a set of Crazyflie 2.0 micro aerial vehicles (MAVs).
-
-In both cases, the source code\footnote{{\tt\footnotesize\href{https://github.com/adamseew/enerergo}{github.com/adamseew/enerergo}}} is released under the popular non-commercial open-source license CC BY NC-SA 4.0. The solution of the OCP in Eq.~(\ref{eq:ocpfinal}) relies on two external open-source components from the literature: the popular nonlinear programming solver IPOPT~\cite{wachter2006implementation} and a software framework for nonlinear optimization called CasADi~\cite{andersson2012casadi}.
 
 \begin{figure}[t!]
   \begin{minipage}[t!]{.48\columnwidth}
@@ -309,14 +302,61 @@ In both cases, the source code\footnote{{\tt\footnotesize\href{https://github.co
   \end{minipage}
 \end{figure}
 
-We evaluate our approach under two different scenarios. In both the scenarios, we derive a continuous ergodic exploration of a three-by-three-meter space $\mathcal{Q}$. The spatial distribution $\phi$ contains four Gaussians in the GMM in Eq.~(\ref{eq:gmm}), as illustrated in Fig.~\ref{fig:scenario}.
+The battery model allows us to determine the battery SoC $\mathbf{b}_{\text{SoC}}$ in Eq.~(\ref{eq:battconst}), which is in turn utilized to find the control action $\mathbf{u}(t)$ so that there is at least one agent exploring $\mathcal{Q}$ at all times. This means that when the solution of the OCP in Eq.~(\ref{eq:ocpfinal}) is evaluated, the battery model in Eq.~(\ref{eq:battmodel}) is integrated for the duration of the horizon, whereas the recharging is approximated linear $\mathbf{b}_{\text{SoC}}=\eta\,\mathbf{b}_{\text{SoC}}+\theta$ for a given $\eta,\theta\in\mathbb{R}$.
 
-In the first extensive scenario, four MAVs $\alpha_1$, $\alpha_2$, $\alpha_3$, and $\alpha_4$ are placed on top of four wireless charging stations. Each MAV is equipped with a positioning and wireless charging decks. Precise positioning of MAVs is achieved via two HTC SteamVR Base Station 2.0 units. Each MAV is then equipped with a one-cell 250 mAh 3.7 volts LiPo battery, capable of approximately seven minutes of flight. The optional constraints in Eq.~(\ref{eq:ocpfinalextra1}) are built so that each MAV covers two Gaussians at a time that are respectively farthest (see different colors in Fig.~\ref{fig:scenario}), whereas the battery constraint is edited so that there are two MAVs at each time, i.e.,
+\begin{figure*}[b!]
+  \input{figures/trajs2.pdf_tex}
+  \caption{.   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .}
+  \label{fig:res2}
+\end{figure*}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Experimental Results}\label{sec:res}
+\noindent
+In this section, we discuss our experimental setup and results. Our experiments are implemented first in simulation using  \textsc{Matlab} (R), and physical experiments  are implemented in Python and conducted using a set of Crazyflie 2.0 micro aerial vehicles (MAVs). Each MAV is equipped with a positioning and wireless charging decks. Precise positioning of MAVs is achieved via two HTC SteamVR Base Station 2.0 units. Each MAV is then equipped with a one-cell 250 mAh 3.7 volts LiPo battery.%, capable of approximately seven minutes of flight.
+
+In both cases, the source code\footnote{{\tt\footnotesize\href{https://github.com/adamseew/enerergo}{github.com/adamseew/enerergo}}} is released under the popular non-commercial open-source license CC BY NC-SA 4.0. The solution of the OCP in Eq.~(\ref{eq:ocpfinal}) relies on two external open-source components from the literature: the popular nonlinear programming solver IPOPT~\cite{wachter2006implementation} and a software framework for nonlinear optimization called CasADi~\cite{andersson2012casadi}.
+
+We evaluate our approach under two different scenarios. In both the scenarios, we use a three-by-three-meter space $\mathcal{Q}$. The spatial distribution $\phi$ contains four Gaussians in the GMM in Eq.~(\ref{eq:gmm}), as illustrated in Fig.~\ref{fig:scenario} (the four cyan empty squares).
+
+
+\begin{figure*}[t!]
+  \begin{minipage}[t]{1\columnwidth}
+    \input{figures/trajs.pdf_tex}
+  \end{minipage}
+  \hspace{.42cm}
+  \begin{minipage}[t]{.93\columnwidth}
+    \vspace*{-4.2cm}
+    \caption{.   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .}
+    \label{fig:res}
+  \end{minipage}
+  \vspace*{-.3cm}
+\end{figure*}
+
+\subsection*{Intermittent exploration}
+\noindent
+In the first scenario, one MAV is positioned on top of a wireless charging station at coordinates $($1.5$,$1.5$)$. The horizon is set to five minutes and is derived empirically along with battery and recharging coefficients. The battery values used in the scenario are those proposed in~\cite{zhao2017observability}. The ergodic trajectories at four different horizons $t_0$, $t_4$, $t_8$, and $t_{12}$ are shown in Fig.~\ref{fig:res2}. For horizons following the first, the past ergodic trajectories are illustrated in gray.
+
+The MAV starts exploring the space (filled blue square in the figure) and derives the ergodic trajectory for the first horizon $t_0$. At the end of the horizon (filled blue dot), the MAV returns to the charging station. Once the battery is recharged -- formally once the constraint in Eq.~(\ref{eq:ocpbattconst}) is satisfied -- the exploration proceeds. The exploration derived in this way is, however, not continuous, as it has periods of ``no exploration'' in which the agent recharges the battery. We show a continuous exploration achieved by a multiagent system in the following.
+
+\subsection*{Continuous exploration}
+\noindent
+In the second extensive scenario, four MAVs $\alpha_1$, $\alpha_2$, $\alpha_3$, and $\alpha_4$ are placed on top of four wireless charging stations. The optional constraints in Eq.~(\ref{eq:ocpfinalextra1}) are built so that each MAV covers two Gaussians at a time that are respectively farthest (see different colors in Fig.~\ref{fig:scenario}; green empty squares refer to the Gaussians covered by the ``red'' agent, cyan empty squares refer to the Guassians covered by the ``blue'' agent), whereas the battery constraint is edited so that there are two MAVs at each time, i.e.,
 \begin{equation}
 \exists_{=1}\, k_1,k_2\in[n]\text{ s.t. }{}^{k_1} \mathbf{b}_{\text{SoC}},{}^{k_2} \mathbf{b}_{\text{SoC}}\in(0,b_f],
 \end{equation} 
 where the notation $\exists_{=1}$ indicates the unique existential quantification.
-The horizon is derived empirically and is set to two minutes and a half. The battery values used in the scenario are those proposed in~\cite{zhao2017observability}, whereas the battery and recharging coefficients are derived empirically~\cite{seewald2022energy}. The ergodicity metric in Eq.~(\ref{eq:ergmetric}) is set to be lower or equal to 0.05 via the constraint in Eq.~(\ref{eq:ergoconst}), in line with similar literature~\cite{dong2023time}.
+
+There is an additional constraint on the final point in Eq~(\ref{eq:ocpgivenconst}), set so that the agent has to be in the proximity of a charging station. %at the end of the horizon.
+
+The cost function in Eq.~(\ref{eq:ocpfinalcost}) is further enhanced with the mixing coefficient $\boldsymbol{\delta}$ in Eq.~(\ref{eq:gmm}), allowing us to find the tradeoffs between the single Gaussians, the different agents, and the battery SoC. Namely, the cost is
+\begin{equation}
+  \min_{\square,\boldsymbol{\delta}}\,\,\,{\frac{1}{n}\sum_{k=1}^{n}\int_{\mathcal{T}_k}{}^k\hspace*{-.1ex}\mathbf{u}(\tau)^TR_k\,{}^k\hspace*{-.1ex}\mathbf{u}(\tau)\,d\tau-\frac{1}{n}\sum_{k=1}^{m}\delta_k}.
+\end{equation}
+
+The battery and recharging coefficients are those used in the previous scenario, whereas the horizon is now set to two minutes and a half.
+The ergodicity metric in Eq.~(\ref{eq:ergmetric}) is set to be lower or equal to 0.05 via the constraint in Eq.~(\ref{eq:ergoconst}), in line with similar literature~\cite{dong2023time}.
 
 The results are shown in Fig.~\ref{fig:res}. The figure is to be read from left to right and from top to bottom, with the horizon being indicated under each subfigure (meaning that $t_0$ is the first horizon, $t_1$ is the second horizon, etc.). Initially, two MAVs are selected via the solution to the OCP in Eq.~(\ref{eq:ocpfinal}), $\alpha_1$ and $\alpha_2$. They are located at coordinates $($0.3$,$0.9$)$ and $($2.7$,$2.1$)$ respectively, denoted by the blue and red filled squares. The energy-aware ergodic trajectories ${}^1\mathbf{q}(t)$ and ${}^2\mathbf{q}(t)$ are selected so that the MAVs land at each other's charging stations, i.e., ${}^1\mathbf{q}(t_f)={}^2\mathbf{q}(t_0)$ and vice-versa. The mixing coefficients for $\alpha_1$ are such that $\delta_2>\delta_3$, meaning that the agent $\alpha_1$ explores in more detail the area delimited by the Gaussian centered in $\mu_2$. This is indicated by the darker coloring of the different Gaussians, which is proportional to the optimal value of $\boldsymbol{\delta}$. 
 
@@ -328,18 +368,6 @@ where $\varepsilon\in\mathbb{R}_{>0}$ and $k_1,k_2\in[n]$ are given.
 
 Once the two agents $\alpha_1$ and $\alpha_2$ land, they start recharging. The formulation of the OCP in Eq.~(\ref{eq:ocpfinal}) is such that the other two agents $\alpha_3$ and $\alpha_4$ are selected. They are located at coordinates $($0.3$,$2.1$)$ and $($2.7$,$0.9$)$ respectively. They proceed on the respective energy-aware ergodic trajectories and land at each other's charging stations, with the past trajectory being indicated in the background in gray. The figure shows fourteen horizons. The actual exploration in the scenario, however, is continuous.
 
-\begin{figure*}[p!]
-  \begin{minipage}[t]{1\columnwidth}
-
-    \input{figures/trajs.pdf_tex}
-  \end{minipage}
-  \hspace{.42cm}
-  \begin{minipage}[t]{.93\columnwidth}
-    \vspace*{-4.2cm}
-    \caption{.   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .}
-    \label{fig:res}
-  \end{minipage}
-\end{figure*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusion and Future Directions}
