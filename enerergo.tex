@@ -122,10 +122,12 @@ September~2023
 
 %%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
+\noindent
+Robotic exploration is a recurring problem in different scenarios. It typically involves coverage path planning (CPP), which deals with deriving robots' trajectories that traverse every point in a given space~\cite{choset2001coverage,galceran2013survey,cabreira2019survey}. Within CPP, ergodic search is a recent and promising direction~\cite{mathew2011metrics,miller2013trajectory,abraham2021ergodic,miller2016ergodic,dressel2018optimality,torre2016ergodic,shetty2022ergodic,prabhakar2020ergodic,coffin2022multi,lerch2023safety,abraham2018decentralized,patel2021multi,calinon2020mixture,dong2023time,abraham2017ergodic,rao2023multi}, as it enhances the efficiency of traditional CPP by optimizing the time a robot spends in a given region w.r.t. an information measure. The user can, e.g., specify areas of interest where the robots should spend more time exploring in a search and rescue scenario~\cite{dong2023time}, where the robots should collect more data in precision agriculture~\cite{rao2023multi}, etc.
 
-\IEEEPARstart{A}{a} 
+While past results include ergodic search in a variety of settings, energy considerations have not been studied yet. The prospect of achieving long-term exploration that is continuous and considers a spatial distribution is thus currently hampered, partly due to energy constraints. Although ergodic search derives continuous exploration~\cite{mathew2011metrics,miller2013trajectory,miller2016ergodic,abraham2017ergodic} -- in scenarios involving CPP, it is indeed often required to cover the space continuously -- it is physically not possible to continue exploring on a single battery charge.
+This work enhances the current ergodic search literature with that of a more traditional energy-aware CPP~\cite{mei2005case,mei2004energy,kim2005energy,ondruska2015scheduled,sudhakar2020balancing,difranco2015energy,difranco2016coverage,cabreira2018energy,seewald2022energy,wei2018coverage,shnaps2016online,jensen2021near}. It answers the question: ``\textit{Is it possible to trade battery and coverage quality so that there is at least one agent exploring the space at all times}''?
 
----
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -375,7 +377,6 @@ Once the two agents $\alpha_1$ and $\alpha_2$ land, they start recharging. The f
 
 ---
 
-\clearpage 
 
 {\small
 \bibliographystyle{IEEEtran} 
