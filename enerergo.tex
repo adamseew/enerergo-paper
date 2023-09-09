@@ -365,15 +365,15 @@ An analogous situation is to be observed with agent $\alpha_2$. At the end of th
 \end{equation} 
 where $\varepsilon\in\mathbb{R}_{>0}$ and $k_1,k_2\in[n]$ are given.
 
-Once the two agents $\alpha_1$ and $\alpha_2$ land, they start recharging. The formulation of the OCP in Eq.~(\ref{eq:ocpfinal}) is such that the other two agents $\alpha_3$ ``dark-green'' and $\alpha_4$ ``magenta'' are selected. They are located at coordinates $($0.3$,$2.1$)$ and $($2.7$,$0.9$)$ respectively. They proceed on the respective energy-aware ergodic trajectories and land at each other's charging stations, with the past trajectory being indicated in the background in gray. The figure shows fourteen horizons. The actual exploration in the scenario, however, is continuous.
+Once the two agents $\alpha_1$ and $\alpha_2$ land, they start recharging. The formulation of the OCP in Eq.~(\ref{eq:ocpfinal}) is such that the other two agents $\alpha_3$ ``dark-green'' and $\alpha_4$ ``magenta'' are selected. They are located at coordinates $($0.3$,$2.1$)$ and $($2.7$,$0.9$)$ respectively. They proceed on the respective energy-aware ergodic trajectories and land at each other's charging stations, with the past trajectory being indicated in the background in gray. The figure shows fourteen horizons. The actual exploration in the scenario, however, is continuous. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusion and Future Directions}\label{sec:conc}
 \noindent
+This work enhances prior literature on ergodic search -- a method to derive robots' trajectories that visit areas with high information density -- with energy-aware coverage. It answers the question of whether is it possible to explore a space uninterruptedly, with at least one agent at all times. Although prior literature has been investigating ergodic search, battery constraints have not been studied. Yet, it is not possible to continue exploring uninterruptedly on a single battery charge. Our paper tackles this challenge. Our methods are to derive an abstract battery model and extend the canonical ergodic search to energy-aware ergodic search. Continuous exploration is achieved using an empirically derived finite horizon, which resembles a model predictive controller from the literature. Experimental data indicate the effectiveness of the battery-constrained exploration with a single agent first. Uninterrupted coverage is achieved with a multi-agent system, guaranteeing that there is always one agent exploring and the spatial distribution is satisfied.
 
----
-
+A limitation of the current methods is that the charging stations are in fixed positions. To enable real-world use cases, we are currently extending the methods to mobile charging stations, which arise in scenarios such as environmental surveying. Furthermore, energy optimality is not addressed by our methods due to the ergodic metric's non-convexity and high non-linearity. Future work will explore the possibilities of guaranteeing energy optimality under tight battery constraints. The physical implementation of such an energy-optimal method will also need to be investigated for feasibility.
 
 {\small
 \bibliographystyle{IEEEtran} 
