@@ -1,17 +1,24 @@
-\documentclass[lettersize,journal,twoside]{IEEEtran} 
+
+\newcommand{\CLASSINPUTtoptextmargin}{54pt}
+\newcommand{\CLASSINPUTbottomtextmargin}{54pt}
+\newcommand{\CLASSINPUTinnersidemargin}{54pt}
+\newcommand{\CLASSINPUToutersidemargin}{54pt}
+
+\documentclass[letterpaper,10pt,conference,twoside]{IEEEtran}
+\IEEEoverridecommandlockouts 
+\def\IEEEtitletopspace{21pt}
+
 \usepackage[inline]{enumitem}
-\usepackage{amsmath,amsfonts}
+\usepackage{amsmath}
+\usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{algorithmic}
 \usepackage{algorithm}
 \usepackage{array}
-%\usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
 \usepackage{textcomp}
 \usepackage{stfloats}
-\usepackage{url}
 \usepackage{verbatim}
 \usepackage{graphicx}
-\usepackage{tikz}
 \usepackage[font=footnotesize]{caption}
 \usepackage[font=footnotesize]{subcaption}
 \usepackage[noadjust]{cite}
@@ -20,7 +27,7 @@
 \usepackage{url}
 
 %% hyperref
-% and an override to make hyperref work with ieeeconf.cls
+% and an override to make hyperref work with ieeetran.cls
 \makeatletter
 \let\NAT@parse\undefined
 \makeatother
@@ -36,21 +43,19 @@
 \usepackage{textpos}
 \usepackage{amsthm}
 \usepackage{xcolor}
-\colorlet{RED}{red}
-
 \usepackage{tikz}
 \usepackage[scaled]{helvet}
 
 \AddToHook{shipout/foreground}{
   \begin{tikzpicture}[remember picture,overlay]
-    \node[red,rotate=45,scale=10,opacity=0.2] at (current page.center) {\small\fontfamily{phv}\selectfont};
-    %IN~PREPARATION};
+    \node[red,rotate=45,scale=10,opacity=0.2] at (current page.center) {\small\fontfamily{phv}\selectfont%};
+    IN~PREPARATION};
     %UNDER~REVIEW};   
   \end{tikzpicture}
 }
 
 %% correct bad hyphenation here
-\hyphenation{obs-tacles sur-roundings}
+\hyphenation{}
 
 \renewcommand{\qedsymbol}{$\blacksquare$}
 
@@ -81,70 +86,45 @@
 \begin{document}
 \bstctlcite{IEEEexample:BSTcontrol}
 
-\title{Energy-Aware Ergodic Search: Continuous Long-Term Exploration for Multi-agent Systems}
+\title{\LARGE\bf Energy-Aware Ergodic Search: Continuous Exploration for Multi-agent Systems with Battery Constraints}
 
-\author{Adam Seewald${}^\text{1}$, Cameron J. Lerch${}^\text{1}$, Marvin Chanc{\'a}n${}^\text{1}$, %Hector Castillo${}^\text{1}$, 
-Aaron M. Dollar${}^\text{1}$, and Ian Abraham${}^\text{1}$%~\IEEEmembership{Staff,~IEEE,}
-        % <-this % stops a space
-  %\thanks{Manuscript received: Month, Day, Year; Revised Month, Day, Year; Accepted Month, Day, Year.}%Use only for final RAL version
-  %\thanks{This paper was recommended for publication by Editor Editor A. Name upon evaluation of the Associate Editor and Reviewers' comments.} %Use only for final RAL version
+\author{Adam Seewald${}^\text{1}$, Cameron J. Lerch${}^\text{1}$, Marvin Chanc{\'a}n${}^\text{1}$, Aaron M. Dollar${}^\text{1}$, and Ian Abraham${}^\text{1}$
+  %\thanks{...}
   \thanks{${}^\text{1}$A.\hspace*{.4ex}S., M.\hspace*{.4ex}C., C.\hspace*{.4ex}J.\hspace*{.4ex}L., H.\hspace*{.4ex}C., A.\hspace*{.4ex}M.\hspace*{.4ex}D., and I.\hspace*{.4ex}A. are with the Department of Mechanical Engineering and Materials Science, Yale University, CT, USA. Email: {\tt\footnotesize \href{mailto:adam.seewald@yale.edu}{adam.seewald@yale.edu};}}
-  %\thanks{${}^\text{3}$A.\hspace*{.4ex}M.\hspace*{.4ex}W. is with the Department of Mechanical Engineering, Massachusetts Institute of Technology, MA, USA;}
-  %\thanks{${}^\text{4}$V.\hspace*{.4ex}E. and B.\hspace*{.4ex}B. are currently unaffiliated. ${}^\text{2, 3, 4}$C.\hspace*{.4ex}M.\hspace*{.4ex}C., A.\hspace*{.4ex}M.\hspace*{.4ex}W., V.\hspace*{.4ex}E., and B.\hspace*{.4ex}B. performed the work while affiliated with Yale University.}
-  %\thanks{Digital Object Identifier (DOI): see top of this page.}
 }
-
-% The paper headers
-\markboth{%Journal of \LaTeX\ Class Files,~Vol.~14, No.~8, August~2021
-%Manuscript~submitted~for~publication. Version~\textnumero~1, 
-Manuscript in preparation. %\underline{Not for distribution}. 
-September~2023
-}%
-{Seewald \MakeLowercase{\textit{et al.}}: Ergodic Search for Long-Term Exploration}
-
-\IEEEpubid{%0000--0000/00\$00.00~\copyright~2023 IEEE
-}
-% Remember, if you use this you must call \IEEEpubidadjcol in the second
-% column for its text to clear the IEEEpubid mark.
 
 \maketitle
 
-%\vspace*{-1cm}
 \begin{abstract} 
----
+  Robots capable of exploring space without interruption are employed in scenarios such as search and rescue and precision agriculture. In these scenarios, ergodic search derives continuous and uninterrupted trajectories so that the robots spend more time in areas with high information density. Prior literature proposes advances in ergodic search, yet energy constraints have not been considered. If the robots are battery-powered, however, it is physically not possible to explore the space on a single battery charge. Our paper tackles this challenge, focusing on the integration of ergodic search techniques with energy-aware coverage. We trade off battery usage and coverage quality, aiming to maintain uninterrupted exploration of a given space by at least one agent. Our approach derives an abstract battery model for future state-of-charge estimation and extends canonical ergodic search to ergodic search under battery constraints. Empirical data from simulations and real-world experiments demonstrate the effectiveness of our energy-aware ergodic search, which ensures continuous, uninterrupted exploration while guaranteeing spatial coverage.
 \end{abstract}
-
-
-%%%%%%%%%%%%%%%%%%%%
-\begin{IEEEkeywords}
-  Motion and Path Planning; Energy and Environment-Aware Autonomation.
-\end{IEEEkeywords}
 
 
 %%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 \noindent
 Robotic exploration is a recurring problem in different scenarios. It typically involves coverage path planning (CPP), which deals with deriving robots' trajectories that traverse every point in a given space~\cite{choset2001coverage,galceran2013survey,cabreira2019survey}. Within CPP, ergodic search is a recent and promising direction~\cite{abraham2021ergodic,miller2016ergodic,dressel2018optimality,torre2016ergodic,shetty2022ergodic,prabhakar2020ergodic,coffin2022multi,lerch2023safety,abraham2018decentralized,patel2021multi,dong2023time,abraham2017ergodic,rao2023multi,ayvali2017ergodic}, as it enhances the efficiency of traditional CPP by optimizing the time a robot spends in a given region w.r.t. an information measure. As a consequence, ergodic search derives trajectories so that the robots spend more time in areas with high information density while quickly passing areas with low information density~\cite{mathew2011metrics,%abraham2021ergodic,dong2023time,
-patel2021multi}. The user can specify areas of interest, e.g., where the robots should spend more time exploring in a search and rescue scenario~\cite{dong2023time}, where the robots should collect more data in a precision agriculture scenario~\cite{rao2023multi}, etc.
+patel2021multi}. The user can specify areas of interest, e.g., where the robots should spend more time exploring in a search and rescue scenario~\cite{dong2023time}, where the robots should collect more data in a precision agriculture scenario~\cite{rao2023multi},~etc.
 
-Past literature has been studying ergodic search in manipulation~\cite{shetty2022ergodic}, tactile sensing~\cite{abraham2017ergodic}, stochastic dynamics~\cite{ayvali2017ergodic,torre2016ergodic}, distributed information~\cite{miller2016ergodic}, time optimality~\cite{dong2023time}, and active learning~\cite{abraham2021ergodic}. Ergodic search for multi-agent systems~\cite{prabhakar2020ergodic,coffin2022multi} has been applied in conjunction with low-information sensors~\cite{coffin2022multi,lerch2023safety,abraham2018decentralized}, swarms control~\cite{prabhakar2020ergodic}, obstacles~\cite{lerch2023safety}, and decentralized systems~\cite{abraham2018decentralized}. Ergodic search has been proven successful in use cases involving urban environments~\cite{patel2021multi} and information gathering~\cite{dressel2018optimality}.
-While past literature includes ergodic search in a variety of settings, energy constraints have not been studied yet. Partly due to these constraints, the prospect of achieving long-term exploration that is continuous and considers a spatial distribution is currently hampered. 
+Prior literature has been studying ergodic search in manipulation~\cite{shetty2022ergodic}, tactile sensing~\cite{abraham2017ergodic}, stochastic dynamics~\cite{ayvali2017ergodic,torre2016ergodic}, distributed information~\cite{miller2016ergodic}, time optimality~\cite{dong2023time}, and active learning~\cite{abraham2021ergodic}. Ergodic search for multi-agent systems~\cite{prabhakar2020ergodic,coffin2022multi} has been applied in conjunction with low-information sensors~\cite{coffin2022multi,lerch2023safety,abraham2018decentralized}, swarms control~\cite{prabhakar2020ergodic}, obstacles~\cite{lerch2023safety}, and decentralized systems~\cite{abraham2018decentralized}. Ergodic search has been proven successful in use cases involving urban environments~\cite{patel2021multi} and information gathering~\cite{dressel2018optimality}.
+While prior literature includes ergodic search methods in a variety of settings, energy constraints have not been studied yet. Partly due to these constraints, the prospect of achieving uninterrupted exploration that is continuous and considers a spatial distribution is currently hampered. 
 
 Canonical ergodic search indeed derives continuous exploration~\cite{%mathew2011metrics,
 miller2013trajectory,miller2016ergodic,abraham2017ergodic}, but it is physically not possible to continue exploring on a single battery charge. 
 Scenarios involving CPP, however, often require that the space is covered continuously.
 This work enhances the current ergodic search literature by incorporating more traditional energy-aware CPP approaches~\cite{difranco2015energy,difranco2016coverage,shnaps2016online,cabreira2018energy,wei2018coverage,jensen2021near}, battery- and energy-aware planning~\cite{mei2004energy,mei2005case,kim2005energy,seewald2022energy}, and planning of energy tradeoffs~\cite{ondruska2015scheduled,sudhakar2020balancing}. It answers the question: \textit{Is it possible to tradeoff battery and coverage quality so that there is at least one agent exploring the space at all times}?
 
-To answer the question, our approach derives an abstract battery model~\cite{zhao2017observability} for battery state of charge (SoC) estimation at future time instances. We first adapt canonical ergodic search to multi-agent ergodic search. We then utilize the formulation to propose energy-aware ergodic search, i.e., ergodic search under battery constraints. The exploration is continuous and runs long-term, employing a finite horizon framework reminiscent of a model predictive controller formulation with an empirically determined horizon~\cite{seewald2022energy}. Data from simulations and real-world experiments show the impact of our newly proposed energy-aware ergodic search. We show that we can effectively explore a space, guaranteeing that there is always one agent exploring, the spatial distribution is satisfied, and the exploration is continuous and long-term (see Section~\ref{sec:res}).
+To answer the question, our approach derives an abstract battery model~\cite{zhao2017observability} for battery state of charge (SoC) estimation at future time instances. We first adapt canonical ergodic search to multi-agent ergodic search. We then utilize the formulation to propose energy-aware ergodic search, i.e., ergodic search under battery constraints. The exploration is continuous and uninterrupted, employing a finite horizon framework reminiscent of a model predictive controller formulation with a horizon that is determined empirically~\cite{seewald2022energy}. Experimental data from simulations and real-world experiments show the impact of our newly proposed energy-aware ergodic search. We show that we can effectively explore a space, guaranteeing that there is always one agent exploring, the spatial distribution is satisfied, and the exploration is continuous and uninterrupted (see Section~\ref{sec:res}). The detailed results from the experimental evaluation and the code to replicate our approach are made available on the project repository page\footnote{{\tt\footnotesize\href{https://github.com/adamseew/enerergo}{github.com/adamseew/enerergo}}}.
 
 The remainder of the paper is structured as follows. Sec.~\ref{sec:pb} formulates the problem of multi-agent continuous ergodic search. Sec.~\ref{sec:meth} discusses the methods for both the canonical ergodic search and a battery model enhanced ergodic search. Sec.~\ref{sec:conc} concludes and proposes future directions.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Problem Formulation}\label{sec:pb}
-\IEEEpubidadjcol
+%\IEEEpubidadjcol
 \noindent
 This work addresses the problem of exploring a bounded space with multiple agents, continuously, and proportionally to a spatial distribution. 
+%
 In the remainder of the text, we will use the term ``continuously'' to indicate that there is at least one agent that is exploring the space at all times.
 
 Canonical ergodic search~\cite{mathew2011metrics,miller2013trajectory,abraham2021ergodic,miller2016ergodic,dressel2018optimality,torre2016ergodic,shetty2022ergodic} does not deal with continuous exploration. It derives an agent's control -- or analogously multiple agents control~\cite{prabhakar2020ergodic,coffin2022multi,lerch2023safety,abraham2018decentralized,patel2021multi} -- so that its trajectory maximizes an ergodic metric defined in the spectral domain~\cite{calinon2020mixture}.
@@ -155,13 +135,13 @@ Canonical ergodic search~\cite{mathew2011metrics,miller2013trajectory,abraham202
 
 Here the notation $\mathbb{R}$ and $\mathbb{N}$ indicates reals and naturals, $\mathbb{N}_{>0}$ strictly naturals. Bold notation is used for vectors.
 
-We extend the canonical ergodic search problem to multi-agent continuous ergodic search, i.e., exploration with multiple agents under spatial distribution and battery constraints.
+We extend the canonical ergodic search problem to multi-agent continuous ergodic search, i.e., uninterrupted exploration with multiple agents under spatial distribution and battery constraints.
 
 \begin{pb}[Multi-agent continuous ergodic search]\label{pb:enerergo}
   Consider a set of $n$ agents $\boldsymbol{\alpha}:=\{\alpha_1,\alpha_2,\dots,\alpha_n\}$, a bounded space $\mathcal{Q}$, and a spatial distribution $\phi$ similar to Problem~\ref{pb:ergo}. \textit{Multi-agent continuous ergodic search problem} is the problem of deriving each agent ${}^j\alpha$ control action ${}^j\mathbf{u}(t)$ so that its trajectory ${}^j\mathbf{q}(t)$ is proportional to the spatial distribution $\phi$ on a continuous time horizon.
 \end{pb}
 
-We will provide a solution to Problem~\ref{pb:enerergo} (see Sec.~\ref{sec:meth}), assuming that there are one or more areas in $\mathcal{Q}$ -- namely, charging stations -- where the agents $\boldsymbol{\alpha}$ can land and recharge the battery, e.g., using wireless charging (see Sec.~\ref{sec:res}). 
+We will provide a solution to Problem~\ref{pb:enerergo} (see Sec.~\ref{sec:meth}), assuming that there are one or more areas in $\mathcal{Q}$ -- namely, charging stations -- where the agents $\boldsymbol{\alpha}$ can land and recharge the battery, using, e.g., wireless charging (see Sec.~\ref{sec:res}). 
 
 
 %%%%%%%%%%%%%%%%%%
@@ -175,7 +155,7 @@ We discuss how to achieve the latter in Sec.~\ref{sec:ergosearch} and the former
 \noindent
 To derive an agent's trajectory proportionally to a spatial distribution, canonical ergodic search first requires defining the distribution $\phi$.
 
-For the purposes of this, in both Problem~\ref{pb:ergo} and \ref{pb:enerergo}, let us consider a Gaussian mixture model (GMM)
+For this purpos, in both Problem~\ref{pb:ergo} and \ref{pb:enerergo}, let us consider a Gaussian mixture model (GMM)
 \begin{equation}\label{eq:gmm}
   \phi(\boldsymbol{\delta},\mathbf{q}):=\sum_{k=1}^{m}\delta_k\,\mathcal{N}(\mathbf{q}\,|\,\mu_k,\Sigma_k),
 \end{equation} 
@@ -211,7 +191,9 @@ To derive the coefficients $\phi_k$, let us consider the GMM model in Eq.~(\ref{
 \begin{equation}
   \Phi(\boldsymbol{\delta},\mathbf{q}):=\sum_{d\in[2^D]_{>0}}\sum_{k=1}^{m}\delta_k\,\mathcal{N}(\mathbf{q}\,|\,A_d\mu_k,A_d\Sigma_k A_d^T)/2^D,
 \end{equation}
-where $A_d\in\mathbb{R}^{D\times D}$ are linear transformation matrices~\cite{calinon2020mixture}. Let us call the integrand in Eq.~(\ref{eq:ck}) $c:\mathcal{Q}\longrightarrow \mathbb{R}^K$. It maps the space to the spectral domain. The equivalent of Eq.~(\ref{eq:ck}) for the spatial distribution can be then expressed
+where $A_d\in\mathbb{R}^{D\times D}$ are linear transformation matrices~\cite{calinon2020mixture}. 
+
+Let us call the integrand in Eq.~(\ref{eq:ck}) $c:\mathcal{Q}\longrightarrow \mathbb{R}^K$. It maps the space to the spectral domain. The equivalent of Eq.~(\ref{eq:ck}) for the spatial distribution can be then expressed
 \begin{equation}\label{eq:phik}
   \phi_k(\boldsymbol{\delta}):=\int_{\mathcal{Q}} \Phi(\boldsymbol{\delta},\mathbf{q})\,c(\mathbf{q})\,\,d\mathbf{q}.
 \end{equation}
@@ -220,7 +202,7 @@ $\mathcal{Q}$ is built so that the integration is within the points of the bound
 
 $\phi_k$ is evaluated per each $k$ in $\mathcal{K}$ in Eq.~(\ref{eq:ergmetric}).
 
-Let us first formulate the solution for Problem~\ref{pb:ergo}, borrowed by canonical ergodic search.
+Let us first formulate the solution for Problem~\ref{pb:ergo}, utilizing a formulation borrowed by canonical ergodic search.
 If the agent's dynamics is described by a generic differential equation $\dot{\mathbf{q}}(t)=f\big({\small\mathbf{q}(t),}$ ${\small\mathbf{u}(t)})$, an optimal control problem (OCP) that selects an ergodic control action can be formulated as~\cite{ayvali2017ergodic}
 \begin{subequations}\label{eq:ocpergo}\begin{align}
   \min_{\mathbf{q}(t),\mathbf{u}(t)}&\int_{\mathcal{T}}\mathbf{u}(\tau)^TR\mathbf{u}(\tau)\,d\tau+{\mathcal{E}(\boldsymbol{\delta},\mathbf{q}(t))},\label{eq:ocpergomin}\\
@@ -244,29 +226,15 @@ In order to satisfy the battery SoC domain and always keep at least one agent ex
 \begin{equation}\label{eq:ocpbattconst}
   \exists k\in[n]\text{ s.t. }{}^k\mathbf{b}_{\text{SoC}}(t_f)\in(0,b_f],
 \end{equation}
-where $b_f\in(0,1)\subset\mathbb{R}_{>0}$ is a given desired battery SoC at the final time instant.
+where $b_f\in(0,1]\subset\mathbb{R}_{>0}$ is a given desired battery SoC at the final time instant.
 
 Finally, let us consider the realistic assumption that the optimization horizon $N\in\mathbb{R}_{>0}$ is known and is,
 e.g., an empirically collected value that corresponds to one of the agents' discharge times (see Sec.~\ref{sec:res}).
 
-\begin{figure}[t]
-  \vspace*{-.2cm}
-  \begin{minipage}[c]{.42\columnwidth}
-    \vspace*{.9cm}
-    \caption{.   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .} 
-    \label{fig:thevenin}
-  \end{minipage}
-  \begin{minipage}[c]{.57\columnwidth}
-    \centering
-    \input{figures/circuit-thevenin.tikz}
-  \end{minipage}
-  \vspace*{-.2cm}
-\end{figure}
-
 The OCP that provides a solution to Problem~\ref{pb:enerergo} can be formulated as
 \begin{subequations}\label{eq:ocpfinal}\begin{align}
   \min_{\square}\,\,\,&{\frac{1}{n}\sum_{k=1}^{n}\int_{\mathcal{T}_k}{}^k\hspace*{-.1ex}\mathbf{u}(\tau)^TR_k\,{}^k\hspace*{-.1ex}\mathbf{u}(\tau)\,d\tau},\label{eq:ocpfinalcost}\\
-  \text{ s.t. }{}^1\hspace*{-.4ex}\dot{\mathbf{q}}&(t)\hspace*{-.4ex}=\hspace*{-.6ex}f_1({}^1\hspace*{-.2ex}\mathbf{q}(t),\hspace*{-.8ex}{}^1\hspace*{-.2ex}\mathbf{u}(t)),\hspace*{-.3ex}{\small\dots},\hspace*{-.7ex}{}^n\hspace*{-.3ex}\dot{\mathbf{q}}(t)\hspace*{-.3ex}=\hspace*{-.5ex}f_n({}^n\hspace*{-.4ex}\mathbf{q}(t),\hspace*{-.7ex}{}^n\hspace*{-.4ex}\mathbf{u}(t)),\\
+  \text{\hspace*{.2ex}s.t.\hspace*{.3ex}}{}^1\hspace*{-.4ex}\dot{\mathbf{q}}&(t)\hspace*{-.4ex}=\hspace*{-.6ex}f_1({}^1\hspace*{-.2ex}\mathbf{q}(t),\hspace*{-.8ex}{}^1\hspace*{-.2ex}\mathbf{u}(t)),\hspace*{-.3ex}{\small\dots},\hspace*{-.7ex}{}^n\hspace*{-.3ex}\dot{\mathbf{q}}(t)\hspace*{-.3ex}=\hspace*{-.5ex}f_n({}^n\hspace*{-.4ex}\mathbf{q}(t),\hspace*{-.7ex}{}^n\hspace*{-.4ex}\mathbf{u}(t)),\\
   {}^1\hspace*{-.2ex}\mathbf{q}&(t),\dots,{}^n\hspace*{-.2ex}\mathbf{q}(t)\in\mathcal{Q},\,{}^1\hspace*{-.2ex}\mathbf{u}(t),\dots,{}^n\hspace*{-.2ex}\mathbf{u}(t)\in\mathcal{U},\\
   \exists &k\in[n]\text{ s.t. }{}^k\mathbf{b}_{\text{SoC}}(t_f)\in(0,b_f],\label{eq:battconst}\\
   \forall &k\,\,\mathcal{E}(\boldsymbol{\delta},{}^k\hspace*{-.2ex}\mathbf{q}(t))\leq\gamma,\label{eq:ergoconst}\\
@@ -276,50 +244,63 @@ The OCP that provides a solution to Problem~\ref{pb:enerergo} can be formulated 
 \end{align}\end{subequations}
 where constraints in Eq.~(\ref{eq:ocpfinalextra1}) are optional and express additional requirements, e.g., that there is always at least one agent exploring $\mathcal{Q}$, the agents explore the space two-by-two, etc. (see Sec.~\ref{sec:res}).
 
-Furthermore, the evolutions of the agents' states in time are described by the deterministic nonlinear equation ${}^k\dot{\mathbf{q}}(t)=f_k($ ${}^k\mathbf{q}(t),{}^k\mathbf{u}(t))$ $\forall k\in[n]$~\cite{abraham2018decentralized}.
+Furthermore, the evolutions of the agents' states in time are described by generic differential equations ${}^k\dot{\mathbf{q}}(t)=f_k($ ${}^k\mathbf{q}(t),{}^k\mathbf{u}(t))$ $\forall k\in[n]$~\cite{abraham2018decentralized}.
 
 In Eq.~(\ref{eq:ocpfinal}), the ergodic metric is integrated into the constraint as proposed in~\cite{dong2023time}. %The cost contains further mixing coefficient $\boldsymbol{\delta}$ in Eq.~(\ref{eq:gmm}) -- so that one can find tradeoffs between the single Gaussians, the different agents, and the battery SoC (see Sec~\ref{sec:res}).
 
 \subsection{Battery modeling}\label{sec:batt}
 \noindent
-To derive a battery model for continuous exploration -- a model that allows us to predict when an agent is exploring and when it conversely should be recharging the battery -- let us consider an equivalent circuit model (ECM). These models are commonly employed in battery metrics estimation for robots and other applications, especially if equipped with rechargeable battery cells~\cite{zhang2018online,xiaosong2012comparative,hasan2018exogenous,hinz2019comparison,mousavi2014various,seewald2022energy}.
+To derive a battery model for continuous exploration -- a model that allows us to predict when an agent is exploring and when it conversely should be recharging the battery -- let us consider an abstract equivalent circuit model (ECM). These models are commonly employed in battery metrics estimation for robots and other applications, especially if equipped with rechargeable battery cells~\cite{zhang2018online,xiaosong2012comparative,hasan2018exogenous,hinz2019comparison,mousavi2014various,seewald2022energy}.
 
 The ECM model we employ is a second-order RC model~\cite{zhao2017observability}, as illustrated in Figure~\ref{fig:thevenin}~\cite{seewaldphdthesis}. 
 
 Formally, it can be formulated as~\cite{zhao2017observability}
 \begin{equation}\label{eq:battmodel}
-  \dot{\mathbf{b}}(t)\hspace*{-.4ex}=\hspace*{-.7ex}\begin{bmatrix}-1/(R_1C_1)\hspace*{-2ex}&\hspace*{-2ex}0&0\\\hspace*{2ex}0&\hspace*{-2ex}-1/(R_2C_2)&0\\\hspace*{2ex}0&\hspace*{-2ex}0&0\end{bmatrix}\hspace*{-.6ex}\mathbf{b}(t)\hspace*{-.2ex}-\hspace*{-.6ex}\begin{bmatrix}\hspace*{-.4ex}-\hspace*{-.2ex}1/C_1\\\hspace*{-.4ex}-\hspace*{-.2ex}1/C_2\\\zeta/Q\end{bmatrix}\hspace*{-.4ex}I(t),
+  \dot{\mathbf{b}}(t)\hspace*{-.4ex}=\hspace*{-.7ex}\begin{bmatrix}-1/(R_1C_1)\hspace*{-2ex}&\hspace*{-2ex}0&0\\\hspace*{2ex}0&\hspace*{-3ex}-1/(R_2C_2)&0\\\hspace*{2ex}0&\hspace*{-2ex}0&0\end{bmatrix}\hspace*{-.6ex}\mathbf{b}(t)\hspace*{-.2ex}+\hspace*{-.6ex}\begin{bmatrix}\hspace*{-.2ex}1/C_1\\\hspace*{-.2ex}1/C_2\\-\hspace*{-.4ex}\zeta/Q\end{bmatrix}\hspace*{-.7ex}I(t),
 \end{equation}
 where $\zeta\in\mathbb{R}$ is a battery coefficient~\cite{seewald2022energy}, $R_1,R_2\in\mathbb{R}$ and $C_1,C_2\in\mathbb{R}$ are the resistors and capacitors relative to the first and second RC elements in the ECM measured in ohms and farad respectively.
 $Q\in\mathbb{R}$ is the battery nominal capacity measured in amperes per hour.
 
 $I\in\mathbb{R}$ is then the internal current which is load-dependent, e.g., the current required to run the motors, actuators, etc.
 
+
 The state $\mathbf{b}:=\begin{bmatrix}V_1&V_2&\mathbf{b}_{\text{SoC}}\end{bmatrix}\in\mathbb{R}^3$ contains three battery metrics. $V_1,V_2\in\mathbb{R}$ are the voltages measured in volts across the first and second RC elements, and $\mathbf{b}_{\text{SoC}}\in(0,1]$ is the normalized battery SoC that evolves from fully charged -- or from a given initial value $\mathbf{b}_{\text{SoC}}(t_0)$ -- to discharged.
 
 The battery voltage at the extremes of the ECM $V_e\in\mathbb{R}$, measured in volts, can be then formulated as~\cite{zhao2017observability}
 \begin{equation}
-  V_e(t)=V_{\text{OC}}(\mathbf{b}_{\text{SoC}}(t))-V_1(t)-V_2(t)-I(t)R,
+  V_e(t)=V(\mathbf{b}_{\text{SoC}}(t))-V_1(t)-V_2(t)-I(t)R,
 \end{equation}
-where $R\in\mathbb{R}$ is the single resistor measured in ohm in Fig.~\ref{fig:thevenin}, and $V_{\text{OC}}$ is the open circuit voltage. It is a nonlinear function of the battery SoC and can be retrieved from the battery data sheet~\cite{hinz2019comparison}.
+where $R\in\mathbb{R}$ is the single resistor measured in ohm in Fig.~\ref{fig:thevenin}, and $V$ is the open circuit voltage. It is a nonlinear function of the battery SoC and can be retrieved from the battery's data sheet~\cite{hinz2019comparison}.
 
 The values of $R_1,C_1,R_2,C_2,R$ are identified so that the model output and the physical behavior of the agents are matched as closely as possible~\cite{zhao2017observability} (see Sec.~\ref{sec:res}).
 
-The battery model allows us to determine the battery SoC $\mathbf{b}_{\text{SoC}}$ in Eq.~(\ref{eq:battconst}), which is in turn utilized to find the control action $\mathbf{u}(t)$ so that there is at least one agent exploring $\mathcal{Q}$ at all times. This means that when the solution of the OCP in Eq.~(\ref{eq:ocpfinal}) is evaluated, the battery model in Eq.~(\ref{eq:battmodel}) is integrated for the duration of the horizon, whereas the recharging is approximated linear $\mathbf{b}_{\text{SoC}}=\eta\,\mathbf{b}_{\text{SoC}}+\theta$ for a given $\eta,\theta\in\mathbb{R}$.
+The battery model allows us to determine the battery SoC $\mathbf{b}_{\text{SoC}}$ in Eq.~(\ref{eq:battconst}), which is in turn utilized to find the control action $\mathbf{u}(t)$ so that there is at least one agent exploring $\mathcal{Q}$ at all times. This means that when the solution of the OCP in Eq.~(\ref{eq:ocpfinal}) is evaluated, the battery model in Eq.~(\ref{eq:battmodel}) is integrated for the duration of the horizon, whereas the recharging is approximated linear with the expression $\mathbf{b}_{\text{SoC}}=\eta\,\mathbf{b}_{\text{SoC}}+\theta$ for a given $\eta,\theta\in\mathbb{R}$.
 
+
+\begin{figure}[t]
+  \vspace*{-.2cm}
+  \begin{minipage}[c]{.42\columnwidth}
+    \vspace*{.9cm}
+    \caption{.   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .} 
+    \label{fig:thevenin}
+  \end{minipage}
+  \begin{minipage}[c]{.57\columnwidth}
+    \centering
+    \input{figures/circuit-thevenin.tikz}
+  \end{minipage}
+  \vspace*{-.2cm}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experimental Results}\label{sec:res}
 \noindent
-In this section, we discuss our experimental setup and results. Our experiments are implemented first in simulation using  \textsc{Matlab} (R), and physical experiments  are implemented in Python and conducted using a set of Crazyflie 2.0 micro aerial vehicles (MAVs). Each MAV is equipped with a positioning and wireless charging decks. Precise positioning of MAVs is achieved via two HTC SteamVR Base Station 2.0 units. Each MAV is then equipped with a one-cell 250 mAh 3.7 volts LiPo battery.%, capable of approximately seven minutes of flight.
+In this section, we discuss our experimental setup and results. Our experiments are implemented first in simulation using  \textsc{Matlab} (R), and physical experiments  are implemented in Python and conducted using a set of Crazyflie 2.0 micro aerial vehicles (MAVs). 
 
-In both cases, the source code\footnote{{\tt\footnotesize\href{https://github.com/adamseew/enerergo}{github.com/adamseew/enerergo}}} is released under the popular non-commercial open-source license CC BY NC-SA 4.0. The solution of the OCP in Eq.~(\ref{eq:ocpfinal}) relies on two external open-source components from the literature: the popular nonlinear programming solver IPOPT~\cite{wachter2006implementation} and a software framework for nonlinear optimization called CasADi~\cite{andersson2012casadi}.
+In both cases, the source code is released under the popular non-commercial open-source license CC BY NC-SA 4.0. The solution of the OCP in Eq.~(\ref{eq:ocpfinal}) relies on two external open-source components from the literature: the popular nonlinear programming solver IPOPT~\cite{wachter2006implementation} and a software framework for nonlinear optimization called CasADi~\cite{andersson2012casadi}.
+
+Each MAV is equipped with a positioning and wireless charging decks. Precise positioning of MAVs is achieved via two HTC SteamVR Base Station 2.0 units. Each MAV is then equipped with a one-cell 250 mAh 3.7 volts LiPo battery.%, capable of approximately seven minutes of flight.
 
 We evaluate our approach under two different scenarios. In both the scenarios, we use a three-by-three-meter space $\mathcal{Q}$. The spatial distribution $\phi$ contains four Gaussians in the GMM in Eq.~(\ref{eq:gmm}), as illustrated in Fig.~\ref{fig:scenario} (the four cyan empty squares).
-
-\subsection*{Intermittent exploration}
-\noindent
-In the first scenario, one MAV is positioned on top of a wireless charging station at coordinates $($1.5$,$1.5$)$. The horizon is set to five minutes and is derived empirically along with battery and recharging coefficients. The battery values used in the scenario are those proposed in~\cite{zhao2017observability}. The ergodic trajectories at four different horizons $t_0$, $t_4$, $t_8$, and $t_{12}$ are shown in Fig.~\ref{fig:res2}. For horizons following the first, the past ergodic trajectories are illustrated in gray.
 
 \begin{figure}[t!]
   \begin{minipage}[t!]{.48\columnwidth}
@@ -333,7 +314,7 @@ In the first scenario, one MAV is positioned on top of a wireless charging stati
 
 \begin{figure*}[b!]
   \input{figures/trajs2.pdf_tex}
-  \caption{.   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .}
+  \caption{.   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .}
   \label{fig:res2}
 \end{figure*}
 
@@ -344,17 +325,21 @@ In the first scenario, one MAV is positioned on top of a wireless charging stati
   \hspace{.42cm}
   \begin{minipage}[t]{.93\columnwidth}
     \vspace*{-4.2cm}
-    \caption{.   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .}
+    \caption{.   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   . }
     \label{fig:res}
   \end{minipage}
   \vspace*{-.3cm}
 \end{figure*}
 
-The MAV starts exploring the space (filled blue square in the figure) and derives the ergodic trajectory for the first horizon $t_0$. At the end of the horizon (filled blue dot), the MAV returns to the charging station. Once the battery is recharged -- formally, once the constraint in Eq.~(\ref{eq:ocpbattconst}) is satisfied -- the exploration proceeds. The exploration derived in this way is, however, not continuous, as it has periods of ``no exploration'' in which the agent recharges the battery. We show a continuous exploration achieved by a multi-agent system in the following.
-
-\subsection*{Continuous exploration}
+\subsection*{Intermittent exploration}
 \noindent
-In the second extensive scenario, four MAVs $\alpha_1$, $\alpha_2$, $\alpha_3$, and $\alpha_4$ are placed on top of four wireless charging stations. The optional constraints in Eq.~(\ref{eq:ocpfinalextra1}) are built so that each MAV covers two Gaussians at a time that are respectively farthest ($\mu_3$ and $\mu_2$ are the centers of Gaussians covered by the ``red'' and ``dark-green'' agents, $\mu_1$ and $\mu_4$ are the centers of the Guassians covered by the ``blue'' and ``magenta'' agents), whereas the battery constraint is edited so that there are two MAVs at each time, i.e.,
+In the first scenario, an intermediate step towards uninterrupted and continuous exploration, one MAV is positioned on top of a wireless charging station at coordinates $($1.5$,$1.5$)$. The horizon is set to five minutes and is derived empirically along with battery and recharging coefficients. The battery values used in the scenario are those proposed in~\cite{zhao2017observability}. The ergodic trajectories at four different horizons $t_0$, $t_4$, $t_8$, and $t_{12}$ are shown in Fig.~\ref{fig:res2}. For horizons following the first, the past ergodic trajectories are illustrated in gray.
+
+The MAV starts exploring the space (filled blue square in the figure) and derives the ergodic trajectory for the first horizon $t_0$. At the end of the horizon (filled blue dot), the MAV returns to the charging station. Once the battery is recharged -- formally, once the constraint in Eq.~(\ref{eq:ocpbattconst}) is satisfied -- the exploration proceeds. The exploration derived in this way is, however, not uninterrupted, as it has periods of ``no exploration'' in which the agent recharges the battery. We show a continuous and uninterrupted exploration achieved by a multi-agent system in the following.
+
+\subsection*{Uninterrupted and continuous exploration}
+\noindent
+In the second extensive scenario, four MAVs $\alpha_1$, $\alpha_2$, $\alpha_3$, and $\alpha_4$ are placed on top of four wireless charging stations. The optional constraints in Eq.~(\ref{eq:ocpfinalextra1}) are built so that each MAV covers two Gaussians at a time that are respectively farthest ($\mu_3$ and $\mu_2$ are the centers of Gaussians covered by the ``red'' and ``dark-green'' agents, $\mu_1$ and $\mu_4$ are the centers of the Guassians covered by the ``blue'' and ``magenta'' agents in Fig.~\ref{fig:res}), whereas the battery constraint is edited so that there are two MAVs at each time, i.e.,
 \begin{equation}
 \exists_{=1}\, k_1,k_2\in[n]\text{ s.t. }{}^{k_1} \mathbf{b}_{\text{SoC}},{}^{k_2} \mathbf{b}_{\text{SoC}}\in(0,b_f],
 \end{equation} 
@@ -366,6 +351,8 @@ The cost function in Eq.~(\ref{eq:ocpfinalcost}) is further enhanced with the mi
 \begin{equation}
   \min_{\square,\boldsymbol{\delta}}\,\,\,{\frac{1}{n}\sum_{k=1}^{n}\int_{\mathcal{T}_k}{}^k\hspace*{-.1ex}\mathbf{u}(\tau)^TR_k\,{}^k\hspace*{-.1ex}\mathbf{u}(\tau)\,d\tau-\frac{1}{n}\sum_{k=1}^{m}\delta_k}.
 \end{equation}
+
+A similar approach is undertaken in prior literature~\cite{rao2023multi}, where the ergodic objective is dynamic as more information is gathered, rather than the battery status is changed.
 
 The battery and recharging coefficients are those used in the previous scenario, whereas the horizon is now set to two and a half minutes.
 The ergodicity metric in Eq.~(\ref{eq:ergmetric}) is set to be lower or equal to 0.05 via the constraint in Eq.~(\ref{eq:ergoconst}), in line with similar literature~\cite{dong2023time}.
@@ -394,5 +381,4 @@ Once the two agents $\alpha_1$ and $\alpha_2$ land, they start recharging. The f
 }
 
 \end{document}
-
 
