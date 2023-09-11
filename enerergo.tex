@@ -52,8 +52,8 @@
 
 \AddToHook{shipout/foreground}{
   \begin{tikzpicture}[remember picture,overlay]
-    \node[red,rotate=45,scale=10,opacity=0.2] at (current page.center) {\small\fontfamily{phv}\selectfont%};
-    IN~PREPARATION};
+    \node[red,rotate=45,scale=10,opacity=0.2] at (current page.center) {\small\fontfamily{phv}\selectfont};
+    %IN~PREPARATION};
     %UNDER~REVIEW};   
   \end{tikzpicture}
 }
@@ -112,6 +112,14 @@ patel2021multi}. The user can specify areas of interest, e.g., where the robots 
 
 Prior literature has been studying ergodic search in manipulation~\cite{shetty2022ergodic}, tactile sensing~\cite{abraham2017ergodic}, stochastic dynamics~\cite{ayvali2017ergodic,torre2016ergodic}, distributed information~\cite{miller2016ergodic}, time optimality~\cite{dong2023time}, and active learning~\cite{abraham2021ergodic}. Ergodic search for multi-agent systems~\cite{prabhakar2020ergodic,coffin2022multi} has been applied in conjunction with low-information sensors~\cite{coffin2022multi,lerch2023safety,abraham2018decentralized}, swarms control~\cite{prabhakar2020ergodic}, obstacles~\cite{lerch2023safety}, and decentralized systems~\cite{abraham2018decentralized}. Ergodic search has been proven successful in use cases involving urban environments~\cite{patel2021multi} and information gathering~\cite{dressel2018optimality}.
 While prior literature includes ergodic search methods in a variety of settings, energy constraints have not been studied yet. Partly due to these constraints, the prospect of achieving uninterrupted exploration that is continuous and considers a spatial distribution is currently hampered. 
+
+\begin{figure}[t!]
+  \centering
+  \hspace*{-.08cm}\input{figures/00002346.pdf_tex}
+  \caption{A set of agents explore a space $\mathcal{Q}$, focusing on areas with high information density $\mu_1$, $\mu_2$, $\mu_3$, and $\mu_4$, employing ergodic search. The exploration is continuous and uninterrupted, guaranteeing that there is always one agent exploring -- $\alpha_1$. The colors of the spheres indicate state-of-charge.}
+  \label{fig:abs}
+  \vspace*{-.3cm}
+\end{figure}
 
 Canonical ergodic search indeed derives continuous exploration~\cite{%mathew2011metrics,
 miller2013trajectory,miller2016ergodic,abraham2017ergodic}, but it is physically not possible to continue exploring on a single battery charge. 
@@ -283,12 +291,7 @@ The battery voltage at the extremes of the ECM $V_e\in\mathbb{R}$, measured in v
 \end{equation}
 where $R\in\mathbb{R}$ is the single resistor measured in ohm in Fig.~\ref{fig:thevenin}, and $V$ is the open circuit voltage. It is a nonlinear function of the battery SoC and can be retrieved from the battery's data sheet~\cite{hinz2019comparison}.
 
-The values of $R_1,C_1,R_2,C_2,R$ are identified so that the model output and the physical behavior of the agents are matched as closely as possible~\cite{zhao2017observability} (see Sec.~\ref{sec:res}).
-
-The battery model allows us to determine the battery SoC $\mathbf{b}_{\text{SoC}}$ in Eq.~(\ref{eq:battconst}), which is in turn utilized to find the control action $\mathbf{u}(t)$ so that there is at least one agent exploring $\mathcal{Q}$ at all times. This means that when the solution of the OCP in Eq.~(\ref{eq:ocpfinal}) is evaluated, the battery model in Eq.~(\ref{eq:battmodel}) is integrated for the duration of the horizon, whereas the recharging is approximated linear with the expression $\mathbf{b}_{\text{SoC}}=\eta\,\mathbf{b}_{\text{SoC}}+\theta$ for given $\eta,\theta\in\mathbb{R}$ determined empirically.
-
-
-\begin{figure}[t]
+\begin{figure}[t!]
   \vspace*{-.2cm}
   \begin{minipage}[c]{.43\columnwidth}
     \vspace*{.24cm}
@@ -303,6 +306,11 @@ The battery model allows us to determine the battery SoC $\mathbf{b}_{\text{SoC}
   \end{minipage}
   \vspace*{-.6cm}
 \end{figure}
+
+The values of $R_1,C_1,R_2,C_2,R$ are identified so that the model output and the physical behavior of the agents are matched as closely as possible~\cite{zhao2017observability} (see Sec.~\ref{sec:res}).
+
+The battery model allows us to determine the battery SoC $\mathbf{b}_{\text{SoC}}$ in Eq.~(\ref{eq:battconst}), which is in turn utilized to find the control action $\mathbf{u}(t)$ so that there is at least one agent exploring $\mathcal{Q}$ at all times. This means that when the solution of the OCP in Eq.~(\ref{eq:ocpfinal}) is evaluated, the battery model in Eq.~(\ref{eq:battmodel}) is integrated for the duration of the horizon, whereas the recharging is approximated linear with the expression $\mathbf{b}_{\text{SoC}}=\eta\,\mathbf{b}_{\text{SoC}}+\theta$ for given $\eta,\theta\in\mathbb{R}$ determined empirically.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experimental Results}\label{sec:res}
