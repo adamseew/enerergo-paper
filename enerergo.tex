@@ -52,8 +52,8 @@
 
 \AddToHook{shipout/foreground}{
   \begin{tikzpicture}[remember picture,overlay]
-    \node[red,rotate=45,scale=10,opacity=0.2] at (current page.center) {\small\fontfamily{phv}\selectfont};
-    %IN~PREPARATION};
+    \node[red,rotate=45,scale=10,opacity=0.2] at (current page.center) {\small\fontfamily{phv}\selectfont%};
+    IN~PREPARATION};
     %UNDER~REVIEW};   
   \end{tikzpicture}
 }
@@ -92,12 +92,14 @@
 
 \title{\LARGE\bf Energy-Aware Ergodic Search: Continuous Exploration for Multi-agent Systems with Battery Constraints}
 
-\author{Adam Seewald${}^\text{1}$, Cameron J. Lerch${}^\text{1}$, Marvin Chanc{\'a}n${}^\text{1}$, Aaron M. Dollar${}^\text{1}$, and Ian Abraham${}^\text{1}$
+\author{Adam Seewald, Cameron J. Lerch, Marvin Chanc{\'a}n, Aaron M. Dollar, and Ian Abraham
   %\thanks{...}
-  \thanks{${}^\text{1}$A.\hspace*{.4ex}S., C.\hspace*{.4ex}J.\hspace*{.4ex}L., M.\hspace*{.4ex}C., A.\hspace*{.4ex}M.\hspace*{.4ex}D., and I.\hspace*{.4ex}A. are with the Department of Mechanical Engineering and Materials Science, Yale University, CT, USA. Email: {\tt\footnotesize \href{mailto:adam.seewald@yale.edu}{adam.seewald@yale.edu};}}
+  \thanks{A.\hspace*{.4ex}S., C.\hspace*{.4ex}J.\hspace*{.4ex}L., M.\hspace*{.4ex}C., A.\hspace*{.4ex}M.\hspace*{.4ex}D., and I.\hspace*{.4ex}A. are with the Department of Mechanical Engineering and Materials Science, Yale University, CT, USA. Email: {\tt\footnotesize \href{mailto:adam.seewald@yale.edu}{adam.seewald@yale.edu};}}
 }
 
 \maketitle
+
+\vspace*{-.05cm} 
 
 \begin{abstract} 
   Robots capable of exploring space without interruption are employed in scenarios such as search and rescue and precision agriculture. In these scenarios, ergodic search derives continuous and uninterrupted trajectories so that the robots spend more time in areas with high information density. Prior literature proposes advances in ergodic search, yet energy constraints have not been considered. If the robots are battery-powered, however, it is physically not possible to explore the space on a single battery charge. Our paper tackles this challenge, focusing on the integration of ergodic search methods with energy-aware coverage. We trade off battery usage and coverage quality, aiming to maintain uninterrupted exploration of a given space by at least one agent. Our approach derives an abstract battery model for future state-of-charge estimation and extends canonical ergodic search to ergodic search under battery constraints. Empirical data from simulations and real-world experiments demonstrate the effectiveness of our energy-aware ergodic search, which ensures continuous, uninterrupted exploration while guaranteeing spatial coverage.
@@ -115,10 +117,11 @@ While prior literature includes ergodic search methods in a variety of settings,
 
 \begin{figure}[t!]
   \centering
+\vspace*{.3cm} 
   \hspace*{-.08cm}\input{figures/00002346.pdf_tex}
-  \caption{A set of agents explore a space $\mathcal{Q}$, focusing on areas with high information density $\mu_1$, $\mu_2$, $\mu_3$, and $\mu_4$, employing ergodic search. The exploration is continuous and uninterrupted, guaranteeing that there is always one agent exploring -- $\alpha_1$. The colors of the spheres indicate state-of-charge.}
+  \caption{A set of agents explore a space $\mathcal{Q}$, focusing on areas with high information density $\mu_1$, $\mu_2$, $\mu_3$, and $\mu_4$, employing ergodic search. The exploration is continuous and uninterrupted, guaranteeing that there is always one agent exploring -- $\alpha_1$, whereas $\alpha_2$, $\alpha_3$, and $\alpha_4$ are recharging. The colors of the spheres indicate the state of charge.}
   \label{fig:abs}
-  \vspace*{-.3cm}
+  \vspace*{-.5cm}
 \end{figure}
 
 Canonical ergodic search indeed derives continuous exploration~\cite{%mathew2011metrics,
@@ -391,6 +394,19 @@ An analogous situation is to be observed with agent $\alpha_2$. At the end of th
 where $\varepsilon\in\mathbb{R}_{>0}$ and $k_1,k_2\in[n]$ are given.
 
 Once the two agents $\alpha_1$ and $\alpha_2$ land, they start recharging. The formulation of the OCP in Eq.~(\ref{eq:ocpfinal}) is such that the other two agents $\alpha_3$ ``dark-green'' and $\alpha_4$ ``magenta'' are selected. They are located at coordinates $($0.3$,$2.1$)$ and $($2.7$,$0.9$)$ respectively. They proceed on the respective energy-aware ergodic trajectories and land at each other's charging stations, with the past trajectory being indicated in the background in gray. The figure shows fourteen horizons. The actual exploration in the scenario, however, is continuous. 
+
+\begin{figure}[t!]
+  \begin{minipage}[t!]{.5\columnwidth}
+    \vspace*{-.2cm}
+    \input{figures/fig_erg-soc.pdf_tex}
+  \end{minipage}
+  \begin{minipage}[c]{.48\columnwidth}
+    \vspace*{.05cm}
+    \caption{Ergodicity $\mathcal{E}$ in Eq.~(\ref{eq:ergmetric}) as a function of the battery state of charge. The top plot shows the evolution of the ergodicity for all the horizons in Fig.~\ref{fig:res}. The bottom shows the average ergodicity. Initially, the MAVs are at their charging stations. As they start exploring, they move to the areas with high information density -- ergodicity decreases. As they approach the end of the horizon, they start moving to the charging stations -- ergodicity increases.}
+    \label{fig:ergo}
+  \end{minipage}
+  \vspace*{-.3cm}
+\end{figure}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

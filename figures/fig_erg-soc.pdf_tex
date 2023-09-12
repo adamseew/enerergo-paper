@@ -1,0 +1,74 @@
+%% Creator: Inkscape 1.1.2 (0a00cf5339, 2022-02-04), www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'figures/fig_erg-soc.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{118.66363907bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,1.03327876)%
+  \footnotesize
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0.33496858,-0.01703845){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}battery SoC (\%)\end{tabular}}}}%
+    \put(0.02016994,0.37345035){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Ergodicity ($\mathcal{E}$)\end{tabular}}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{figures/fig_erg-soc.pdf}}%
+    \put(0.12138585,0.52679078){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0\end{tabular}}}}%
+    \put(0.0518616,0.6827786){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}.05\end{tabular}}}}%
+    \put(0.09610431,0.83160213){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}.1\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{figures/fig_erg-soc.pdf}}%
+    \put(0.91891465,0.07978038){\rotatebox{45}{\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.4\end{tabular}}}}}%
+    \put(0.70749938,0.04849609){\rotatebox{45}{\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.55\end{tabular}}}}}%
+    \put(0.53337114,0.0797804){\rotatebox{45}{\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.7\end{tabular}}}}}%
+    \put(0.32195576,0.04849606){\rotatebox{45}{\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.85\end{tabular}}}}}%
+    \put(0.19251946,0.12447227){\rotatebox{45}{\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}1\end{tabular}}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{figures/fig_erg-soc.pdf}}%
+    \put(0.12138585,0.1918103){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0\end{tabular}}}}%
+    \put(0.0518616,0.29082989){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}.05\end{tabular}}}}%
+    \put(0.09156895,0.38984885){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}.1\end{tabular}}}}%
+  \end{picture}%
+\endgroup%
