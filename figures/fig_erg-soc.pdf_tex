@@ -54,21 +54,20 @@
   \footnotesize
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
-    \put(0.33496858,-0.01703845){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}battery SoC (\%)\end{tabular}}}}%
-    \put(0.02016994,0.37345035){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Ergodicity ($\mathcal{E}$)\end{tabular}}}}}%
+    \put(0.34760935,-0.01703845){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}battery SoC (\%)\end{tabular}}}}%
+    \put(0.02516994,0.37552803){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Ergodicity ($\mathcal{E}$)\end{tabular}}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{figures/fig_erg-soc.pdf}}%
-    \put(0.12138585,0.52679078){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0\end{tabular}}}}%
-    \put(0.0518616,0.6827786){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}.05\end{tabular}}}}%
-    \put(0.09610431,0.83160213){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}.1\end{tabular}}}}%
+    \put(0.08709001,0.40743867){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0\end{tabular}}}}%
+    \put(0.04659806,0.59072983){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}.05\end{tabular}}}}%
+    \put(0.08291107,0.79930257){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}.1\end{tabular}}}}%
+    \put(0.04659806,0.99523453){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}.15\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=2]{figures/fig_erg-soc.pdf}}%
-    \put(0.91891465,0.07978038){\rotatebox{45}{\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.4\end{tabular}}}}}%
-    \put(0.70749938,0.04849609){\rotatebox{45}{\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.55\end{tabular}}}}}%
-    \put(0.53337114,0.0797804){\rotatebox{45}{\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.7\end{tabular}}}}}%
-    \put(0.32195576,0.04849606){\rotatebox{45}{\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.85\end{tabular}}}}}%
-    \put(0.19251946,0.12447227){\rotatebox{45}{\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}1\end{tabular}}}}}%
+    \put(0.80094183,0.06213513){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.7\end{tabular}}}}%
+    \put(0.51721893,0.06213513){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.75\end{tabular}}}}%
+    \put(0.27773887,0.06213513){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.8\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=3]{figures/fig_erg-soc.pdf}}%
-    \put(0.12138585,0.1918103){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0\end{tabular}}}}%
-    \put(0.0518616,0.29082989){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}.05\end{tabular}}}}%
-    \put(0.09156895,0.38984885){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}.1\end{tabular}}}}%
+    \put(0.08709001,0.11670092){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0\end{tabular}}}}%
+    \put(0.04659806,0.19675929){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}.05\end{tabular}}}}%
+    \put(0.08291107,0.27681709){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}.1\end{tabular}}}}%
   \end{picture}%
 \endgroup%

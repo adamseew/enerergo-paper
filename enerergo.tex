@@ -90,52 +90,52 @@
 \begin{document}
 \bstctlcite{IEEEexample:BSTcontrol}
 
-\title{\LARGE\bf Energy-Aware Ergodic Search: Continuous Exploration for Multi-agent Systems with Battery Constraints}
+\title{\LARGE\bf Energy-Aware Ergodic Search: Continuous Exploration for Multi-Agent Systems with Battery Constraints}
 
 \author{Adam Seewald, Cameron J. Lerch, Marvin Chanc{\'a}n, Aaron M. Dollar, and Ian Abraham
-  %\thanks{...}
   \thanks{A.\hspace*{.4ex}S., C.\hspace*{.4ex}J.\hspace*{.4ex}L., M.\hspace*{.4ex}C., A.\hspace*{.4ex}M.\hspace*{.4ex}D., and I.\hspace*{.4ex}A. are with the Department of Mechanical Engineering and Materials Science, Yale University, CT, USA. Email: {\tt\footnotesize \href{mailto:adam.seewald@yale.edu}{adam.seewald@yale.edu};}}
 }
 
 \maketitle
 
-\vspace*{-.05cm} 
-
 \begin{abstract} 
-  Robots capable of exploring space without interruption are employed in scenarios such as search and rescue and precision agriculture. In these scenarios, ergodic search derives continuous and uninterrupted trajectories so that the robots spend more time in areas with high information density. Prior literature proposes advances in ergodic search, yet energy constraints have not been considered. If the robots are battery-powered, however, it is physically not possible to explore the space on a single battery charge. Our paper tackles this challenge, focusing on the integration of ergodic search methods with energy-aware coverage. We trade off battery usage and coverage quality, aiming to maintain uninterrupted exploration of a given space by at least one agent. Our approach derives an abstract battery model for future state-of-charge estimation and extends canonical ergodic search to ergodic search under battery constraints. Empirical data from simulations and real-world experiments demonstrate the effectiveness of our energy-aware ergodic search, which ensures continuous, uninterrupted exploration while guaranteeing spatial coverage.
+  %Robots capable of exploring space without interruption are employed in scenarios such as search and rescue and precision agriculture. In these scenarios, ergodic search derives continuous and uninterrupted trajectories so that the robots spend more time in areas with high information density. 
+  Exploring space without interruption is important in scenarios such as search and rescue and precision agriculture. Ergodic search derives continuous and uninterrupted trajectories in these scenarios so that the robots spend more time in areas with high information density. 
+  However, existing literature on ergodic search does not consider the robot's energy constraints. 
+  %Prior literature proposes advances in ergodic search, yet energy constraints have not been considered. 
+  If the robots are battery-powered, it is physically not possible to explore the space on a single battery charge. Our paper tackles this challenge, integrating ergodic search methods with energy-aware coverage. We trade off battery usage and coverage quality, aiming to maintain uninterrupted exploration of a given space by at least one agent. Our approach derives an abstract battery model for future state-of-charge estimation and extends canonical ergodic search to ergodic search under battery constraints. Empirical data from simulations and real-world experiments demonstrate the effectiveness of our energy-aware ergodic search, which ensures continuous and uninterrupted exploration and guarantees spatial coverage.
 \end{abstract}
-
 
 %%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 \noindent
-Robotic exploration is a recurring problem in different scenarios. It typically involves coverage path planning (CPP), which deals with deriving robots' trajectories that traverse every point in a given space~\cite{choset2001coverage,galceran2013survey,cabreira2019survey}. Within CPP, ergodic search is a recent and promising direction~\cite{abraham2021ergodic,miller2016ergodic,dressel2018optimality,torre2016ergodic,shetty2022ergodic,prabhakar2020ergodic,coffin2022multi,lerch2023safety,abraham2018decentralized,patel2021multi,dong2023time,abraham2017ergodic,rao2023multi,ayvali2017ergodic}, as it enhances the efficiency of traditional CPP by optimizing the time a robot spends in a given region w.r.t. an information measure. As a consequence, ergodic search derives trajectories so that the robots spend more time in areas with high information density while quickly passing areas with low information density~\cite{mathew2011metrics,%abraham2021ergodic,dong2023time,
-patel2021multi}. The user can specify areas of interest, e.g., where the robots should spend more time exploring in a search and rescue scenario~\cite{dong2023time}, where the robots should collect more data in a precision agriculture scenario~\cite{rao2023multi},~etc.
+Robotic exploration is a recurring problem in different scenarios. It typically involves coverage path planning (CPP), which deals with deriving robots' trajectories that traverse every point in a given space~\cite{choset2001coverage,galceran2013survey,cabreira2019survey}. Within CPP, ergodic search is a recent and promising direction~\cite{abraham2021ergodic,miller2016ergodic,dressel2018optimality,torre2016ergodic,shetty2022ergodic,prabhakar2020ergodic,coffin2022multi,lerch2023safety,abraham2018decentralized,patel2021multi,dong2023time,abraham2017ergodic,rao2023multi,ayvali2017ergodic}, as it enhances the efficiency of traditional CPP by optimizing the time a robot spends in a given region w.r.t. an information measure. As a result, ergodic search derives trajectories so that the robots spend more time in areas with high information density while quickly passing areas with low information density~\cite{mathew2011metrics,%abraham2021ergodic,dong2023time,
+patel2021multi}. The user can specify areas of interest, e.g., where the robots should spend more time exploring in a search and rescue scenario~\cite{dong2023time}, where the robots should collect more data in a precision agriculture scenario~\cite{rao2023multi}, etc.
+Figure~\ref{fig:abs}  shows our setup, which resembles a search and rescue scenario. Four agents explore a space where the high information density is represented by cyan boxes. Some agents are actively exploring, while others are grounded and recharging.
 
 Prior literature has been studying ergodic search in manipulation~\cite{shetty2022ergodic}, tactile sensing~\cite{abraham2017ergodic}, stochastic dynamics~\cite{ayvali2017ergodic,torre2016ergodic}, distributed information~\cite{miller2016ergodic}, time optimality~\cite{dong2023time}, and active learning~\cite{abraham2021ergodic}. Ergodic search for multi-agent systems~\cite{prabhakar2020ergodic,coffin2022multi} has been applied in conjunction with low-information sensors~\cite{coffin2022multi,lerch2023safety,abraham2018decentralized}, swarms control~\cite{prabhakar2020ergodic}, obstacles~\cite{lerch2023safety}, and decentralized systems~\cite{abraham2018decentralized}. Ergodic search has been proven successful in use cases involving urban environments~\cite{patel2021multi} and information gathering~\cite{dressel2018optimality}.
-While prior literature includes ergodic search methods in a variety of settings, energy constraints have not been studied yet. Partly due to these constraints, the prospect of achieving uninterrupted exploration that is continuous and considers a spatial distribution is currently hampered. 
+While prior literature includes ergodic search methods in a variety of settings, energy constraints have not been studied yet. 
+Partly due to these constraints, the uninterrupted exploration %in realistic systems
+that %is continuous and 
+considers a spatial distribution is currently hindered. 
 
 \begin{figure}[t!]
   \centering
-\vspace*{.3cm} 
-  \hspace*{-.08cm}\input{figures/00002346.pdf_tex}
+  \hspace*{-.04cm}\input{figures/00002346.pdf_tex}
   \caption{A set of agents explore a space $\mathcal{Q}$, focusing on areas with high information density $\mu_1$, $\mu_2$, $\mu_3$, and $\mu_4$, employing ergodic search. The exploration is continuous and uninterrupted, guaranteeing that there is always one agent exploring -- $\alpha_1$, whereas $\alpha_2$, $\alpha_3$, and $\alpha_4$ are recharging. The colors of the spheres indicate the state of charge.}
   \label{fig:abs}
-  \vspace*{-.5cm}
+  \vspace*{-.2cm}
 \end{figure}
 
 Canonical ergodic search indeed derives continuous exploration~\cite{%mathew2011metrics,
 miller2013trajectory,miller2016ergodic,abraham2017ergodic}, but it is physically not possible to continue exploring on a single battery charge. 
 Scenarios involving CPP, however, often require that the space is covered continuously.
-This work enhances the current ergodic search literature by incorporating more traditional energy-aware CPP approaches~\cite{difranco2015energy,difranco2016coverage,shnaps2016online,cabreira2018energy,wei2018coverage,jensen2021near}, battery- and energy-aware planning~\cite{mei2004energy,mei2005case,kim2005energy,seewald2022energy}, and planning of energy tradeoffs~\cite{ondruska2015scheduled,sudhakar2020balancing}. It answers the question: \textit{Is it possible to tradeoff battery and coverage quality so that there is at least one agent exploring the space at all times}?
+This work enhances the current ergodic search literature by incorporating more traditional energy-aware CPP approaches~\cite{difranco2015energy,difranco2016coverage,shnaps2016online,cabreira2018energy,wei2018coverage,jensen2021near}, battery- and energy-aware planning~\cite{mei2004energy,mei2005case,kim2005energy,seewald2022energy}, and planning of energy trade-offs~\cite{ondruska2015scheduled,sudhakar2020balancing}. It answers the question: \textit{Is it possible to tradeoff battery and coverage quality so that there is at least one agent exploring %the space 
+at all times}?
 
-%\begin{figure}
-%  \includegraphics[width=\columnwidth]{vlcsnap-2023-09-09-20h27m24s706}
-%  \caption{.   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   }
-%  \vspace*{-.5cm}
-%\end{figure}
-
-To answer the question, our approach derives an abstract battery model~\cite{zhao2017observability} for battery state of charge (SoC) estimation at future time instances. We first adapt canonical ergodic search to multi-agent ergodic search. We then utilize the formulation to propose energy-aware ergodic search, i.e., ergodic search under battery constraints. The exploration is continuous and uninterrupted, employing a finite horizon framework reminiscent of a model predictive controller formulation with a horizon that is determined empirically~\cite{seewald2022energy}. Experimental data from simulations and real-world experiments show the impact of our newly proposed energy-aware ergodic search. We show that we can effectively explore a space, guaranteeing that there is always one agent exploring, the spatial distribution is satisfied, and the exploration is continuous and uninterrupted (see Section~\ref{sec:res}). The detailed results from the experimental evaluation and the code to replicate our approach are made available on the project repository page\footnote{\label{reflink}{\tt\footnotesize\href{https://github.com/adamseew/enerergo}{github.com/adamseew/enerergo}}}.
+To answer the question, our approach derives an abstract battery model~\cite{zhao2017observability} for battery state of charge (SoC) estimation at future time instances. We first adapt canonical ergodic search to multi-agent ergodic search~\cite{prabhakar2020ergodic,coffin2022multi}. We then utilize the formulation to propose energy-aware ergodic search, i.e., ergodic search under battery constraints. The exploration is continuous and uninterrupted, employing a finite horizon framework reminiscent of a model predictive controller formulation~\cite{seewald2022energy}. %with a horizon that is determined empirically
+Experimental data from simulations and real-world experiments show the impact of our newly proposed energy-aware ergodic search. We show with empirical evidence that we can effectively explore a space, %guaranteeing that 
+there is always one agent exploring, the spatial distribution is satisfied, and the exploration is continuous and uninterrupted (see Section~\ref{sec:res}). The detailed results from the experimental evaluation and the code to replicate our approach are made available on the project repository webpage\footnote{\label{reflink}{\tt\footnotesize\href{https://github.com/adamseew/enerergo}{github.com/adamseew/enerergo}}}.
 
 The remainder of the paper is structured as follows. Sec.~\ref{sec:pb} formulates the problem of multi-agent continuous ergodic search. Sec.~\ref{sec:meth} discusses the methods for both the canonical ergodic search and a battery model enhanced ergodic search. Sec.~\ref{sec:conc} concludes and proposes future directions.
 
@@ -151,15 +151,25 @@ In the remainder of the text, we will use the term ``continuously'' to indicate 
 Canonical ergodic search~\cite{mathew2011metrics,miller2013trajectory,abraham2021ergodic,miller2016ergodic,dressel2018optimality,torre2016ergodic,shetty2022ergodic} does not deal with continuous exploration. It derives an agent's control -- or analogously multiple agents control~\cite{prabhakar2020ergodic,coffin2022multi,lerch2023safety,abraham2018decentralized,patel2021multi} -- so that its trajectory maximizes an ergodic metric defined in the spectral domain~\cite{calinon2020mixture}.
 
 \begin{pb}[Ergodic search]\label{pb:ergo}
-  Consider a bounded space $\mathcal{Q}\subset\mathbb{R}^D$ of dimension $D$ with $D\in\mathbb{N}_{>0}$ and a spatial distribution $\phi$. \textit{Ergodic search problem} is the problem of deriving a control action $\mathbf{u}(t)\in\mathcal{U}\subset\mathbb{R}^V$ with $V\in\mathbb{N}_{>0}$ so that the trajectory $\mathbf{q}(t)\in\mathcal{Q}$ is proportional to the spatial distribution $\phi$.
+  Consider a bounded space $\mathcal{Q}\subset\mathbb{R}^D$ of dimension $D\in\mathbb{N}_{>0}$ and a spatial distribution $\phi$ s.t. $\int_{\mathcal{Q}}\phi\,d\mathbf{q},\,\phi(\mathbf{q})\geq 0\,\,\, \forall \mathbf{q}\in\mathcal{Q}$.
+  \textit{Ergodic search problem} is the problem of deriving a control action $\mathbf{u}(t)\in\mathcal{U}\subset\mathbb{R}^V$ with $V\in\mathbb{N}_{>0}$ so that the trajectory~$\mathbf{q}(t)\in\mathcal{Q}$ is proportional to the spatial distribution $\phi$ via an ergodic metric.
 \end{pb}
 
 Here the notation $\mathbb{R}$ and $\mathbb{N}$ indicates reals and naturals, $\mathbb{N}_{>0}$ strictly naturals. Bold notation is used for vectors.
 
+\begin{defn}[Ergodic metric]\label{def:ergom}
+  Consider a time average distribution that describes where the robot spends more time $\int_{\mathcal{T}}{\Delta\big(s-\mathbf{q}(t)\big)}\,dt\,/t_f$, 
+  where $s\in\mathcal{Q}$ is a spatial statistics~\cite{abraham2018decentralized}, $\Delta$ is a Dirac delta function, and $t_f\in\mathbb{R}_{>0}$ the final time instant. 
+  An \textit{ergodic metric} from Problem~\ref{pb:ergo} relates the average distribution and $\phi$.
+\end{defn}
+
+We will derive an ergodic metric in Equation~(\ref{eq:ergmetric}) in Sec.~\ref{sec:ergosearch}.
+
 We extend the canonical ergodic search problem to multi-agent continuous ergodic search, i.e., uninterrupted exploration with multiple agents under spatial distribution and battery constraints.
 
 \begin{pb}[Multi-agent continuous ergodic search]\label{pb:enerergo}
-  Consider a set of $n$ agents $\boldsymbol{\alpha}:=\{\alpha_1,\alpha_2,\dots,\alpha_n\}$, a bounded space $\mathcal{Q}$, and a spatial distribution $\phi$ similar to Problem~\ref{pb:ergo}. \textit{Multi-agent continuous ergodic search problem} is the problem of deriving each agent ${}^j\alpha$ control action ${}^j\mathbf{u}(t)$ so that its trajectory ${}^j\mathbf{q}(t)$ is proportional to the spatial distribution $\phi$ and there is at least one agent exploring at all times.
+  Consider a set of $n$ agents $\boldsymbol{\alpha}:=\{\alpha_1,\alpha_2,\dots,\alpha_n\}$, a bounded space $\mathcal{Q}$, and a spatial distribution $\phi$ similar to Problem~\ref{pb:ergo}. \textit{Multi-agent continuous ergodic search problem} is the problem of deriving each agent ${}^j\alpha$ control action ${}^j\mathbf{u}(t)$ so that its trajectory ${}^j\mathbf{q}(t)$ is proportional to the spatial distribution $\phi$ and %there is at least one agent exploring at all times.
+  $\exists \alpha_k\in\boldsymbol{\alpha},\,\,{}^k\mathbf{q}(t)$ s.t. the problem is satisfied, i.e., there is at least one agent exploring at all times.
 \end{pb}
 
 We will provide a solution to Problem~\ref{pb:enerergo} (see Sec.~\ref{sec:meth}), assuming that there are one or more areas in $\mathcal{Q}$ -- namely, charging stations -- where the agents $\boldsymbol{\alpha}$ can land and recharge the battery, using, e.g., wireless charging (see Sec.~\ref{sec:res}). 
@@ -182,11 +192,11 @@ For this purpos, in both Problem~\ref{pb:ergo} and \ref{pb:enerergo}, let us con
 \end{equation} 
 composed of $m$ Gaussians. Each has a covariance matrix ${\Sigma_k}\in\mathbb{R}^{D\times D}$, a center $\mu_k\in\mathcal{Q}$, and a positive mixing coefficient $\delta_k\in\boldsymbol{\delta}$ such that the sum of the $\delta$s is less or equal to one. They indicate how well is each Gaussian in the GMM considered. 
 
-The goal of the ergodic search is to minimize an ergodic metric~\cite{mathew2011metrics}
+The goal of the ergodic search is to minimize an ergodic metric~\cite{mathew2011metrics} (see Definition~\ref{def:ergom})
 \begin{equation}\label{eq:ergmetric}
   \mathcal{E}(\boldsymbol{\delta},\mathbf{q}(t)):=\frac{1}{2}\sum_{k\in\mathcal{K}}\Lambda_k \big( c_k(\mathbf{q}(t))-\phi_k(\boldsymbol{\delta}) \big)^2,
 \end{equation}
-where $\phi_k$ are coefficients derived utilizing the Fourier series on the spatial distribution $\phi$ and $c_k$ on the trajectory $\mathbf{q}(t)$. They are detailed in Equation~(\ref{eq:phik}) and (\ref{eq:ck}) respectively.
+where $\phi_k$ are coefficients derived utilizing the Fourier series on the spatial distribution $\phi$ and $c_k$ on the trajectory $\mathbf{q}(t)$. They are detailed in Eq.~(\ref{eq:phik}) and (\ref{eq:ck}) respectively.
 $\Lambda_k$ is a weight factor. That is, if 
 \begin{equation}
   \Lambda_k=(1+\lVert k\rVert^2)^{(-D-1)/2},
@@ -275,7 +285,7 @@ Furthermore, the evolutions of the agents' states in time are described by gener
 \noindent
 To derive a battery model for continuous exploration -- a model that allows us to predict when an agent is exploring and when it conversely should be recharging the battery -- let us consider an abstract equivalent circuit model (ECM). These models are commonly employed in battery metrics estimation for robots and other applications, especially if equipped with rechargeable battery cells~\cite{zhang2018online,xiaosong2012comparative,hasan2018exogenous,hinz2019comparison,mousavi2014various,seewald2022energy}.
 
-The ECM model we employ is a second-order resistor-capacitor (RC) circuit model~\cite{zhao2017observability}, as illustrated in Figure~\ref{fig:thevenin}~\cite{seewaldphdthesis}. 
+The ECM model we employ is a second-order resistor-capacitor (RC) circuit model~\cite{zhao2017observability}, as illustrated in Fig.~\ref{fig:thevenin}~\cite{seewaldphdthesis}. 
 
 Formally, it can be formulated as~\cite{zhao2017observability}
 \begin{equation}\label{eq:battmodel}
@@ -284,15 +294,6 @@ Formally, it can be formulated as~\cite{zhao2017observability}
 where $\zeta\in\mathbb{R}$ is a battery coefficient~\cite{seewald2022energy}, $R_1,R_2\in\mathbb{R}$ and $C_1,C_2\in\mathbb{R}$ are the resistors and capacitors relative to the first and second RC elements in the ECM measured in ohms and farad respectively.
 $Q\in\mathbb{R}$ is the battery nominal capacity measured in amperes per hour.
 
-$I\in\mathbb{R}$ is then the internal current which is load-dependent, e.g., the current required to run the motors, actuators, etc. It is measured in amperes.
-
-The state $\mathbf{b}:=\begin{bmatrix}V_1&V_2&\mathbf{b}_{\text{SoC}}\end{bmatrix}\in\mathbb{R}^3$ contains three battery metrics. $V_1,V_2\in\mathbb{R}$ are the voltages measured in volts across the first and second RC elements, and $\mathbf{b}_{\text{SoC}}\in(0,1]$ is the normalized battery SoC that evolves from fully charged -- or from a given initial value $\mathbf{b}_{\text{SoC}}(t_0)$ -- to discharged.
-
-The battery voltage at the extremes of the ECM $V_e\in\mathbb{R}$, measured in volts, can be then formulated as~\cite{zhao2017observability}
-\begin{equation}
-  V_e(t)=V(\mathbf{b}_{\text{SoC}}(t))-V_1(t)-V_2(t)-I(t)R,
-\end{equation}
-where $R\in\mathbb{R}$ is the single resistor measured in ohm in Fig.~\ref{fig:thevenin}, and $V$ is the open circuit voltage. It is a nonlinear function of the battery SoC and can be retrieved from the battery's data sheet~\cite{hinz2019comparison}.
 
 \begin{figure}[t!]
   \vspace*{-.2cm}
@@ -310,21 +311,19 @@ where $R\in\mathbb{R}$ is the single resistor measured in ohm in Fig.~\ref{fig:t
   \vspace*{-.6cm}
 \end{figure}
 
+$I\in\mathbb{R}$ is then the internal current which is load-dependent, e.g., the current required to run the motors, actuators, etc. It is measured in amperes.
+
+The state $\mathbf{b}:=\begin{bmatrix}V_1&V_2&\mathbf{b}_{\text{SoC}}\end{bmatrix}\in\mathbb{R}^3$ contains three battery metrics. $V_1,V_2\in\mathbb{R}$ are the voltages measured in volts across the first and second RC elements, and $\mathbf{b}_{\text{SoC}}\in(0,1]$ is the normalized battery SoC that evolves from fully charged -- or from a given initial value $\mathbf{b}_{\text{SoC}}(t_0)$ -- to discharged.
+
+The battery voltage at the extremes of the ECM $V_e\in\mathbb{R}$, measured in volts, can be then formulated as~\cite{zhao2017observability}
+\begin{equation}
+  V_e(t)=V(\mathbf{b}_{\text{SoC}}(t))-V_1(t)-V_2(t)-I(t)R,
+\end{equation}
+where $R\in\mathbb{R}$ is the single resistor measured in ohm in Fig.~\ref{fig:thevenin}, and $V$ is the open circuit voltage. It is a nonlinear function of the battery SoC and can be retrieved from the battery's data sheet~\cite{hinz2019comparison}.
+
 The values of $R_1,C_1,R_2,C_2,R$ are identified so that the model output and the physical behavior of the agents are matched as closely as possible~\cite{zhao2017observability} (see Sec.~\ref{sec:res}).
 
 The battery model allows us to determine the battery SoC $\mathbf{b}_{\text{SoC}}$ in Eq.~(\ref{eq:battconst}), which is in turn utilized to find the control action $\mathbf{u}(t)$ so that there is at least one agent exploring $\mathcal{Q}$ at all times. This means that when the solution of the OCP in Eq.~(\ref{eq:ocpfinal}) is evaluated, the battery model in Eq.~(\ref{eq:battmodel}) is integrated for the duration of the horizon, whereas the recharging is approximated linear with the expression $\mathbf{b}_{\text{SoC}}=\eta\,\mathbf{b}_{\text{SoC}}+\theta$ for given $\eta,\theta\in\mathbb{R}$ determined empirically.
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Experimental Results}\label{sec:res}
-\noindent
-In this section, we discuss our experimental setup and results. Our experiments are implemented first in simulation using  \textsc{Matlab} (R), and physical experiments  are implemented in Python and conducted using a set of Crazyflie 2.0 micro aerial vehicles (MAVs). 
-
-In both cases, the source code\cref{reflink} is released under the popular non-commercial open-source license CC BY-NC-SA 4.0. The solution of the OCP in Eq.~(\ref{eq:ocpfinal}) relies on two external open-source components from the literature: the popular nonlinear programming solver IPOPT~\cite{wachter2006implementation} and a software framework for nonlinear optimization called CasADi~\cite{andersson2012casadi}.
-
-Each MAV is equipped with a positioning and wireless charging decks. Precise positioning of MAVs is achieved via two HTC SteamVR Base Station 2.0 units. Each MAV is then equipped with a one-cell 250 mAh 3.7 volts LiPo battery.%, capable of approximately seven minutes of flight.
-
-We evaluate our approach under two different scenarios. In both the scenarios, we use a three-by-three-meter space $\mathcal{Q}$. The spatial distribution $\phi$ contains four Gaussians in the GMM in Eq.~(\ref{eq:gmm}), as illustrated in Fig.~\ref{fig:scenario} (the four cyan empty squares).
 
 \begin{figure}[t!]
   \begin{minipage}[t!]{.5\columnwidth}
@@ -336,6 +335,7 @@ We evaluate our approach under two different scenarios. In both the scenarios, w
     \caption{Information spatial distribution and search space in our experimental evaluation. The distribution consists of four Gaussians in a Gaussian mixture model $\phi$. The Gaussians are centered in $\mu_1$, $\mu_2$, $\mu_3$, and $\mu_4$, as depicted by the cyan empty squares. The search space $\mathcal{Q}$ is a three-by-three area. The resulting ergodic trajectories are expected to be s.t. the robot spends more time close to the Gaussians.}
     \label{fig:scenario}
   \end{minipage}
+  \vspace*{-.1cm}
 \end{figure}
 
 \begin{figure*}[b!]
@@ -359,11 +359,36 @@ We evaluate our approach under two different scenarios. In both the scenarios, w
   \vspace*{-.4cm}
 \end{figure*}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Experimental Results}\label{sec:res}
+\noindent
+In this section, we discuss our experimental setup and results. Our experiments are implemented first in simulation using  \textsc{Matlab} (R), and physical experiments  are implemented in Python and conducted using a set of Crazyflie 2.0 micro aerial vehicles (MAVs). 
+
+In both cases, the source code\cref{reflink} is released under the popular non-commercial open-source license CC BY-NC-SA 4.0. The solution of the OCP in Eq.~(\ref{eq:ocpfinal}) relies on two external open-source components from the literature: the popular nonlinear programming solver IPOPT~\cite{wachter2006implementation} and a software framework for nonlinear optimization called CasADi~\cite{andersson2012casadi}.
+
+Each MAV is equipped with a positioning and wireless charging decks. Precise positioning of MAVs is achieved via two HTC SteamVR Base Station 2.0 units. Each MAV is then equipped with a one-cell 250 mAh 3.7 volts LiPo battery.%, capable of approximately seven minutes of flight.
+
+We evaluate our approach under two different scenarios. In both the scenarios, we use a three-by-three-meter space $\mathcal{Q}$. The spatial distribution $\phi$ contains four Gaussians in the GMM in Eq.~(\ref{eq:gmm}), as illustrated in Fig.~\ref{fig:scenario} (the four cyan empty squares).
+
 \subsection*{Intermittent exploration}
 \noindent
 In the first scenario, an intermediate step towards uninterrupted and continuous exploration, one MAV is positioned on top of a wireless charging station at coordinates $($1.5$,$1.5$)$. The horizon is set to five minutes and is derived empirically along with battery and recharging coefficients. The battery values used in the scenario are those proposed in~\cite{zhao2017observability}. The number of frequencies $K$ is set to nine, as in~\cite{calinon2020mixture}. The ergodic trajectories at four different horizons $t_0$, $t_4$, $t_8$, and $t_{12}$ are shown in Fig.~\ref{fig:res2}. For horizons following the first, the past ergodic trajectories are illustrated in gray.
 
 The MAV starts exploring the space (filled blue square in the figure) and derives the ergodic trajectory for the first horizon $t_0$. At the end of the horizon (filled blue dot), the MAV returns to the charging station. Once the battery is recharged -- formally, once the constraint in Eq.~(\ref{eq:ocpbattconst}) is satisfied -- the exploration proceeds. The exploration derived in this way is, however, not uninterrupted, as it has periods of ``no exploration'' in which the agent recharges the battery. We show a continuous and uninterrupted exploration achieved by a multi-agent system in the following.
+
+
+\begin{figure}[t!]
+  \begin{minipage}[t!]{.5\columnwidth}
+    \vspace*{-.2cm}
+    \input{figures/fig_erg-soc.pdf_tex}
+  \end{minipage}
+  \begin{minipage}[c]{.48\columnwidth}
+    \vspace*{.05cm}
+    \caption{Ergodicity $\mathcal{E}$ in Eq.~(\ref{eq:ergmetric}) as a function of the battery state of charge. The top plot shows the evolution of the ergodicity for all the horizons in Fig.~\ref{fig:res}. The bottom shows the average ergodicity. Initially, the MAVs are at their charging stations. As they start exploring, they move to the areas with high information density -- ergodicity decreases. As they approach the end of the horizon, they start moving to the charging stations -- ergodicity increases.}
+    \label{fig:ergo}
+  \end{minipage}
+  \vspace*{-.3cm}
+\end{figure}
 
 \subsection*{Continuous, uninterrupted exploration}
 \noindent
@@ -395,24 +420,18 @@ where $\varepsilon\in\mathbb{R}_{>0}$ and $k_1,k_2\in[n]$ are given.
 
 Once the two agents $\alpha_1$ and $\alpha_2$ land, they start recharging. The formulation of the OCP in Eq.~(\ref{eq:ocpfinal}) is such that the other two agents $\alpha_3$ ``dark-green'' and $\alpha_4$ ``magenta'' are selected. They are located at coordinates $($0.3$,$2.1$)$ and $($2.7$,$0.9$)$ respectively. They proceed on the respective energy-aware ergodic trajectories and land at each other's charging stations, with the past trajectory being indicated in the background in gray. The figure shows fourteen horizons. The actual exploration in the scenario, however, is continuous. 
 
-\begin{figure}[t!]
-  \begin{minipage}[t!]{.5\columnwidth}
-    \vspace*{-.2cm}
-    \input{figures/fig_erg-soc.pdf_tex}
-  \end{minipage}
-  \begin{minipage}[c]{.48\columnwidth}
-    \vspace*{.05cm}
-    \caption{Ergodicity $\mathcal{E}$ in Eq.~(\ref{eq:ergmetric}) as a function of the battery state of charge. The top plot shows the evolution of the ergodicity for all the horizons in Fig.~\ref{fig:res}. The bottom shows the average ergodicity. Initially, the MAVs are at their charging stations. As they start exploring, they move to the areas with high information density -- ergodicity decreases. As they approach the end of the horizon, they start moving to the charging stations -- ergodicity increases.}
-    \label{fig:ergo}
-  \end{minipage}
-  \vspace*{-.3cm}
-\end{figure}
+\subsection*{Ergodicity against battery staate of charge}
+\noindent
+We report the evolution of the value of the ergodicity metric in Eq. (\ref{eq:ergmetric}) in time as a function of the battery SoC in Fig.~\ref{fig:ergo}. The experimental data are from continuous, uninterrupted exploration (see Fig.~\ref{fig:res}).
+
+The top of the figure shows the evolution per each horizon in Fig.~\ref{fig:res} in red, whereas the bottom shows the averaged value in blue. We can observe that the exploration starts at an initial value of ergodicity, which mostly depends on the distance from the charging stations to the components of the GMM (i.e., high information density). The ergodicity decreases as the agents move towards the Gaussians in the spatial distribution GMM. It oscillates as the agents move from one Gaussian to another. In the first half of the horizon, the average ergodicity continues to descend as more information is gathered. In the second, the ergodicity increases, peaking at the end, as the discharged agents return to the charging stations for recharging (i.e., low information density).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusion and Future Directions}\label{sec:conc}
 \noindent
-This work enhances prior literature on ergodic search -- a method to derive robots' trajectories that visit areas with high information density -- with energy-aware coverage. It answers the question of whether is it possible to explore a space uninterruptedly, with at least one agent at all times. Although prior literature has been investigating ergodic search, battery constraints have not been studied. Yet, it is not possible to continue exploring uninterruptedly on a single battery charge. Our paper tackles this challenge. Our methods are to derive an abstract battery model and extend the canonical ergodic search to energy-aware ergodic search. Continuous exploration is achieved using an empirically derived finite horizon, which resembles a model predictive controller from the literature. Experimental data indicate the effectiveness of the battery-constrained exploration with a single agent first. Uninterrupted coverage is achieved with a multi-agent system, guaranteeing that there is always one agent exploring and the spatial distribution is satisfied.
+This work enhances prior literature on ergodic search -- a method to derive robots' trajectories that visit areas with high information density -- with energy-aware coverage. It answers the question of whether is it possible to explore a space uninterruptedly, with at least one agent at all times. Although prior literature has been investigating ergodic search, battery constraints have not been studied. Yet, it is not possible to continue exploring uninterruptedly on a single battery charge. Our paper tackles this challenge. Our methods are to derive an abstract battery model and extend the canonical ergodic search to energy-aware ergodic search. Continuous exploration is achieved using an %n empirically derived finite horizon
+optimization framework, which resembles a model predictive controller formulation. Experimental data indicate the effectiveness of the battery-constrained exploration with a single agent first. Uninterrupted coverage is achieved with a multi-agent system so that there is always one agent exploring and the spatial distribution is satisfied -- a statement that we prove with empirical evidence.
 
 A limitation of the current methods is that the charging stations are in fixed positions. To enable real-world use cases, we are currently extending the methods to mobile charging stations, which arise in scenarios such as environmental surveying. Furthermore, energy optimality is not addressed by our methods due to the ergodic metric's non-convexity and high non-linearity. Future work will explore the possibilities of guaranteeing energy optimality under tight battery constraints. The physical implementation of such an energy-optimal method will also need to be investigated for feasibility.
 
