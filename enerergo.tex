@@ -52,8 +52,8 @@
 
 \AddToHook{shipout/foreground}{
   \begin{tikzpicture}[remember picture,overlay]
-    \node[red,rotate=45,scale=10,opacity=0.2] at (current page.center) {\small\fontfamily{phv}\selectfont%};
-    IN~PREPARATION};
+    \node[red,rotate=45,scale=10,opacity=0.2] at (current page.center) {\small\fontfamily{phv}\selectfont};
+    %IN~PREPARATION};
     %UNDER~REVIEW};   
   \end{tikzpicture}
 }
@@ -249,9 +249,9 @@ $\mathcal{T}$ is $[t_0, t_f)$, i.e., the last time instant is not considered.
 
 To formulate the solution to Problem~\ref{pb:enerergo}, let us first extend the OCP in Eq.~(\ref{eq:ocpergo}) to multi-agent systems~\cite{coffin2022multi}. Eq.~(\ref{eq:ocpergomin}) becomes
 \begin{equation}\label{eq:ocpergomulti}
-  \min_{\square}\,\,\,{\frac{1}{n}\sum_{k=1}^{n}\left(\int_{\mathcal{T}_k}{}^k\hspace*{-.1ex}\mathbf{u}(\tau)^TR_k\,{}^k\hspace*{-.1ex}\mathbf{u}(\tau)\,d\tau+\mathcal{E}(\boldsymbol{\delta},{}^k\hspace*{-.2ex}\mathbf{q}(t))\right)},
+  \min_{\boldsymbol{\Theta}}\,\,\,{\frac{1}{n}\sum_{k=1}^{n}\left(\int_{\mathcal{T}_k}{}^k\hspace*{-.1ex}\mathbf{u}(\tau)^TR_k\,{}^k\hspace*{-.1ex}\mathbf{u}(\tau)\,d\tau+\mathcal{E}(\boldsymbol{\delta},{}^k\hspace*{-.2ex}\mathbf{q}(t))\right)},
 \end{equation}
-where the ergodic metric and the control penalizing term $R_k$ are now agent-specific. The term $\square$ is ${}^1\mathbf{q}(t),{}^2\mathbf{q}(t),\dots,$ ${}^n\mathbf{q}(t),{}^1\mathbf{u}(t),{}^2\mathbf{u}(t),\dots{}^n\mathbf{u}(t)$. $\mathcal{T}_k$ is $[{}^kt_0, {}^kt_f)$, i.e., different agents might have different durations.
+where the ergodic metric and the control penalizing term $R_k$ are now agent-specific. The term $\boldsymbol{\Theta}$ is ${}^1\mathbf{q}(t),{}^2\mathbf{q}(t),\dots,$ ${}^n\mathbf{q}(t),{}^1\mathbf{u}(t),{}^2\mathbf{u}(t),\dots{}^n\mathbf{u}(t)$. $\mathcal{T}_k$ is $[{}^kt_0, {}^kt_f)$, i.e., different agents might have different durations.
 
 Let us consider a vector $\mathbf{b}\in\mathbb{R}^3$ -- which is detailed later in Sec.~\ref{sec:batt} -- whose trajectory $\mathbf{b}(t)$ describes the battery metrics' evolution in time. If $\mathbf{b}_{\text{SoC}}$ is the value of the vector that expresses the battery %state of charge (SoC)
 SoC, the expression in Eq.~(\ref{eq:ocpergomulti}) might select ergodic metrics corresponding to trajectories that are impossible to traverse in the $\mathbf{b}_{\text{SoC}}\in(0,1]$ domain, i.e., one or more agents' state at $\mathbf{q}(t_f)$ will not satisfy Eq.~(\ref{eq:ocpconsttotf}).
@@ -267,7 +267,7 @@ e.g., an empirically collected value that corresponds to one of the agents' disc
 
 The OCP that provides a solution to Problem~\ref{pb:enerergo} can be formulated as
 \begin{subequations}\label{eq:ocpfinal}\begin{align}
-  \min_{\square}\,\,\,&{\frac{1}{n}\sum_{k=1}^{n}\int_{\mathcal{T}_k}{}^k\hspace*{-.1ex}\mathbf{u}(\tau)^TR_k\,{}^k\hspace*{-.1ex}\mathbf{u}(\tau)\,d\tau},\label{eq:ocpfinalcost}\\
+  \min_{\boldsymbol{\Theta}}\,\,\,&{\frac{1}{n}\sum_{k=1}^{n}\int_{\mathcal{T}_k}{}^k\hspace*{-.1ex}\mathbf{u}(\tau)^TR_k\,{}^k\hspace*{-.1ex}\mathbf{u}(\tau)\,d\tau},\label{eq:ocpfinalcost}\\
   \text{\hspace*{.2ex}s.t.\hspace*{.3ex}}{}^1\hspace*{-.4ex}\dot{\mathbf{q}}&(t)\hspace*{-.4ex}=\hspace*{-.6ex}f_1({}^1\hspace*{-.2ex}\mathbf{q}(t),\hspace*{-.8ex}{}^1\hspace*{-.2ex}\mathbf{u}(t)),\hspace*{-.3ex}{\small\dots},\hspace*{-.7ex}{}^n\hspace*{-.3ex}\dot{\mathbf{q}}(t)\hspace*{-.3ex}=\hspace*{-.5ex}f_n({}^n\hspace*{-.4ex}\mathbf{q}(t),\hspace*{-.7ex}{}^n\hspace*{-.4ex}\mathbf{u}(t)),\\
   {}^1\hspace*{-.2ex}\mathbf{q}&(t),\dots,{}^n\hspace*{-.2ex}\mathbf{q}(t)\in\mathcal{Q},\,{}^1\hspace*{-.2ex}\mathbf{u}(t),\dots,{}^n\hspace*{-.2ex}\mathbf{u}(t)\in\mathcal{U},\\
   \exists &k\in[n]\text{ s.t. }{}^k\mathbf{b}_{\text{SoC}}(t_f)\in(0,b_f],\label{eq:battconst}\\
@@ -350,6 +350,7 @@ The battery model allows us to determine the battery SoC $\mathbf{b}_{\text{SoC}
 \end{figure*}
 
 \begin{figure*}[t!]
+  \vspace*{.17cm}
   \begin{minipage}[t]{1\columnwidth}
     \input{figures/trajs.pdf_tex}
   \end{minipage}
@@ -359,7 +360,7 @@ The battery model allows us to determine the battery SoC $\mathbf{b}_{\text{SoC}
     \caption{Experimental evaluation of continuous, uninterrupted exploration. Four agents $\alpha_1$, $\alpha_2$, $\alpha_3$, and $\alpha_4$ are placed on top of four wireless charging stations at coordinates $($0.3$,$0.9$)$, $($2.7$,$2.1$)$, $($0.3$,$2.1$)$, and $($2.7$,$0.9$)$. The problem is set so that the agents explore the space two-by-two first and they never compete for the same Gaussian. The Gaussians might be further spread, allowing for tradeoffs between the coverage quality and battery state of charge. In the first horizon (top-left of the figure indicated by $t_0$), $\alpha_1$ and $\alpha_2$ start exploring (blue- and red-filled squares). They finish the exploration at the end of the horizon and land on each others' charging stations. The exploration proceeds at the following horizon (right of the previous horizon indicated by $t_1$) with agents $\alpha_3$ and $\alpha_4$ (green- and magenta-filled squares), and so on. The figure shows fourteen horizons of uninterrupted exploration with at least one agent exploring at all times.}
     \label{fig:res}
   \end{minipage}
-  \vspace*{-.0cm}
+  \vspace*{-.2cm}
 \end{figure*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -382,11 +383,11 @@ The MAV starts exploring the space (filled blue square in the figure) and derive
 
 \begin{figure}[t!]
   \begin{minipage}[t!]{.5\columnwidth}
-    \vspace*{-.2cm}
+    \vspace*{.1cm}
     \input{figures/fig_erg-soc.pdf_tex}
   \end{minipage}
   \begin{minipage}[c]{.48\columnwidth}
-    \vspace*{.05cm}
+    \vspace*{-.2cm}
     \caption{Ergodicity $\mathcal{E}$ in Eq.~(\ref{eq:ergmetric}) as a function of the battery state of charge. The top plot shows the evolution of the ergodicity for all the horizons in Fig.~\ref{fig:res}. The bottom shows the average ergodicity. Initially, the MAVs are at their charging stations. As they start exploring, they move to the areas with high information density -- ergodicity decreases. As they approach the end of the horizon, they start moving to the charging stations -- ergodicity increases.}
     \label{fig:ergo}
   \end{minipage}
@@ -405,7 +406,7 @@ There is an additional constraint on the final point in Eq~(\ref{eq:ocpgivencons
 
 The cost function in Eq.~(\ref{eq:ocpfinalcost}) is further enhanced with the mixing coefficient $\boldsymbol{\delta}$ in Eq.~(\ref{eq:gmm}), allowing us to find the tradeoffs between the single Gaussians, the different agents, and the battery SoC. Namely, the cost is
 \begin{equation}
-  \min_{\square,\boldsymbol{\delta}}\,\,\,{\frac{1}{n}\sum_{k=1}^{n}\int_{\mathcal{T}_k}{}^k\hspace*{-.1ex}\mathbf{u}(\tau)^TR_k\,{}^k\hspace*{-.1ex}\mathbf{u}(\tau)\,d\tau-\frac{1}{n}\sum_{k=1}^{m}\delta_k}.
+  \min_{\boldsymbol{\Theta},\boldsymbol{\delta}}\,\,\,{\frac{1}{n}\sum_{k=1}^{n}\int_{\mathcal{T}_k}{}^k\hspace*{-.1ex}\mathbf{u}(\tau)^TR_k\,{}^k\hspace*{-.1ex}\mathbf{u}(\tau)\,d\tau-\frac{1}{n}\sum_{k=1}^{m}\delta_k}.
 \end{equation}
 
 A similar approach is undertaken in prior literature~\cite{rao2023multi}, where the ergodic objective is dynamic as more information is gathered, rather than the battery status is changed.
