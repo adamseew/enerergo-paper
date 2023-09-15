@@ -100,19 +100,14 @@
 
 \vspace*{-.5cm}
 \begin{abstract} 
-  %Robots capable of exploring space without interruption are employed in scenarios such as search and rescue and precision agriculture. In these scenarios, ergodic search derives continuous and uninterrupted trajectories so that the robots spend more time in areas with high information density. 
-  Exploring space without interruption is important in scenarios such as search and rescue and precision agriculture. Ergodic search already derives continuous %and uninterrupted 
-  trajectories in these scenarios so that the robots spend more time in areas with high information density. 
-  However, existing literature on ergodic search does not consider the robot's energy constraints. 
-  %Prior literature proposes advances in ergodic search, yet energy constraints have not been considered. 
-  If the robots are battery-powered, it is physically not possible to continuously explore %a space 
-  on a single battery charge. Our paper tackles this challenge by integrating ergodic search methods with energy-aware coverage. We trade off battery usage and coverage quality, maintaining uninterrupted exploration of a given space by at least one agent. Our approach is to derive an abstract battery model for future state-of-charge estimation and extend canonical ergodic search to ergodic search under battery constraints. Empirical data from simulations and real-world experiments demonstrate the effectiveness of our energy-aware ergodic search, which ensures continuous and uninterrupted exploration and guarantees spatial coverage.
+  Autonomous exploration without interruption is important in scenarios such as search and rescue and precision agriculture, where consistent presence is needed to detect events over large areas. Ergodic search already derives continuous coverage trajectories in these scenarios so that a robot spends more time in areas with high information density. However, existing literature on ergodic search does not consider the robot’s energy constraints, limiting how long a robot can explore. If the robots are battery-powered, it is physically not possible to continuously explore on a single battery charge. Our paper tackles this challenge by integrating ergodic search methods with energy-aware coverage. We trade off battery usage and coverage quality, maintaining uninterrupted exploration of a given space by at least one agent. Our approach derives an abstract battery model for future state-of-charge estimation and extends canonical ergodic search to ergodic search under battery constraints. Empirical data from simulations and real-world experiments demonstrate the effectiveness of our energy-aware ergodic search, which ensures continuous and uninterrupted exploration and guarantees spatial coverage.
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 \noindent
-Robotic exploration is a recurring problem in different scenarios. It typically involves coverage path planning (CPP), which deals with deriving robots' trajectories that traverse every point in a given space~\cite{choset2001coverage,galceran2013survey,cabreira2019survey}. Within CPP, ergodic search is a recent and promising direction~\cite{abraham2021ergodic,miller2016ergodic,dressel2018optimality,torre2016ergodic,shetty2022ergodic,prabhakar2020ergodic,coffin2022multi,lerch2023safety,abraham2018decentralized,patel2021multi,dong2023time,abraham2017ergodic,rao2023multi,ayvali2017ergodic}, as it enhances the efficiency of traditional CPP by optimizing the time a robot spends in a given region w.r.t. an information measure. As a result, ergodic search derives trajectories so that the robots spend more time in areas with high information density while quickly passing areas with low information density~\cite{mathew2011metrics,%abraham2021ergodic,dong2023time,
+Robotic %exploration is a recurring problem in different scenarios (inspection, surveying, etc.). It 
+typically involves coverage path planning (CPP), which deals with deriving robots' trajectories that traverse every point in a given space~\cite{choset2001coverage,galceran2013survey,cabreira2019survey}. Within CPP, ergodic search is a recent and promising direction~\cite{abraham2021ergodic,miller2016ergodic,dressel2018optimality,torre2016ergodic,shetty2022ergodic,prabhakar2020ergodic,coffin2022multi,lerch2023safety,abraham2018decentralized,patel2021multi,dong2023time,abraham2017ergodic,rao2023multi,ayvali2017ergodic}, as it enhances the efficiency of traditional CPP by optimizing the time a robot spends in a given region w.r.t. an information measure. As a result, ergodic search derives trajectories so that the robots spend more time in areas with high information density while quickly passing areas with low information density~\cite{mathew2011metrics,%abraham2021ergodic,dong2023time,
 patel2021multi}. The user can specify areas of interest, e.g., where the robots should spend more time exploring in a search and rescue scenario~\cite{dong2023time}, where the robots should collect more data in a precision agriculture scenario~\cite{rao2023multi}, etc.
 
 Canonical ergodic search indeed derives continuous exploration~\cite{%mathew2011metrics,
@@ -121,7 +116,7 @@ Scenarios involving CPP, however, often require that the space is covered contin
 This work enhances the current ergodic search literature by incorporating more traditional energy-aware CPP approaches~\cite{difranco2015energy,difranco2016coverage,shnaps2016online,cabreira2018energy,wei2018coverage,jensen2021near}, battery- and energy-aware planning~\cite{mei2004energy,mei2005case,kim2005energy,seewald2022energy}, and planning of energy trade-offs~\cite{ondruska2015scheduled,sudhakar2020balancing}. It answers the question: \textit{Is it possible to tradeoff battery and coverage quality so that there is at least one agent exploring %the space 
 at all times}?
 
-Prior literature has studied ergodic search in manipulation~\cite{shetty2022ergodic}, tactile sensing~\cite{abraham2017ergodic}, stochastic dynamics~\cite{ayvali2017ergodic,torre2016ergodic}, distributed information~\cite{miller2016ergodic}, time optimality~\cite{dong2023time}, and active learning~\cite{abraham2021ergodic}. Ergodic search for multi-agent systems~\cite{prabhakar2020ergodic,coffin2022multi} has been applied in conjunction with low-information sensors~\cite{coffin2022multi,lerch2023safety,abraham2018decentralized}, swarms control~\cite{prabhakar2020ergodic}, obstacles~\cite{lerch2023safety}, and decentralized systems~\cite{abraham2018decentralized}. Ergodic search has been proven successful in use cases involving urban environments~\cite{patel2021multi} and information gathering~\cite{dressel2018optimality}.
+Prior literature has studied ergodic search in manipulation~\cite{shetty2022ergodic}, tactile sensing~\cite{abraham2017ergodic}, stochastic dynamics~\cite{ayvali2017ergodic,torre2016ergodic}, distributed information~\cite{miller2016ergodic}, time optimality~\cite{dong2023time}, and active learning~\cite{abraham2021ergodic}. Ergodic search for multi-agent systems~\cite{prabhakar2020ergodic,coffin2022multi} has been applied in conjunction with low-information sensors~\cite{coffin2022multi,lerch2023safety,abraham2018decentralized}, swarms control~\cite{prabhakar2020ergodic}, obstacle avoidance~\cite{lerch2023safety}, and decentralized systems~\cite{abraham2018decentralized}. Ergodic search has been proven successful in use cases involving urban environments~\cite{patel2021multi} and information gathering~\cite{dressel2018optimality}.
 While prior literature includes ergodic search methods in a variety of settings, energy constraints have not been studied yet. 
 Partly due to these constraints, the uninterrupted exploration %in realistic systems
 that %is continuous and 
@@ -153,26 +148,24 @@ The remainder of the paper is structured as follows. Sec.~\ref{sec:pb} formulate
 \noindent
 This work addresses the problem of exploring a bounded space with multiple agents, proportionally to a spatial distribution and in such a way that there is at least one agent exploring. 
 %
-In the remainder of the text, we will use the terms \textit{continuously} and \textit{uninterruptedly} to indicate that there is at least one agent exploring the space at all times.
+In the remainder of the text, we will use the terms \textit{continuously} and \textit{uninterruptedly} to indicate that there is at least one agent exploring the space at all times, i.e., a certain reasonable level of coverage is already sattisfied.
 
 Canonical ergodic search~\cite{mathew2011metrics,miller2013trajectory,abraham2021ergodic,miller2016ergodic,dressel2018optimality,torre2016ergodic,shetty2022ergodic} does not deal with uninterrupted exploration. It derives an agent's control -- or analogously multiple agents' control~\cite{prabhakar2020ergodic,coffin2022multi,lerch2023safety,abraham2018decentralized,patel2021multi} -- so that its trajectory maximizes an ergodic metric %defined 
 in the spectral domain~\cite{calinon2020mixture}.
 
-
 \begin{defn}[Ergodicity]
   Consider a bounded space $\mathcal{Q}\subset\mathbb{R}^D$ of dimension $D\in\mathbb{N}_{>0}$. 
-  A trajectory $\mathbf{q}(t)\in\mathcal{Q}$ is said \textit{ergodic} with respect to a spatial distribution $\phi$ if and only if
+  A trajectory $\mathbf{q}(t)\in\mathcal{Q}$ is said to be \textit{ergodic} with respect to a spatial distribution $\phi$ if and only if
   \begin{equation}
     \lim_{t\rightarrow \infty}{\small
       \frac{1}{t}\int_{\mathcal{T}}\Omega\bigg(\kappa\big(\mathbf{q}(t)\big)\bigg)=\int_{\mathcal{Q}}\phi(\mathbf{q})\,\Omega(\mathbf{q})\,d\mathbf{q},
     }
   \end{equation}
-  for all Lebesgue functions $\Omega$~\cite{mathew2011metrics}. The function $\kappa$ maps the state to exploration space (see Sec.~\ref{sec:meth}).
+  for all Lebesgue functions $\Omega$~\cite{mathew2011metrics}. The function $\kappa$ maps the state to the exploration work space (see Sec.~\ref{sec:meth}).
   \end{defn}
 
 \begin{defn}[Ergodic metric]\label{def:ergom}
-  Consider a time average distribution that describes where the robot spends more time, i.e., $h(\mathbf{q}(t))=\int_{\mathcal{T}}{\Delta\big(s-\mathbf{q}(t)\big)}\,dt\,/t_f$, 
-  where $s\in\mathcal{Q}$ is a spatial distribution~\cite{abraham2018decentralized} for a finite time $t_f$, $\Delta$ is a Dirac delta function, and $t_f\in\mathbb{R}_{>0}$ the final time instant. 
+  Consider a time average distribution that describes where the robot spends more time over a finite time window $[t_0-t_f]$, i.e., $h(\mathbf{q}(t))=\int_{\mathcal{T}}{\Delta\big(\mathbf{q}(t)\big)}\,dt\,/t_f$, $\Delta$ is a Dirac delta function, and $t_0,t_f\in\mathbb{R}_{>0}$ are the initial and final time instants. 
   An \textit{ergodic metric} is defined as the $L^2$ inner product between the time average distribution $h$ and the average of the spatial distribution $\phi$.
 \end{defn}
 
@@ -180,17 +173,18 @@ in the spectral domain~\cite{calinon2020mixture}.
   Consider the bounded space $\mathcal{Q}$ and a spatial distribution $\phi$ s.t. $\int_{\mathcal{Q}}\phi\,d\mathbf{q}=1,\,\phi(\mathbf{q})\geq 0\,\,\, \forall \mathbf{q}\in\mathcal{Q}$.
   \textit{Ergodic search problem} is the problem of~deriving a control action $\mathbf{u}(t)\in\mathcal{U}\subset\mathbb{R}^V$ with $V\in\mathbb{N}_{>0}$ so that the ergodic metric is minimized (see Definition~\ref{def:ergom}). %trajectory~$\mathbf{q}(t)\in\mathcal{Q}$ is proportional to the spatial distribution $\phi$ via an ergodic metric.
 \end{pb}
-
 Here the notation $\mathbb{R}$ and $\mathbb{N}$ indicates reals and naturals, $\mathbb{N}_{>0}$ strictly naturals. Bold notation is used for vectors.
-
+%
 We derive an ergodic metric in Equation~(\ref{eq:ergmetric}) in Sec.~\ref{sec:ergosearch}.
 
 We extend the canonical ergodic search problem to energy-aware ergodic search, i.e., uninterrupted exploration with multiple agents under spatial distribution and battery constraints.
 
 \begin{pb}[Energy-aware ergodic search]\label{pb:enerergo}
-  Consider a set of $n$ agents $\boldsymbol{\alpha}:=\{\alpha_1,\alpha_2,\dots,\alpha_n\}$, a bounded space $\mathcal{Q}$, and a spatial distribution $\phi$ similar to Problem~\ref{pb:ergo}.~\textit{Energy-aware ergodic search problem} is the problem of deriving each agent ${}^j\alpha$ control action ${}^j\mathbf{u}(t)$ so that its trajectory~${}^j\mathbf{q}(t)$ is proportional to the spatial distribution $\phi$ and %there is at least one agent exploring at all times.
+  Consider a set of $n$ agents $\boldsymbol{\alpha}:=\{\alpha_1,\alpha_2,\dots,\alpha_n\}$, a bounded space $\mathcal{Q}$, and a spatial distribution $\phi$ similar to Problem~\ref{pb:ergo}.~\textit{Energy-aware ergodic search problem} is the problem of deriving each agent ${}^j\alpha$ control action ${}^j\mathbf{u}(t)$ so that $\forall j,\,\,{}^j\mathbf{q}(t)$ induces a time average distribution that is proportional to the spatial distribution $\phi$ and %there is at least one agent exploring at all times.
   %$\exists \alpha_k\in\boldsymbol{\alpha},\,\,{}^k\mathbf{q}(t)$ s.t.  
-  the ergodic metric calculated between the agents' averaged time average distribution in Definition~\ref{def:ergom} is satisfied, i.e., $\sum_{k\in[n]}\int_{\mathcal{T}}{\Delta(s-{}^k\mathbf{q}(t))\,dt\,/(n\,t_f)}\leq \gamma$ for a given $\gamma$.%add 1 %$\mathcal{E}\big({}^k\mathbf{q}(t)\big)\leq \gamma$ for a given $\gamma\in\mathbb{R}_{>0}$, i.e., there is at least one agent exploring at all times.
+  the ergodic metric calculated between the agents' averaged time average distribution in Definition~\ref{def:ergom} is satisfied, i.e., satisfying an upperbound on the ergodic metric 
+  %$\sum_{k\in[n]}\int_{\mathcal{T}}{\Delta(s-{}^k\mathbf{q}(t))\,dt\,/(n\,t_f)}\leq \gamma$ for a given $\gamma$.%add 1 %$\mathcal{E}\big({}^k\mathbf{q}(t)\big)\leq \gamma$ 
+  for a given $\gamma\in\mathbb{R}_{>0}$.%, i.e., there is at least one agent exploring at all times.
 \end{pb}
 
 We will provide a solution to Problem~\ref{pb:enerergo} (see Sec.~\ref{sec:meth}), assuming that there are one or more areas in $\mathcal{Q}$ -- namely, charging stations -- where the agents can land and recharge the battery, using, e.g., wireless charging (see Sec.~\ref{sec:res}). 
@@ -366,13 +360,23 @@ The state $\mathbf{b}:=\begin{bmatrix}V_1&V_2&\mathbf{b}_{\text{SoC}}\end{bmatri
   \vspace*{-.15cm}
 \end{figure}
 
-\begin{figure*}[b!]
-  \vspace*{-.2cm}
+\begin{figure}[b!]
+  \vspace*{-.1cm}
   \input{figures/trajs2_2.pdf_tex}
   \caption{\textbf{Experimental evaluation of %intermittent exploration
-  competing exploration}. Four agents $\alpha_1$, $\alpha_2$, $\alpha_3$, and $\alpha_4$ are placed on top of four wireless charging stations at coordinates $($0.3$,$0.9$)$, $($2.7$,$2.1$)$, $($0.3$,$2.1$)$, and $($2.7$,$0.9$)$. The problem is set so that the agents explore the space two-by-two first, and they compete for one area with high information density -- the first three sub-figures from the left. The same problem is then applied to two areas -- the last sub-figure. The agents $\alpha_1$ ``blue'' and $\alpha_2$ ``red'' explore the space in the first horizon $t_0$ (left of the figure), spending most of the time close to the Gaussian. The agents then return to the charging station to recharge the battery. The other two agents $\alpha_3$ ``dark-green'' and $\alpha_4$ ``magenta'' proceed for the following horizon. After that, the ``blue'' and ``red'' agents resume the previous exploration.}
+  competing exploration with one Gaussian}.
+  Four agents $\alpha_1$, $\alpha_2$, $\alpha_3$, and $\alpha_4$ explore the space two-by-two first, and they compete for one area with high information density. The agents $\alpha_1$ ``blue'' and $\alpha_2$ ``red'' explore the space in the first horizon $t_0$ (left of the figure), spending most of the time close to the Gaussian. The agents then return to the charging station to recharge the battery. The other two agents $\alpha_3$ ``dark-green'' and $\alpha_4$ ``magenta'' proceed for the next horizon.}% -- the first three sub-figures from the left.}
   \label{fig:res2}
-\end{figure*}
+\end{figure}
+
+
+\begin{figure}[b!]
+  \vspace*{-.1cm}
+  \input{figures/trajs2_3.pdf_tex}
+  \caption{\textbf{Experimental evaluation of %intermittent exploration
+  competing exploration with two Gaussians}. The problem in Fig.~\ref{fig:res2} is applied to two areas, but now with two areas. The agents compete for both areas with high information density, with the agents ``blue'' and ``red'' selected first. One can note how both agents swap between the areas but spend most time in proximity to the Gaussians. At the end of the first horizon, they return to the charging stations with the other two agents ``dark-green'' and ``magenta'' exploring the space.}
+  \label{fig:res3}
+\end{figure}
 
 \begin{figure*}[t!]
   \vspace*{.17cm}
@@ -386,7 +390,7 @@ The state $\mathbf{b}:=\begin{bmatrix}V_1&V_2&\mathbf{b}_{\text{SoC}}\end{bmatri
     that the agents never compete for the same Gaussian. The Gaussians might be further spread, allowing for tradeoffs between the coverage quality and battery state of charge. In the first horizon (top-left of the figure indicated by $t_0$), $\alpha_1$ and $\alpha_2$ start exploring (blue- and red-filled squares). They finish the exploration at the end of the horizon and land on each others' charging stations. The exploration proceeds at the following horizon (right of the previous horizon indicated by $t_1$) with agents $\alpha_3$ and $\alpha_4$ (dark-green- and magenta-filled squares), and so on. The figure shows fourteen horizons of uninterrupted exploration.}
     \label{fig:res}
   \end{minipage}
-  \vspace*{-.5cm}
+  \vspace*{-.6cm}
 \end{figure*}
 
 The battery voltage at the extremes of the ECM $V_e\in\mathbb{R}$, measured in volts, can be then formulated as%~\cite{zhao2017observability}
@@ -416,7 +420,7 @@ We evaluate our approach under two different scenarios. In both the scenarios, w
 \subsection*{Competing exploration}
 \noindent
 % we found that that we were able to get feasible solutions -by including the alphas in the optimization, this is concurrent with results with the [multi-object] which has found that ergodic coverage was improved for multiobjective optimization.
-In the first scenario, four MAVs $\alpha_1$, $\alpha_2$, $\alpha_3$, and $\alpha_4$ are placed on top of four wireless charging stations. The horizon is set to two and a half minutes and is derived empirically along with battery and recharging coefficients. The battery values used in the scenario are those proposed in~\cite{zhao2017observability}. The number of frequencies $K$ is set to nine, as in~\cite{calinon2020mixture}. %The ergodic trajectories at %four different horizons 
+In the first scenario, four MAVs $\alpha_1$, $\alpha_2$, $\alpha_3$, and $\alpha_4$ are placed on top of four wireless charging stations at coordinates $($0.3$,$0.9$)$, $($2.7$,$2.1$)$, $($0.3$,$2.1$)$, and $($2.7$,$0.9$)$. The horizon is set to two and a half minutes and is derived empirically along with battery and recharging coefficients. The battery values used in the scenario are those proposed in~\cite{zhao2017observability}. The number of frequencies $K$ is set to nine, as in~\cite{calinon2020mixture}. %The ergodic trajectories at %four different horizons 
 %$t_0$, $t_4$, $t_8$, and $t_{12}$ are shown in Fig.~\ref{fig:res2}. For horizons following the first, the past ergodic trajectories are illustrated in gray.
 The MAVs compete for the same area with high information density, i.e., they utilize the multi-agent ergodic metric introduced in Eq.~(\ref{eq:multiergometric}).
 
@@ -433,7 +437,7 @@ Once the two agents $\alpha_1$ and $\alpha_2$ land, they start recharging. The f
 
 In the following horizon, the agents $\alpha_3$ and $\alpha_4$ are recharging whereas $\alpha_1$ and $\alpha_2$ proceed with the exploration. %from where they left off.%, and so on.
 
-The last sub-figure in Fig.~\ref{fig:res2} illustrates the case of the agents competing for two areas with high information density.
+Fig.~\ref{fig:res3} illustrates the case of the agents competing for two areas with high information density.
 
 \begin{figure}[t!]
   \begin{minipage}[t!]{.5\columnwidth}

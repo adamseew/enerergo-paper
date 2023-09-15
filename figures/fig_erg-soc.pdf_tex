@@ -63,7 +63,7 @@
     \put(0,0){\includegraphics[width=\unitlength,page=2]{figures/fig_erg-soc.pdf}}%
     \put(0.08746903,0.10530741){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0\end{tabular}}}}%
     \put(0.04107715,0.18488711){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}.05\end{tabular}}}}%
-    \put(0.0749013,0.26446624){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}.1\end{tabular}}}}%
+    \put(-0.0149013,0.26446624){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\color{red}$\gamma\hspace{-.5ex}=\hspace{-.1ex}$.1\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=3]{figures/fig_erg-soc.pdf}}%
     \put(0.79565281,0.4208607){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.828\end{tabular}}}}%
     \put(0.54119256,0.4208607){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.83\end{tabular}}}}%
