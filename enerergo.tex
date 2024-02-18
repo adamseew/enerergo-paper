@@ -172,7 +172,7 @@ Let us define the concepts of ergodicity and ergodic metric.
       \frac{1}{t}\int_{\mathcal{T}}\Omega\bigg(\kappa\big(\mathbf{q}(t)\big)\bigg)=\int_{\mathcal{Q}}\phi(\mathbf{q})\,\Omega(\mathbf{q})\,d\mathbf{q},
     }
   \end{equation}
-  for all Lebesgue functions $\Omega$~\cite{mathew2011metrics}. The function $\kappa$ maps the state to the exploration work space, e.g., Equation~(\ref{eq:ergmetric}).
+  for all Lebesgue functions $\Omega$~\cite{mathew2011metrics}. The function $\kappa$ maps the state to the exploration workspace, e.g., Equation~(\ref{eq:ck}).
   \end{defn}
 
 \begin{defn}[Ergodic metric]\label{def:ergom}
@@ -185,7 +185,7 @@ Let us define the concepts of ergodicity and ergodic metric.
   \textit{Ergodic search problem} is the problem of~deriving a control action $\mathbf{u}(t)\in\mathcal{U}\subset\mathbb{R}^V$ with $V\in\mathbb{N}_{>0}$ so that the ergodic metric is minimized (see Definition~\ref{def:ergom}). %trajectory~$\mathbf{q}(t)\in\mathcal{Q}$ is proportional to the spatial distribution $\phi$ via an ergodic metric.
 \end{pb}
 
-We derive an ergodic metric in Equation~(\ref{eq:ergmetric}) in Sec.~\ref{sec:ergosearch}.
+We derive an ergodic metric in Eq.~(\ref{eq:ergmetric}) in Sec.~\ref{sec:ergosearch}.
 
 The notation $\mathbb{R}$ and $\mathbb{N}$ indicates reals and naturals, $\mathbb{N}_{>0}$ strictly naturals. Bold notation is used for vectors.
 %
@@ -207,7 +207,7 @@ We will provide a solution to Problem~\ref{pb:enerergo} (see Sec.~\ref{sec:meth}
 %%%%%%%%%%%%%%%%%%
 \section{Methods}\label{sec:meth}
 \noindent
-In this section, we discuss the methods utilized in this work for continuous, uninterrupted exploration with multiple agents and proportionally to a spatial distribution
+In this section, we discuss the methods utilized in this work for continuous, uninterrupted exploration with multiple agents and proportionally to a spatial distribution.
 
 We discuss how to achieve the latter in Sec.~\ref{sec:ergosearch} and the former in Sec.~\ref{sec:batt}.
 
@@ -296,7 +296,7 @@ The ergodic metric is now evaluated for multiple agents\vspace*{-.1cm}
 Let us consider a vector $\mathbf{b}\in\mathbb{R}^3$, detailed later in Sec.~\ref{sec:batt}, whose trajectory $\mathbf{b}(t)$ describes the evolution of some battery metrics' in time. If $\mathbf{b}_{\text{SoC}}$ is the value of the vector that expresses the battery %state of charge (SoC)
 SoC, the expression in Eq.~(\ref{eq:ocpergomulti}) might select ergodic metrics corresponding to trajectories that are impossible to traverse in the $\mathbf{b}_{\text{SoC}}\in(0,1]$ domain.%, i.e., one or more agents' state at $\mathbf{q}(t_f)$ will not satisfy Eq.~(\ref{eq:ocpconsttotf}).
 
-In order to satisfy the battery SoC domain and always keep at least one agent exploring, an OCP must satisfy an additional constrain
+In order to satisfy the battery SoC domain and always keep at least one agent exploring, an OCP must satisfy an additional constraint
 \begin{equation}\label{eq:ocpbattconst}
   \exists k\in[n]\text{ s.t. }{}^k\mathbf{b}_{\text{SoC}}(t_f)\in(0,b_f],
 \end{equation}
@@ -304,9 +304,9 @@ where $b_f\in(0,1]\subset\mathbb{R}_{>0}$ is a given desired battery SoC at the 
 
 Finally, let us consider the realistic assumption that the optimization horizon %$N\in\mathbb{R}_{>0}$ 
 is known and is,
-e.g., an empirically collected value that corresponds to one of the agents' discharge time (see Sec.~\ref{sec:res}).
+e.g., an empirically collected value that corresponds to one of the agents' discharge times (see Sec.~\ref{sec:res}).
 
-The OCP that provides a solution to Problem~\ref{pb:enerergo} can be formulated as
+The OCP that provides a solution to Problem~\ref{pb:enerergo} can be formulated %as
 \begin{subequations}\label{eq:ocpfinal}\begin{align}
   \min_{\boldsymbol{\Theta}}\,\,\,&{\frac{1}{n}\sum_{k=1}^{n}\int_{\mathcal{T}_k}{}^k\hspace*{-.1ex}\mathbf{u}(\tau)^TR_k\,{}^k\hspace*{-.1ex}\mathbf{u}(\tau)\,d\tau},\label{eq:ocpfinalcost}\\
   \text{\hspace*{.2ex}s.t.\hspace*{.3ex}}{}^1\hspace*{-.4ex}\dot{\mathbf{q}}&(t)\hspace*{-.4ex}=\hspace*{-.6ex}f_1({}^1\hspace*{-.2ex}\mathbf{q}(t),\hspace*{-.8ex}{}^1\hspace*{-.2ex}\mathbf{u}(t)),\hspace*{-.3ex}{\small\dots},\hspace*{-.7ex}{}^n\hspace*{-.3ex}\dot{\mathbf{q}}(t)\hspace*{-.3ex}=\hspace*{-.5ex}f_n({}^n\hspace*{-.4ex}\mathbf{q}(t),\hspace*{-.7ex}{}^n\hspace*{-.4ex}\mathbf{u}(t)),\\
@@ -380,7 +380,7 @@ The state $\mathbf{b}:=\begin{bmatrix}V_1&V_2&\mathbf{b}_{\text{SoC}}\end{bmatri
   \input{figures/trajs2_2.pdf_tex}
   \caption{\textbf{Experimental evaluation of %intermittent exploration
   competing exploration with one Gaussian}.
-  Four agents $\alpha_1$, $\alpha_2$, $\alpha_3$, and $\alpha_4$ explore the space two-by-two first, and they compete for one area with high information density. The agents $\alpha_1$ blue and $\alpha_2$ red explore the space in the first horizon $t_0$ (left of the figure), spending most of the time close to the Gaussian. The agents then return to the charging station to recharge the battery. The other two agents $\alpha_3$ dark-green and $\alpha_4$ magenta proceed for the next horizon.}% -- the first three sub-figures from the left.}
+  Four agents $\alpha_1$, $\alpha_2$, $\alpha_3$, and $\alpha_4$ explore the space two-by-two first, and they compete for one area with high information density. The agents $\alpha_1$ blue and $\alpha_2$ red explore the space in the first horizon $t_0$ (left of the figure), spending most of the time close to the Gaussian. The agents then return to the charging station to recharge the battery. The other two agents $\alpha_3$ dark green and $\alpha_4$ magenta proceed in the next time horizon.}% -- the first three sub-figures from the left.}
   \label{fig:res2}
 \end{figure}
 
@@ -390,7 +390,7 @@ The state $\mathbf{b}:=\begin{bmatrix}V_1&V_2&\mathbf{b}_{\text{SoC}}\end{bmatri
   \hspace*{-.2cm}
   \input{figures/trajs2_3.pdf_tex}
   \caption{\textbf{Experimental evaluation of %intermittent exploration
-  competing exploration with two Gaussians}. Four agents explore the space and compete for two areas with high information density (instead of one in Fig.~\ref{fig:res2}). The agents blue and red are selected first. One can note how both agents swap between the areas but spend most time near the Gaussians. At the end of the first horizon, they return to the charging stations with the other two agents dark-green and magenta exploring the space.}
+  competing exploration with two Gaussians}. Four agents explore the space and compete for two areas with high information density (instead of one in Fig.~\ref{fig:res2}). The agents blue and red are selected first. One can note how both agents swap between the areas but spend most time near the Gaussians. At the end of the first horizon, they return to the charging stations with the other two agents dark green and magenta exploring the space.}
   \label{fig:res3}
 \end{figure}
 
@@ -403,17 +403,17 @@ The state $\mathbf{b}:=\begin{bmatrix}V_1&V_2&\mathbf{b}_{\text{SoC}}\end{bmatri
   \begin{minipage}[t]{.97\columnwidth}
     \vspace*{-4.2cm}
     \caption{\textbf{Experimental evaluation of cooperative exploration}. Four agents $\alpha_1$, $\alpha_2$, $\alpha_3$, and $\alpha_4$ are placed on top of four wireless charging stations at the same coordinates in Fig.~\ref{fig:res2}. The problem is now set so %that the agents explore the space two-by-two first and 
-    that the agents never compete for the same Gaussian. The Gaussians might be further spread, allowing for tradeoffs between the coverage quality and battery state of charge. In the first horizon (top-left of the figure indicated by $t_0$), $\alpha_1$ and $\alpha_2$ start exploring (blue- and red-filled squares). They finish the exploration at the end of the horizon and land on each others' charging stations. The exploration proceeds at the following horizon (right of the previous horizon indicated by $t_1$) with agents $\alpha_3$ and $\alpha_4$ (dark-green- and magenta-filled squares), and so on. The figure shows fourteen horizons of continuous and uninterrupted exploration.}
+    that the agents never compete for the same Gaussian. The Gaussians might be further spread, allowing for tradeoffs between the coverage quality and battery state of charge. In the first horizon (top-left of the figure indicated by $t_0$), $\alpha_1$ and $\alpha_2$ start exploring (blue- and red-filled squares). They finish the exploration at the end of the horizon and land on top of each others' charging stations. The exploration proceeds at the following horizon (right of the previous horizon indicated by $t_1$) with agents $\alpha_3$ and $\alpha_4$ (dark green- and magenta-filled squares), and so on. The figure shows fourteen horizons of continuous and uninterrupted exploration.}
     \label{fig:res}
   \end{minipage}
   \vspace*{-.6cm}
 \end{figure*}
 
-The battery voltage $V_e\in\mathbb{R}$ measured in volts can be then formulated as%~\cite{zhao2017observability}
+The battery voltage $V_e\in\mathbb{R}$ measured in volts can be then formulated %as%~\cite{zhao2017observability}
 \begin{equation}\label{eq:battvolt}
   V_e(t)=V\big(\mathbf{b}_{\text{SoC}}(t)\big)-V_1(t)-V_2(t)-I(t)R,
 \end{equation}
-where $R\in\mathbb{R}$ is the single resistor measured in ohms in Fig.~\ref{fig:thevenin}, and $V$ the open circuit voltage. %It is a function of the battery SoC and can be retrieved from the %battery's 
+where $R\in\mathbb{R}$ is the single resistor measured in ohms in Fig.~\ref{fig:thevenin}, and $V$ is the open circuit voltage. %It is a function of the battery SoC and can be retrieved from the %battery's 
 %datasheet~\cite{hinz2019comparison}.
 
 The values of $R_1,C_1,R_2,C_2,R$ are identified so that the model output and the physical behavior of the agents are matched as closely as possible~\cite{zhao2017observability} (see Sec.~\ref{sec:res}).
@@ -431,11 +431,11 @@ In this section, we discuss our experimental setup and results. Our experiments 
 The dynamics $\dot{\mathbf{q}}=f(\mathbf{q},\mathbf{u})$ is that of a 2D single integrator system, which mimics the MAV control reasonably~\cite{dong2023time}. The chosen dynamics is not specific to our implementation. The physical setup is illustrated in Fig.~\ref{fig:abs}.
 
 The source code\cref{reflink} is released under the %popular 
-non-commercial open-source license CC BY-NC-SA~4.0. The solution of the OCP in Eq.~(\ref{eq:ocpfinal}) relies on two external open-source components from the literature: the popular nonlinear programming solver IPOPT~\cite{wachter2006implementation} and a software framework for nonlinear optimization called CasADi~\cite{andersson2012casadi}. The simulation is derived offline first, but computational load is not prohibitive, i.e., online runtime is possible (see Sec.~\ref{sec:conc}).
+non-commercial open-source license CC BY-NC-SA~4.0. The solution of the OCP in Eq.~(\ref{eq:ocpfinal}) relies on two external open-source components from the literature: the popular nonlinear programming solver IPOPT~\cite{wachter2006implementation} and a software framework for nonlinear optimization called CasADi~\cite{andersson2012casadi}. The simulation is derived offline first, but the computational load is not prohibitive, i.e., online runtime is possible (see Sec.~\ref{sec:conc}).
 
 Each MAV is equipped with a positioning and wireless charging decks. Precise positioning of MAVs is achieved via two HTC SteamVR Base Station 2.0 units. Each MAV is then equipped with a one-cell 250 mAh 3.7 volts LiPo battery.%, capable of approximately seven minutes of flight.
 
-We evaluate our approach under two different scenarios. In both the scenarios, we use a three-by-three-meter space where the knowledge of the environment is assumed. The spatial distribution $\phi$ contains four Gaussians in the GMM in Eq.~(\ref{eq:gmm}) in the second scenario, as illustrated in Fig.~\ref{fig:scenario} (the four cyan empty squares). In the first scenario, it contains one Gaussian centered in $\mu_2$ first, and it contains two Gaussians centered in $\mu_2$ and $\mu_3$ later.
+We evaluate our approach under two different scenarios. In both scenarios, we use a three-by-three-meter space where the knowledge of the environment is assumed. The spatial distribution $\phi$ contains four Gaussians in the GMM in Eq.~(\ref{eq:gmm}) in the second scenario, as illustrated in Fig.~\ref{fig:scenario} (the four cyan empty squares). In the first scenario, it contains one Gaussian centered in $\mu_2$ first, and it contains two Gaussians centered in $\mu_2$ and $\mu_3$ later.
 
 \subsection*{Competing exploration}
 \noindent
@@ -454,10 +454,10 @@ $\exists_{=1}$ indicates the unique existential quantification.
 
 Initially, two MAVs are selected via the solution to the OCP in Eq.~(\ref{eq:ocpfinal}), $\alpha_1$ ``blue'' and $\alpha_2$ ``red.'' They are located at coordinates $($0.3$,$0.9$)$ and $($2.7$,$2.1$)$ respectively, denoted by the blue and red filled squares in Fig.~\ref{fig:res2}. The MAVs explore the space for the first horizon, focusing on the area with high information density. At the end of the horizon (blue and red filled dots), the MAVs return to the charging stations. %Once the battery is recharged -- formally, once the constraint in Eq.~(\ref{eq:ocpbattconst}) is satisfied -- the exploration proceeds. The exploration derived in this way is, however, not uninterrupted, as it has periods of ``no exploration'' in which the agent recharges the battery. We show a continuous and uninterrupted exploration achieved by a multi-agent system in the following.
 
-Once the two agents $\alpha_1$ and $\alpha_2$ land, they start recharging. The formulation of the OCP in Eq.~(\ref{eq:ocpfinal}) is such that the other two agents $\alpha_3$ ``dark-green'' and $\alpha_4$ ``magenta'' are selected. They are located at coordinates $($0.3$,$2.1$)$ and $($2.7$,$0.9$)$.% respectively. 
-
-In the following horizon, the agents $\alpha_3$ and $\alpha_4$ are recharging whereas $\alpha_1$ and $\alpha_2$ proceed with the exploration, %from where they left off.%, 
-and so on.
+Once the two agents $\alpha_1$ and $\alpha_2$ land, they start recharging. The formulation of the OCP in Eq.~(\ref{eq:ocpfinal}) is such that the other two agents $\alpha_3$ ``dark green'' and $\alpha_4$ ``magenta'' are selected. They are located at coordinates $($0.3$,$2.1$)$ and $($2.7$,$0.9$)$. % respectively. 
+%
+In the following horizon, agents $\alpha_3$ and $\alpha_4$ are recharging whereas $\alpha_1$ and $\alpha_2$ proceed with the exploration, %from where they left off.%, 
+and so~on.
 
 Fig.~\ref{fig:res3} illustrates the case of the agents competing for two areas with high information density.
 
@@ -477,7 +477,7 @@ Fig.~\ref{fig:res3} illustrates the case of the agents competing for two areas w
 
 \subsection*{Cooperative exploration}
 \noindent
-In the second extensive scenario, four MAVs $\alpha_1$, $\alpha_2$, $\alpha_3$, and $\alpha_4$ are placed on top of four wireless charging stations, as in the previous scenario. The optional constraints in Eq.~(\ref{eq:ocpfinalextra1}) are built so that each MAV covers two Gaussians at a time that are respectively farthest ($\mu_3$ and $\mu_2$ are the centers of Gaussians covered by the red and dark-green agents, $\mu_1$ and $\mu_4$ are the centers of the Gaussians covered by the blue and magenta agents in Fig.~\ref{fig:res}). This means that the MAVs will never compete for the same Gaussian, but will cooperate in the exploration. %The battery constraint is edited so that there are two MAVs first, i.e.,
+In the second extensive scenario, four MAVs $\alpha_1$, $\alpha_2$, $\alpha_3$, and $\alpha_4$ are placed on top of four wireless charging stations, as in the previous scenario. The optional constraints in Eq.~(\ref{eq:ocpfinalextra1}) are built so that each MAV covers two Gaussians at a time that are respectively farthest ($\mu_3$ and $\mu_2$ are the centers of Gaussians covered by the red and dark green agents, $\mu_1$ and $\mu_4$ are the centers of the Gaussians covered by the blue and magenta agents in Fig.~\ref{fig:res}). This means that the MAVs will never compete for the same Gaussian, but will cooperate in the exploration. %The battery constraint is edited so that there are two MAVs first, i.e.,
 %\begin{equation}
 %\exists_{=1}\, k_1,k_2\in[n]\text{ s.t. }{}^{k_1} \mathbf{b}_{\text{SoC}},{}^{k_2} \mathbf{b}_{\text{SoC}}\in(0,b_f],
 %\end{equation} 
@@ -502,7 +502,7 @@ The energy-aware ergodic trajectories ${}^1\mathbf{q}(t)$ and ${}^2\mathbf{q}(t)
 
 An analogous situation is to be observed with agent $\alpha_2$. %At the end of the optimization horizon, 
 To guarantee that both agents land %in the proximity of 
-on each other's charging stations (the red and blue filled dots at the end of the trajectories for $\alpha_2$ and $\alpha_1$) respectively, %meaning that 
+on top of each other's charging stations (the red and blue filled dots at the end of the trajectories for $\alpha_2$ and $\alpha_1$) respectively, %meaning that 
 the constraint in Eq.~(\ref{eq:ocpgivenconst}) is evaluated within
 \begin{equation}\label{eq:resaddconst}
   \lVert{}^{k_2}\mathbf{q}(t_f)-{}^{k_1}\mathbf{q}(t_0)\rVert\leq\varepsilon,
@@ -510,26 +510,27 @@ the constraint in Eq.~(\ref{eq:ocpgivenconst}) is evaluated within
 where $\varepsilon\in\mathbb{R}_{>0}$ and $k_1,k_2\in[n]$ are given.
 
 Once the two agents $\alpha_1$ and $\alpha_2$ land, they start recharging. % The formulation of the OCP in Eq.~(\ref{eq:ocpfinal}) is such that 
-The other two agents $\alpha_3$ ``dark-green'' and $\alpha_4$ ``magenta'' are selected. %They are located at coordinates $($0.3$,$2.1$)$ and $($2.7$,$0.9$)$ respectively. 
+The other two agents $\alpha_3$ dark green and $\alpha_4$ magenta are selected. %They are located at coordinates $($0.3$,$2.1$)$ and $($2.7$,$0.9$)$ respectively. 
 They proceed on the respective energy-aware ergodic trajectories and land at each other's charging stations, with the past trajectory being indicated in the background in gray. The figure shows fourteen horizons. %The actual exploration in the scenario, however, is continuous. 
 
-\subsection*{Ergodicity against battery staate of charge}
+\subsection*{Ergodicity against battery state of charge}
 \noindent
 We report the evolution of the value of the ergodicity metric in Eq. (\ref{eq:ergmetric}) in time as a function of the battery SoC in Fig.~\ref{fig:ergo}. The experimental data are from the cooperative exploration.% (see Fig.~\ref{fig:res}).
 
-The top of the figure shows the evolution per each horizon in red, whereas the bottom shows the averaged value in blue. We can observe that the exploration starts at an initial value of ergodicity, which mostly depends on the distance from the charging stations to the components of the GMM (i.e., high information density). The ergodicity decreases as the agents move towards the Gaussians in the spatial distribution GMM. It oscillates as the agents move from one Gaussian to another. In the first half of the horizon, the average ergodicity continues to descend as more information is gathered. In the second, the ergodicity increases, peaking at the end, as the discharged agents return to the charging stations for recharging (i.e., low information density).
+The top of the figure shows the evolution per each horizon in red, whereas the bottom shows the average value in blue. We can observe that the exploration starts at an initial value of ergodicity, which mostly depends on the distance from the charging stations to the components of the GMM (i.e., high information density). The ergodicity decreases as the agents move towards the Gaussians in the spatial distribution GMM. It oscillates as the agents move from one Gaussian to another. In the first half of the horizon, the average ergodicity continues to descend as more information is gathered. In the second, the ergodicity increases, peaking at the end, as the discharged agents return to the charging stations for recharging (i.e., low information density).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusion and Future Directions}\label{sec:conc}
 \noindent
-This work %enhances prior literature on ergodic search -- a method to derive robots' trajectories that visit areas with high information density -- with energy-aware coverage. It 
+This work enhances prior literature on ergodic search and %-- a method to derive robots' trajectories that visit areas with high information density -- 
+%with energy-aware coverage. It 
 answers the question of whether is it possible to explore a space uninterruptedly, with at least one agent at all times. %Although prior literature has been investigating ergodic search, battery constraints have not been studied. Yet, it is not possible to continue exploring uninterruptedly on a single battery charge. Our paper tackles this challenge. 
-Our methods are to derive an abstract battery model and extend the canonical ergodic search -- a method to derive robots' trajectories that visit areas with high information density -- to energy-aware ergodic search. %Continuous exploration is achieved using an %n empirically derived finite horizon
-%optimization framework, which resembles a model predictive controller formulation. 
-Experimental data indicate the effectiveness of the battery-constrained exploration. Continuous and uninterrupted coverage is achieved with a multi-agent system so that there is always at least one agent exploring and the spatial distribution is satisfied -- a statement that we prove with empirical evidence.
+Our methods are to derive an abstract battery model and extend the canonical ergodic search -- a method to derive robots' trajectories that visit areas with high information density -- to energy-aware ergodic search. Continuous exploration is achieved using an %n empirically derived finite horizon
+optimization framework, which resembles a model predictive controller formulation. 
+Experimental data indicate the effectiveness of our battery-constrained exploration. Continuous and uninterrupted coverage is achieved with a multi-agent system so that there is always at least one agent exploring and the spatial distribution is satisfied -- a statement that we prove with empirical evidence.
 
-A limitation of the current methods is that the charging stations are in fixed positions and the information is centralized. To enable real-world use cases, we are currently extending the methods to mobile charging stations and decentralized information distributions, which arise in scenarios such as environmental surveying. Furthermore, energy optimality and online runtime are currently not addressed by our methods and require further investigation. %due to the ergodic metric's non-convexity and high non-linearity. 
+A limitation of the current methods is that the charging stations are in fixed positions and the information is centralized. To enable real-world use cases, we are currently extending the methods to mobile charging stations and decentralized information distributions, which arise in scenarios such as environmental surveying. In future work, we are also planning to investigate other aspects, including energy optimality, online runtime, etc., which are currently not addressed. %by our methods. %and require further investigation. %due to the ergodic metric's non-convexity and high non-linearity. 
 %Future work will also explore the possibilities of guaranteeing energy optimality under %tight 
 %battery constraints. %The physical implementation of such an energy-optimal method will also need to be investigated for feasibility.
 
