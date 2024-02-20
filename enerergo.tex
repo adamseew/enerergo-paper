@@ -138,7 +138,7 @@ considers a spatial distribution is currently hindered.
 
 %To answer the question, 
 Our approach derives an abstract battery model~\cite{zhao2017observability} for battery state of charge (SoC) estimation at future time instances. We first adapt canonical ergodic search to multi-agent ergodic search~\cite{prabhakar2020ergodic,coffin2022multi}. We then utilize the formulation to propose energy-aware ergodic search, i.e., ergodic search under battery constraints. The exploration is continuous and uninterrupted, employing a finite horizon framework reminiscent of a model predictive controller~\cite{seewald2022energy}. %formulation~\cite{seewald2022energy}. %with a horizon that is determined empirically
-
+%
 Experimental data from simulations and real-world experiments show %the impact of 
 our newly proposed energy-aware ergodic search. 
 We show with empirical evidence that we can effectively explore a space, %guaranteeing that 
@@ -157,12 +157,12 @@ The remainder of the paper is then structured as follows. Sec.~\ref{sec:pb} form
 \noindent
 This work addresses the problem of exploring a bounded space with multiple agents, proportionally to a spatial distribution and in such a way that there is at least one agent exploring. 
 %
-In the remainder of the text, we will use the terms \textit{continuously} and \textit{uninterruptedly} to indicate that there is at least one agent exploring the space at all times, i.e., a certain measurable level of coverage is always satisfied.
-
+In the remainder of the text, we will use the terms \textit{continuously} and \textit{uninterruptedly} to indicate that there is at least one agent exploring the space at all times, i.e., a certain measurable level of coverage is always satisfied. 
+%
 Canonical ergodic search~\cite{mathew2011metrics,miller2013trajectory,abraham2021ergodic,miller2016ergodic,dressel2018optimality,torre2016ergodic,shetty2022ergodic} does not deal with uninterrupted exploration. It derives an agent's control -- or analogously multiple agents' control~\cite{prabhakar2020ergodic,coffin2022multi,lerch2023safety,abraham2018decentralized,patel2021multi} -- so that its trajectory maximizes an ergodic metric %defined 
-in the spectral~domain.%~\cite{calinon2020mixture}.
-
-Let us define the concepts of ergodicity and ergodic metric.
+in the spectral~domain. %~\cite{calinon2020mixture}.
+%
+Let us thus define the concepts of ergodicity and ergodic metric.
 
 \begin{defn}[Ergodicity]
   Consider a bounded space $\mathcal{Q}\subset\mathbb{R}^D$ of dimension $D\in\mathbb{N}_{>0}$. 
@@ -172,11 +172,11 @@ Let us define the concepts of ergodicity and ergodic metric.
       \frac{1}{t}\int_{\mathcal{T}}\Omega\bigg(\kappa\big(\mathbf{q}(t)\big)\bigg)=\int_{\mathcal{Q}}\phi(\mathbf{q})\,\Omega(\mathbf{q})\,d\mathbf{q},
     }
   \end{equation}
-  for all Lebesgue functions $\Omega$~\cite{mathew2011metrics}. The function $\kappa$ maps the state to the exploration workspace.%, e.g., Equation~(\ref{eq:ck}).
+  for all Lebesgue functions $\Omega$~\cite{mathew2011metrics}. Here, the function $\kappa$ maps the state to the exploration workspace.%, e.g., Equation~(\ref{eq:ck}).
   \end{defn}
 
 \begin{defn}[Ergodic metric]\label{def:ergom}
-  Consider a time average distribution that describes where the robot spends more time over a finite time window $[t_0,t_f]$, i.e., $h\big(\mathbf{q}(t)\big)=\int_{\mathcal{T}}{\Delta\big(\mathbf{q}(t)\big)}\,dt\,/t_f$, $\Delta$ is a Dirac delta function, and $t_0,t_f\in\mathbb{R}_{>0}$ are the initial and final time instants. 
+  Consider a time average distribution that describes where the robot spends more time over a finite time window $[t_0,t_f]$, i.e., $h\big(\mathbf{q}(t)\big)=\int_{\mathcal{T}}{\Delta\big(\mathbf{q}(t)\big)}\,dt\,/(t_f-t_0)$, $\Delta$ is a Dirac delta function, and $t_0,t_f\in\mathbb{R}_{>0}$ are the initial and final time instants. 
   An \textit{ergodic metric} is defined as the $L^2$ inner product between the time average distribution $h$ and the average of the spatial distribution $\phi$.
 \end{defn}
 
@@ -185,8 +185,8 @@ Let us define the concepts of ergodicity and ergodic metric.
   \textit{Ergodic search problem} is the problem of~deriving a control action $\mathbf{u}(t)\in\mathcal{U}\subset\mathbb{R}^V$ with $V\in\mathbb{N}_{>0}$ so that the ergodic metric is minimized (see Definition~\ref{def:ergom}). %trajectory~$\mathbf{q}(t)\in\mathcal{Q}$ is proportional to the spatial distribution $\phi$ via an ergodic metric.
 \end{pb}
 
-We derive an ergodic metric in Equation~(\ref{eq:ergmetric}) in Sec.~\ref{sec:ergosearch}.
-
+We derive an ergodic metric in Equation~(\ref{eq:ergmetric}) in Sec.~\ref{sec:ergosearch}. 
+%
 The notation $\mathbb{R}$ and $\mathbb{N}$ indicates reals and naturals, $\mathbb{N}_{>0}$ strictly naturals. Bold notation is used for vectors.
 %
 
@@ -207,14 +207,14 @@ We will provide a solution to Problem~\ref{pb:enerergo} (see Sec.~\ref{sec:meth}
 %%%%%%%%%%%%%%%%%%
 \section{Methods}\label{sec:meth}
 \noindent
-In this section, we discuss the methods utilized in this work for continuous, uninterrupted exploration with multiple agents and proportionally to a spatial distribution.
-
+In this section, we discuss the methods utilized in this work for continuous, uninterrupted exploration with multiple agents and proportionally to a spatial distribution. 
+%
 We discuss how to achieve the latter in Sec.~\ref{sec:ergosearch} and the former in Sec.~\ref{sec:batt}.
 
 \subsection{Ergodic search}\label{sec:ergosearch}
 \noindent
-To derive an agent's trajectory proportionally to a spatial distribution, canonical ergodic search first requires defining the distribution $\phi$.
-
+To derive an agent's trajectory proportionally to a spatial distribution, canonical ergodic search first requires defining the distribution $\phi$. 
+%
 For this purpose, in both Problem~\ref{pb:ergo} and \ref{pb:enerergo}, let us consider a Gaussian mixture model (GMM)
 \begin{equation}\label{eq:gmm}
   \phi(\boldsymbol{\delta},\mathbf{q}):=\sum_{k=1}^{m}\delta_k\,\mathcal{N}(\mathbf{q}\,|\,\mu_k,\Sigma_k),
@@ -296,8 +296,8 @@ The ergodic metric is now evaluated for multiple agents\vspace*{-.1cm}
 \vspace*{-.2cm}
 
 Let us consider a vector $\mathbf{b}\in\mathbb{R}^3$, detailed later in Sec.~\ref{sec:batt}, whose trajectory $\mathbf{b}(t)$ describes the evolution of some battery metrics' in time. If $\mathbf{b}_{\text{SoC}}$ is the value of the vector that expresses the battery %state of charge (SoC)
-SoC, the expression in Eq.~(\ref{eq:ocpergomulti}) might select ergodic metrics corresponding to trajectories that are impossible to traverse in the $\mathbf{b}_{\text{SoC}}\in(0,1]$ domain.%, i.e., one or more agents' state at $\mathbf{q}(t_f)$ will not satisfy Eq.~(\ref{eq:ocpconsttotf}).
-
+SoC, the expression in Eq.~(\ref{eq:ocpergomulti}) might select ergodic metrics corresponding to trajectories that are impossible to traverse in the $\mathbf{b}_{\text{SoC}}\in(0,1]$ domain. %, i.e., one or more agents' state at $\mathbf{q}(t_f)$ will not satisfy Eq.~(\ref{eq:ocpconsttotf}).
+%
 In order to satisfy the battery SoC domain and always keep at least one agent exploring, an OCP must satisfy an additional constraint
 \begin{equation}\label{eq:ocpbattconst}
   \exists k\in[n]\text{ s.t. }{}^k\mathbf{b}_{\text{SoC}}(t_f)\in(0,b_f],
@@ -350,18 +350,26 @@ the evolutions of the agents' states in time are described by generic differenti
 To derive a battery model for continuous exploration -- a model that allows us to predict when an agent is exploring and when it conversely should be recharging the battery -- let us consider an abstract equivalent circuit model (ECM). These models are commonly employed in battery metrics estimation for robots and other applications, especially if equipped with rechargeable battery cells~\cite{zhang2018online,xiaosong2012comparative,hasan2018exogenous,hinz2019comparison,mousavi2014various,seewald2022energy}.
 
 The ECM model we employ is a second-order resistor-capacitor (RC) circuit model, as illustrated in Fig.~\ref{fig:thevenin}~\cite{seewaldphdthesis}. 
-
-Formally, it can be formulated~\cite{zhao2017observability}
+%
+Formally, it can be expressed~\cite{zhao2017observability}
 \begin{equation}\label{eq:battmodel}
   \dot{\mathbf{b}}(t)\hspace*{-.4ex}=\hspace*{-.7ex}\begin{bmatrix}-1/(R_1C_1)\hspace*{-2ex}&\hspace*{-2ex}0&0\\\hspace*{2ex}0&\hspace*{-3ex}-1/(R_2C_2)&0\\\hspace*{2ex}0&\hspace*{-2ex}0&0\end{bmatrix}\hspace*{-.6ex}\mathbf{b}(t)\hspace*{-.2ex}+\hspace*{-.6ex}\begin{bmatrix}\hspace*{-.2ex}1/C_1\\\hspace*{-.2ex}1/C_2\\-\hspace*{-.4ex}\zeta/Q\end{bmatrix}\hspace*{-.7ex}I(t),
 \end{equation}
-where $\zeta\in\mathbb{R}$ is a battery coefficient~\cite{seewald2022energy}, $R_1,R_2\in\mathbb{R}$ and $C_1,C_2\in\mathbb{R}$ are the resistors and capacitors relative to the first and second RC elements in the ECM measured in ohms and farads respectively.
+where $\zeta\in\mathbb{R}$ is a battery coefficient~\cite{seewald2022energy}, $R_1,R_2\in\mathbb{R}$ and $C_1,C_2\in\mathbb{R}$ are resistors and capacitors relative to the first and second RC elements in the ECM measured in ohms and farads respectively.
 $Q\in\mathbb{R}$ is the battery nominal capacity measured in amperes per hour. 
 %
 $I\in\mathbb{R}$ is the internal current which is load-dependent, e.g., the current required to run the motors, actuators, etc. It is measured in amperes and assumed constant in flight from empirical observations of the aerial robot used in the experiments (see Sec.~\ref{sec:res}).
 
-The state $\mathbf{b}:=\begin{bmatrix}V_1&V_2&\mathbf{b}_{\text{SoC}}\end{bmatrix}\in\mathbb{R}^3$ contains three battery metrics. $V_1,V_2\in\mathbb{R}$ are the voltages measured in volts across the first and second RC elements, and $\mathbf{b}_{\text{SoC}}\in(0,1]$ is the normalized battery SoC that evolves from fully charged -- or from a given initial value $\mathbf{b}_{\text{SoC}}(t_0)$ -- to discharged.
-
+The state $\mathbf{b}:=\begin{bmatrix}V_1&V_2&\mathbf{b}_{\text{SoC}}\end{bmatrix}\in\mathbb{R}^3$ contains three battery metrics. $V_1,V_2\in\mathbb{R}$ are the voltages measured in volts across the first and second RC elements, and $\mathbf{b}_{\text{SoC}}\in(0,1]$ is the normalized battery SoC that evolves from fully charged -- or from a given initial value $\mathbf{b}_{\text{SoC}}(t_0)$ -- to discharged. 
+%
+Battery voltage $V_e\in\mathbb{R}$ measured in volts can be %then 
+expressed %as%~\cite{zhao2017observability}
+\begin{equation}\label{eq:battvolt}
+  V_e(t)=V\big(\mathbf{b}_{\text{SoC}}(t)\big)-V_1(t)-V_2(t)-I(t)R,
+\end{equation}
+where $R\in\mathbb{R}$ is the single resistor measured in ohms in Fig.~\ref{fig:thevenin}, and $V$ is the open circuit voltage that %It is a function of the battery SoC and 
+can be retrieved from the %battery's 
+datasheet~\cite{hinz2019comparison}.
 
 
 \begin{figure}[t!]
@@ -378,7 +386,7 @@ The state $\mathbf{b}:=\begin{bmatrix}V_1&V_2&\mathbf{b}_{\text{SoC}}\end{bmatri
 \end{figure}
 
 \begin{figure}[b!]
-  \vspace*{-.3cm}
+  \vspace*{-.15cm}
   \input{figures/trajs2_2.pdf_tex}
   \caption{\textbf{Experimental evaluation of %intermittent exploration
   competing exploration with one Gaussian}.
@@ -388,7 +396,7 @@ The state $\mathbf{b}:=\begin{bmatrix}V_1&V_2&\mathbf{b}_{\text{SoC}}\end{bmatri
 
 
 \begin{figure}[b!]
-  \vspace*{-.3cm}
+  \vspace*{-.15cm}
   \hspace*{-.2cm}
   \input{figures/trajs2_3.pdf_tex}
   \caption{\textbf{Experimental evaluation of %intermittent exploration
@@ -404,21 +412,12 @@ The state $\mathbf{b}:=\begin{bmatrix}V_1&V_2&\mathbf{b}_{\text{SoC}}\end{bmatri
   \hspace{.42cm}
   \begin{minipage}[t]{.97\columnwidth}
     \vspace*{-4.2cm}
-    \caption{\textbf{Experimental evaluation of cooperative exploration}. Four agents $\alpha_1$, $\alpha_2$, $\alpha_3$, and $\alpha_4$ are placed on top of four wireless charging stations at the same coordinates in Fig.~\ref{fig:res2}. The problem is now set so %that the agents explore the space two-by-two first and 
+    \caption{\textbf{Experimental evaluation of cooperative exploration}. Four agents $\alpha_1$, $\alpha_2$, $\alpha_3$, and $\alpha_4$ are placed on top of four wireless charging stations at the same coordinates as in Fig.~\ref{fig:res2}. The problem is now set so %that the agents explore the space two-by-two first and 
     that the agents never compete for the same Gaussian. The Gaussians might be further spread, allowing for tradeoffs between the coverage quality and battery state of charge. In the first horizon (top-left of the figure indicated by $t_0$), $\alpha_1$ and $\alpha_2$ start exploring (blue- and red-filled squares). They finish the exploration at the end of the horizon and land on top of each others' charging stations. The exploration proceeds at the following horizon (right of the previous horizon indicated by $t_1$) with agents $\alpha_3$ and $\alpha_4$ (dark green- and magenta-filled squares), and so on. The figure shows fourteen horizons of continuous and uninterrupted exploration.}
     \label{fig:res}
   \end{minipage}
   \vspace*{-.6cm}
 \end{figure*}
-
-Battery voltage $V_e\in\mathbb{R}$ measured in volts can be %then 
-expressed %as%~\cite{zhao2017observability}
-\begin{equation}\label{eq:battvolt}
-  V_e(t)=V\big(\mathbf{b}_{\text{SoC}}(t)\big)-V_1(t)-V_2(t)-I(t)R,
-\end{equation}
-where $R\in\mathbb{R}$ is the single resistor measured in ohms in Fig.~\ref{fig:thevenin}, and $V$ is the open circuit voltage that %It is a function of the battery SoC and 
-can be retrieved from the %battery's 
-datasheet~\cite{hinz2019comparison}.
 
 The values of $R_1,C_1,R_2,C_2,R$ are identified so that the model output and the physical behavior of the agents are matched as closely as possible~\cite{zhao2017observability} (see Sec.~\ref{sec:res}).
 
@@ -435,8 +434,8 @@ In this section, we discuss our experimental setup and results. Our experiments 
 The dynamics $\dot{\mathbf{q}}=f(\mathbf{q},\mathbf{u})$ is that of a 2D single integrator system, which mimics the MAV control reasonably~\cite{dong2023time}. The chosen dynamics is not specific to our implementation. The physical setup is illustrated in Fig.~\ref{fig:abs}.
 
 The source code\cref{reflink} is released under the %popular 
-non-commercial open-source license CC BY-NC-SA~4.0. The solution of the OCP in Eq.~(\ref{eq:ocpfinal}) relies on two external open-source components from the literature: the popular nonlinear programming solver IPOPT~\cite{wachter2006implementation} and a software framework for nonlinear optimization called CasADi~\cite{andersson2012casadi}. The simulation is derived offline first, but the computational load is not prohibitive, i.e., online runtime is possible (see Sec.~\ref{sec:conc}).
-
+non-commercial open-source license CC BY-NC-SA~4.0. The solution of the OCP in Eq.~(\ref{eq:ocpfinal}) relies on two external open-source components from the literature: the popular nonlinear programming solver IPOPT~\cite{wachter2006implementation} and a software framework for nonlinear optimization called CasADi~\cite{andersson2012casadi}. The simulation is derived offline first, but the computational load is not prohibitive, i.e., online runtime is possible (see Sec.~\ref{sec:conc}). 
+%
 Each MAV is equipped with a positioning and wireless charging decks. Precise positioning of MAVs is achieved via two HTC SteamVR Base Station 2.0 units. Each MAV is then equipped with a one-cell 250 mAh 3.7 volts LiPo battery.%, capable of approximately seven minutes of flight.
 
 We evaluate our approach under two different scenarios. In both scenarios, we use a three-by-three-meter space where the knowledge of the environment is assumed. The spatial distribution $\phi$ contains four Gaussians in the GMM in Eq.~(\ref{eq:gmm}) in the second scenario, as illustrated in Fig.~\ref{fig:scenario} (the four cyan empty squares). In the first scenario, it contains one Gaussian centered in $\mu_2$ first, and it contains two Gaussians centered in $\mu_2$ and $\mu_3$ later.
@@ -447,9 +446,9 @@ We evaluate our approach under two different scenarios. In both scenarios, we us
 In the first scenario, four MAVs $\alpha_1$, $\alpha_2$, $\alpha_3$, and $\alpha_4$ are placed on top of four wireless charging stations. %at coordinates $($0.3$,$0.9$)$, $($2.7$,$2.1$)$, $($0.3$,$2.1$)$, and $($2.7$,$0.9$)$. 
 The horizon is set to two and a half minutes and is derived empirically along with battery and recharging coefficients. The battery values used in the scenario are scaled from~\cite{zhao2017observability}. The number of frequencies $K$ is set to nine, as in~\cite{calinon2020mixture}. %The ergodic trajectories at %four different horizons 
 %$t_0$, $t_4$, $t_8$, and $t_{12}$ are shown in Fig.~\ref{fig:res2}. For horizons following the first, the past ergodic trajectories are illustrated in gray.
-The MAVs compete for the same area with high information density, i.e., they utilize the multi-agent ergodic metric introduced in Eq.~(\ref{eq:multiergometric}).
-
-The battery constraint is edited so that there are two MAVs first, i.e.,\vspace*{-.15cm}
+The MAVs compete for the same area with high information density, i.e., they utilize the multi-agent ergodic metric introduced in Eq.~(\ref{eq:multiergometric}). 
+%
+The battery constraint is edited so that there are two MAVs first, i.e.,\vspace*{-.165cm}
 \begin{equation}
 \exists_{=1}\, k_1,k_2\in[n]\text{ s.t. }{}^{k_1} \mathbf{b}_{\text{SoC}},{}^{k_2} \mathbf{b}_{\text{SoC}}\in(0,b_f],\vspace*{-.1cm}
 \end{equation} 
@@ -488,7 +487,7 @@ In the second extensive scenario, four MAVs $\alpha_1$, $\alpha_2$, $\alpha_3$, 
 %where the notation $\exists_{=1}$ indicates the unique existential quantification.
 
 There is an additional constraint on the final point in Eq~(\ref{eq:ocpgivenconst}), set so that the agents have to be in the proximity of a charging station. The actual constraint is derived in Eq.~(\ref{eq:resaddconst}). %at the end of the horizon.
-
+%
 The cost function in Eq.~(\ref{eq:ocpfinalcost}) is further enhanced with the mixing coefficient $\boldsymbol{\delta}$ in Eq.~(\ref{eq:gmm}), allowing us to find the tradeoffs between the single Gaussians, the different agents, and the battery SoC. Namely, the cost is
 \begin{equation}
   \min_{\boldsymbol{\Theta},\boldsymbol{\delta}}\,\,\,{\frac{1}{n}\sum_{k=1}^{n}\int_{\mathcal{T}_k}{}^k\hspace*{-.1ex}\mathbf{u}(\tau)^TR_k\,{}^k\hspace*{-.1ex}\mathbf{u}(\tau)\,d\tau-\sum_{k=1}^{m}\delta_k}.
@@ -497,11 +496,11 @@ The cost function in Eq.~(\ref{eq:ocpfinalcost}) is further enhanced with the mi
 A similar approach is undertaken in prior literature~\cite{rao2023multi}, where the ergodic objective is dynamic as more information is gathered, rather than the battery status is changed.
 
 The number of frequencies, battery and recharging coefficients, and the horizon are those used in the previous scenario.
-The ergodicity metric %in Eq.~(\ref{eq:ergmetric}) 
+The ergodic metric %in Eq.~(\ref{eq:ergmetric}) 
 is set to be lower or equal to 0.1, %via the constraint in Eq.~(\ref{eq:ergoconst}), 
 in line with similar literature~\cite{dong2023time}.
 
-The results are shown in Fig.~\ref{fig:res}. The figure is to be read from left to right and from top to bottom, with the horizon being indicated under each subfigure (meaning that $t_0$ is the first horizon, $t_1$ is the second horizon, etc.). Initially, two MAVs are selected via the solution to the OCP in Eq.~(\ref{eq:ocpfinal}), $\alpha_1$ blue and $\alpha_2$ red, similarly to the previous scenario. %They are located at coordinates $($0.3$,$0.9$)$ and $($2.7$,$2.1$)$ respectively, denoted by the blue and red filled squares.
+The results are shown in Fig.~\ref{fig:res}. The figure is to be read from left to right and from top to bottom, with the horizons being indicated under each subfigure (meaning that $t_0$ is the first horizon, $t_1$ is the second horizon, etc.). Initially, two MAVs are selected via the solution to the OCP in Eq.~(\ref{eq:ocpfinal}), $\alpha_1$ blue and $\alpha_2$ red, similarly to the previous scenario. %They are located at coordinates $($0.3$,$0.9$)$ and $($2.7$,$2.1$)$ respectively, denoted by the blue and red filled squares.
 The energy-aware ergodic trajectories ${}^1\mathbf{q}(t)$ and ${}^2\mathbf{q}(t)$ are selected so that the MAVs land at each other's charging stations, i.e., ${}^1\mathbf{q}(t_f)={}^2\mathbf{q}(t_0)$ and vice-versa. The mixing coefficients for $\alpha_1$ are such that $\delta_2>\delta_3$, meaning that the agent $\alpha_1$ explores in more detail the area delimited by the Gaussian centered in $\mu_2$. This is indicated by the darker coloring of the different Gaussians, which is proportional to the optimal value of $\boldsymbol{\delta}$. 
 %
 An analogous situation is to be observed with agent $\alpha_2$. %At the end of the optimization horizon, 
@@ -520,7 +519,7 @@ They proceed on the respective energy-aware ergodic trajectories and land on top
 
 \subsection*{Ergodicity against battery state of charge}
 \noindent
-We report the evolution of the value of the ergodicity metric in Eq. (\ref{eq:ergmetric}) in time as a function of the battery SoC in Fig.~\ref{fig:ergo}. The experimental data are from the cooperative exploration.% (see Fig.~\ref{fig:res}).
+We report the evolution of the value of the ergodic metric in Eq. (\ref{eq:ergmetric}) in time as a function of the battery SoC in Fig.~\ref{fig:ergo}. The experimental data are from the cooperative exploration.% (see Fig.~\ref{fig:res}).
 
 The top of the figure shows the evolution per each horizon in red, whereas the bottom shows the average value in blue. We can observe that the exploration starts at an initial value of ergodicity, which mostly depends on the distance from the charging stations to the components of the GMM (i.e., high information density). The ergodicity decreases as the agents move towards the Gaussians in the spatial distribution GMM. It oscillates as the agents move from one Gaussian to another. In the first half of the horizon, the average ergodicity continues to descend as more information is gathered. In the second, the ergodicity increases, peaking at the end, as the discharged agents return to the charging stations for recharging (i.e., low information density).
 
