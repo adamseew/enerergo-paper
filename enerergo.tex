@@ -282,7 +282,9 @@ To formulate the solution to Problem~\ref{pb:enerergo}, let us first extend the 
 \begin{equation}\label{eq:ocpergomulti}
   \min_{\boldsymbol{\Theta}}\,\,\,{\frac{1}{n}\left(\sum_{k=1}^{n}\int_{\mathcal{T}_k}{}^k\hspace*{-.1ex}\mathbf{u}(\tau)^TR_k\,{}^k\hspace*{-.1ex}\mathbf{u}(\tau)\,d\tau\right)+\mathcal{E}(\boldsymbol{\delta},\boldsymbol{\Theta}_{\mathbf{q}})},
 \end{equation}
-where the ergodic metric and the control penalizing term $R_k$ are now agent-specific. The term $\boldsymbol{\Theta}_{\mathbf{q}}$ is ${}^1\mathbf{q}(t),{}^2\mathbf{q}(t),$ $\dots,{}^n\mathbf{q}(t)$, and $\boldsymbol{\Theta}$ is $\boldsymbol{\Theta}_{\mathbf{q}},{}^1\mathbf{u}(t),{}^2\mathbf{u}(t),\dots{}^n\mathbf{u}(t)$. $\mathcal{T}_k$ is $[{}^kt_0, {}^kt_f]$, i.e., different agents might have different durations.
+where %the ergodic metric and 
+the control penalizing term $R_k$ %are 
+is now agent-specific. The term $\boldsymbol{\Theta}_{\mathbf{q}}$ is ${}^1\mathbf{q}(t),{}^2\mathbf{q}(t),$ $\dots,{}^n\mathbf{q}(t)$, and $\boldsymbol{\Theta}$ is $\boldsymbol{\Theta}_{\mathbf{q}},{}^1\mathbf{u}(t),{}^2\mathbf{u}(t),\dots{}^n\mathbf{u}(t)$. $\mathcal{T}_k$ is $[{}^kt_0, {}^kt_f]$, i.e., different agents might have different durations.
 
 The ergodic metric is now evaluated for multiple agents\vspace*{-.1cm}
 \begin{equation}\label{eq:multiergometric}
@@ -480,7 +482,7 @@ Fig.~\ref{fig:res3} illustrates the case of the agents competing for two areas w
 
 \subsection*{Cooperative exploration}
 \noindent
-In the second extensive scenario, four MAVs $\alpha_1$, $\alpha_2$, $\alpha_3$, and $\alpha_4$ are placed on top of four wireless charging stations, as in the previous scenario. The optional constraints in Eq.~(\ref{eq:ocpfinalextra1}) are built so that each MAV covers two Gaussians at a time that are respectively farthest ($\mu_3$ and $\mu_2$ are the centers of Gaussians covered by the red and dark green agents, $\mu_1$ and $\mu_4$ are the centers of the Gaussians covered by the blue and magenta agents in Fig.~\ref{fig:res}). This means that the MAVs will never compete for the same Gaussian, but will cooperate in the exploration. %The battery constraint is edited so that there are two MAVs first, i.e.,
+In the second extensive scenario, four MAVs $\alpha_1$, $\alpha_2$, $\alpha_3$, and $\alpha_4$ are placed on top of four wireless charging stations, as in the previous scenario. The optional constraints in Eq.~(\ref{eq:ocpfinalextra1}) are built so that each MAV covers two Gaussians at a time that are respectively farthest ($\mu_3$ and $\mu_2$ are the centers of the Gaussians covered by the blue and dark green agents, $\mu_1$ and $\mu_4$ are the centers of the Gaussians covered by the red and magenta agents in Fig.~\ref{fig:res}). This means that the MAVs will never compete for the same Gaussian, but will cooperate in the exploration. %The battery constraint is edited so that there are two MAVs first, i.e.,
 %\begin{equation}
 %\exists_{=1}\, k_1,k_2\in[n]\text{ s.t. }{}^{k_1} \mathbf{b}_{\text{SoC}},{}^{k_2} \mathbf{b}_{\text{SoC}}\in(0,b_f],
 %\end{equation} 
@@ -534,7 +536,8 @@ Our methods are to derive an abstract battery model and extend the canonical erg
 optimization framework, which resembles a model predictive controller formulation. 
 Experimental data indicate the effectiveness of our battery-constrained exploration. Continuous and uninterrupted coverage is achieved with a multi-agent system so that there is always at least one agent exploring and the spatial distribution is satisfied -- a statement that we prove with empirical evidence.
 
-A limitation of the current methods is that the charging stations are in fixed positions and the information is centralized. To enable real-world use cases, we are currently extending the methods to mobile charging stations and decentralized information distributions, which arise in scenarios such as environmental surveying. In future work, we are also planning to investigate other aspects, including energy optimality, online runtime, etc., which are currently not addressed. %by our methods. %and require further investigation. %due to the ergodic metric's non-convexity and high non-linearity. 
+A limitation of the current methods is that the charging stations are in fixed positions and the information is centralized. To enable real-world use cases, we are currently extending the methods to mobile charging stations and decentralized %information distributions
+systems, which arise in scenarios such as environmental surveying. In future work, we are also planning to investigate other aspects, including energy optimality, online runtime, etc., which are currently not addressed. %by our methods. %and require further investigation. %due to the ergodic metric's non-convexity and high non-linearity. 
 %Future work will also explore the possibilities of guaranteeing energy optimality under %tight 
 %battery constraints. %The physical implementation of such an energy-optimal method will also need to be investigated for feasibility.
 
